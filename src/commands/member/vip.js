@@ -48,7 +48,7 @@ Quer ver a gente de verdade, sem cortes e com total sigilo? Escolha sua forma fa
 🎁 *DEGUSTAÇÃO GRÁTIS:*
 • Prévias no Telegram: https://t.me/+QY2sd5zWIZFmZDEx
 • Privacy Grátis: https://privacy.com.br/checkout/casalzaumofcgratis
-• Página VIP Completa: https://clubcasalzaum.vercel.app/vip/
+• Página VIP Completa: https://casalzaumofcvip.vercel.app/
 
 ---
 🔒 *DADOS PARA PAGAMENTO VIA PIX:*
