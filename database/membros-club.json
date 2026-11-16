@@ -1,0 +1,22 @@
+[
+  {
+    "id": "m-1",
+    "nome": "Lucas Fontes",
+    "fone": "5571988410012",
+    "plano": "6m",
+    "planoNome": "Passe Semestral (6M)",
+    "dataInicio": "2026-10-15",
+    "dataVencimento": "2027-04-15",
+    "valor": "R$ 97,00"
+  },
+  {
+    "id": "m-2",
+    "nome": "Rafael Mendonça",
+    "fone": "5571991823344",
+    "plano": "1ano",
+    "planoNome": "Membro VIP Black (1 Ano)",
+    "dataInicio": "2025-11-20",
+    "dataVencimento": "2026-11-20",
+    "valor": "R$ 167,00"
+  }
+]
