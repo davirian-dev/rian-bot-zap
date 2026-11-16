@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takeshi Bot — Engine de Automação & Vendas para WhatsApp | Davi Rian</title>
+    <meta name="description" content="Motor de automação no WhatsApp em Node.js com Baileys para triagem de grupos VIP, cobrança Pix automática e entrega de infoprodutos.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .glow-green { box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.25); }
+    </style>
+</head>
+<body class="bg-[#06080F] text-slate-200 antialiased min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
+
+    <!-- Topbar -->
+    <header class="border-b border-slate-800/80 bg-[#06080F]/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg font-bold">🤖</span>
+                <span class="font-extrabold text-white text-base tracking-tight">Takeshi Bot <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono">Davi Edition</span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/davirian-dev/takeshi-bot" target="_blank" class="text-xs text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors">
+                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                </a>
+                <a href="https://wa.me/557196815876?text=Ol%C3%A1%20Davi!%20Quero%20contratar%20a%20implanta%C3%A7%C3%A3o%20do%20Takeshi%20Bot%20no%20meu%20WhatsApp." target="_blank" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs flex items-center gap-1.5 transition-all hover:scale-105 shadow-lg shadow-emerald-500/20">
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                    <span>Contratar Licença</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="py-16 sm:py-24 max-w-5xl mx-auto px-4 text-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Motor de Vendas & Triagem WhatsApp 24/7
+        </div>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
+            Transforme seu WhatsApp em uma Máquina Autônoma de <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Vendas com Pix</span>
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+            Engine de alta performance baseada em Node.js e Baileys. Triagem automática de membros VIP, geração de Pix em 1 segundo, moderação anti-link e entrega instantânea de conteúdos digitais.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+            <a href="https://wa.me/557196815876?text=Fala%20Davi!%20Quero%20ver%20uma%20demonstra%C3%A7%C3%A3o%20do%20Takeshi%20Bot%20rodando." target="_blank" class="px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm flex items-center gap-2 transition-all hover:scale-105 shadow-xl shadow-emerald-500/30">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+                <span>Ver Demonstração ao Vivo</span>
+            </a>
+            <a href="https://github.com/davirian-dev/takeshi-bot" target="_blank" class="px-7 py-3.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold text-sm flex items-center gap-2 transition-all">
+                <i data-lucide="code" class="w-4 h-4"></i>
+                <span>Documentação Técnica</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Recursos em Grid -->
+    <section class="py-16 border-t border-slate-900 bg-slate-950/40">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 transition-all glow-green">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-4 border border-emerald-500/20">
+                        💸
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Cobranças Pix Automáticas</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Comandos instantâneos como <code>.pix10</code> e <code>.pix69</code> para emitir chave Pix, instruções de pagamento e identificação discreta em segundos.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-cyan-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-4 border border-cyan-500/20">
+                        🛡️
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Triagem & Admissão VIP</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Comandos administrativos <code>.triagem</code> e <code>.aprovar</code> que registram membros no banco de dados local seguro e liberam acesso apenas aos pagantes.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-4 border border-purple-500/20">
+                        📚
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Entrega de Infoprodutos</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Envio automatizado de links seguros para download de ebooks, planos e scripts, sem que você precise digitar ou enviar nada manualmente.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos de Implantação Comercial -->
+    <section class="py-20 border-t border-slate-900">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 font-mono">Planos de Instalação & Licença</span>
+            <h2 class="text-3xl font-extrabold text-white mt-2 mb-10">Implante no Seu Servidor ou Deixe Comigo</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <!-- Plano 1 -->
+                <div class="p-8 rounded-3xl bg-slate-900/50 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Self-Hosted</div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Licença do Código</h3>
+                        <div class="text-3xl font-extrabold text-emerald-400 my-4 font-mono">R$ 97,00 <span class="text-xs text-slate-500 font-normal">taxa única</span></div>
+                        <p class="text-xs text-slate-400 mb-6">Acesso ao repositório completo com todos os módulos customizados de Pix, triagem e infoprodutos para você rodar na sua máquina ou VPS.</p>
+                        <ul class="text-xs text-slate-300 space-y-2.5 mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Código-fonte completo Node.js</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Comandos de Pix e triagem inclusos</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Suporte à integração com Davi Bot</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/557196815876?text=Ol%C3%A1%20Davi!%20Quero%20adquirir%20a%20licen%C3%A7a%20do%20Takeshi%20Bot%20(R$%2097)." target="_blank" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                        <span>Comprar Licença</span>
+                    </a>
+                </div>
+
+                <!-- Plano 2 -->
+                <div class="p-8 rounded-3xl bg-gradient-to-b from-emerald-950/20 to-slate-900/80 border border-emerald-500/40 flex flex-col justify-between relative shadow-2xl">
+                    <span class="absolute -top-3 right-6 px-3 py-1 rounded-full bg-emerald-500 text-black text-[10px] font-extrabold uppercase tracking-wider">Mais Recomendado</span>
+                    <div>
+                        <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Chave na Mão</div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Instalação & Setup VIP</h3>
+                        <div class="text-3xl font-extrabold text-emerald-400 my-4 font-mono">R$ 297,00 <span class="text-xs text-slate-500 font-normal">taxa única</span></div>
+                        <p class="text-xs text-slate-400 mb-6">Eu instalo, configuro no seu WhatsApp e coloco para rodar em nuvem ou VPS sem você se preocupar com programação.</p>
+                        <ul class="text-xs text-slate-300 space-y-2.5 mb-8">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Tudo do plano de código</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Configuração da sua chave Pix e preços</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Conexão no seu WhatsApp via QR Code</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Suporte prioritário de 30 dias</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/557196815876?text=Ol%C3%A1%20Davi!%20Quero%20o%20Setup%20Completo%20do%20Takeshi%20Bot%20no%20meu%20WhatsApp%20(R$%20297)." target="_blank" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs flex items-center justify-center gap-2 transition-all hover:scale-[1.02] shadow-lg shadow-emerald-500/30">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        <span>Quero Instalação Completa</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-8 border-t border-slate-900 text-slate-500 text-xs text-center">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>© 2026 <strong>Takeshi Bot Davi Edition</strong> · Desenvolvido por <a href="https://davirian-tech.vercel.app" target="_blank" class="text-emerald-400 hover:underline">Davi Rian</a>.</div>
+            <div>WhatsApp Suporte: <a href="https://wa.me/557196815876" target="_blank" class="text-slate-400 hover:text-white">+55 (71) 9681-5876</a></div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
