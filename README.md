@@ -1,4 +1,29 @@
-# 🤖 Takeshi Bot
+# 🤖 Takeshi Bot — Davi Rian Edition (Módulo de Automação Davi Bot SaaS)
+
+> ⚡ **Edição Personalizada e Estendida por [Davi Rian](https://github.com/davirian-dev)**  
+> Este repositório é uma evolução e adaptação do motor open-source Takeshi Bot (Node.js/Baileys), transformado no **Motor Oficial de Mensageria e Vendas no WhatsApp** integrado aos projetos **[Davi Bot SaaS](https://github.com/davirian-dev/davi-bot)** e ecossistema **Casalzaum**.
+
+---
+
+### 🚀 Melhorias Exclusivas Implementadas por Davi Rian:
+1. 💸 **Cobranças Pix Automatizadas:**
+   - `src/commands/member/pix10.js`: Gera cobrança instantânea via Pix de R$ 10,00 para suporte e consultorias rápidas.
+   - `src/commands/member/pix69.js`: Gera cobrança instantânea via Pix de R$ 69,00 para acesso anual ou planos VIP.
+2. 🛡️ **Triagem e Gestão de Comunidades VIP:**
+   - `src/commands/admin/triagem.js`: Sistema de verificação e onboarding automático de novos membros.
+   - `src/commands/admin/aprovar.js`: Liberação de membros após confirmação de pagamento.
+   - `src/commands/admin/membros.js` & `database/membros-club.json`: Banco de dados local de membros VIP ativos.
+3. 📚 **Entrega de Infoprodutos e Comandos Customizados:**
+   - `planos.js`: Tabela comercial interativa com planos e benefícios.
+   - `vip.js`: Apresentação das vantagens exclusivas para assinantes.
+   - `ebooks.js`: Envio automatizado de links e materiais digitais educativos.
+   - `regras.js`: Diretrizes e termos de uso do grupo VIP.
+4. 🔗 **Integração com Davi Bot (FastAPI):**
+   - Comunicação via API e Webhooks para despacho de notificações de cortes virais produzidos pelo Davi Bot.
+
+---
+
+# 🤖 Takeshi Bot Original Base
 
 ![Takeshi Bot](./assets/images/takeshi-bot.png)
 
