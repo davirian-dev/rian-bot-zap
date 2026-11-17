@@ -56,6 +56,7 @@ export function registrarAtividadeMensagem(webMessage) {
 
     const atividade = lerAtividadeMembros();
     const hoje = new Date();
+    const diaKey = hoje.toISOString().split("T")[0]; // YYYY-MM-DD
     const semanaKey = `${hoje.getFullYear()}-W${getWeekNumber(hoje)}`;
     const mesKey = `${hoje.getFullYear()}-${hoje.getMonth() + 1}`;
 
@@ -64,9 +65,11 @@ export function registrarAtividadeMensagem(webMessage) {
         fone: fone,
         nome: webMessage.pushName || `Membro (${fone.slice(-4)})`,
         totalMensagens: 0,
+        mensagensDia: 0,
         mensagensSemana: 0,
         mensagensMes: 0,
         ultimaMensagem: hoje.toISOString(),
+        diaAtual: diaKey,
         semanaAtual: semanaKey,
         mesAtual: mesKey,
         statusClassificado: "observador"
@@ -75,7 +78,11 @@ export function registrarAtividadeMensagem(webMessage) {
 
     const reg = atividade[fone];
 
-    // Reinicia contadores caso tenha mudado de semana ou mês
+    // Reinicia contadores caso tenha mudado de dia, semana ou mês
+    if (reg.diaAtual !== diaKey) {
+      reg.diaAtual = diaKey;
+      reg.mensagensDia = 0;
+    }
     if (reg.semanaAtual !== semanaKey) {
       reg.semanaAtual = semanaKey;
       reg.mensagensSemana = 0;
@@ -86,15 +93,16 @@ export function registrarAtividadeMensagem(webMessage) {
     }
 
     reg.totalMensagens += 1;
+    reg.mensagensDia += 1;
     reg.mensagensSemana += 1;
     reg.mensagensMes += 1;
     reg.ultimaMensagem = hoje.toISOString();
     if (webMessage.pushName) reg.nome = webMessage.pushName;
 
     // Regra de Classificação:
-    // Se mandou 3 ou mais mensagens na semana, é considerado ATIVO PARTICIPATIVO!
-    // Se mandou menos, permanece classificado como OBSERVADOR.
-    if (reg.mensagensSemana >= 2) {
+    // Se mandou 1+ mensagem hoje ou 2+ na semana: ATIVO PARTICIPATIVO!
+    // Se mandou menos, é classificado como OBSERVADOR.
+    if (reg.mensagensDia >= 1 || reg.mensagensSemana >= 2) {
       reg.statusClassificado = "ativo";
     } else {
       reg.statusClassificado = "observador";
@@ -107,6 +115,7 @@ export function registrarAtividadeMensagem(webMessage) {
     const idx = contatos.findIndex(c => c.fone === fone);
     if (idx !== -1) {
       contatos[idx].statusModo = reg.statusClassificado;
+      contatos[idx].mensagensDia = reg.mensagensDia;
       contatos[idx].mensagensSemana = reg.mensagensSemana;
       contatos[idx].mensagensMes = reg.mensagensMes;
       salvarContatosGrupos(contatos);

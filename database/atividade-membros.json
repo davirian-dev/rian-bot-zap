@@ -2,12 +2,23 @@
   "160602467102822": {
     "fone": "160602467102822",
     "nome": "Casalzaumofc",
-    "totalMensagens": 1,
-    "mensagensSemana": 1,
-    "mensagensMes": 1,
-    "ultimaMensagem": "2026-11-17T13:13:58.638Z",
+    "totalMensagens": 2,
+    "mensagensSemana": 2,
+    "mensagensMes": 2,
+    "ultimaMensagem": "2026-11-17T13:27:14.631Z",
     "semanaAtual": "2026-W47",
     "mesAtual": "2026-11",
-    "statusClassificado": "observador"
+    "statusClassificado": "ativo"
+  },
+  "69128186527844": {
+    "fone": "69128186527844",
+    "nome": "Membro (7844)",
+    "totalMensagens": 5,
+    "mensagensSemana": 5,
+    "mensagensMes": 5,
+    "ultimaMensagem": "2026-11-17T14:11:50.520Z",
+    "semanaAtual": "2026-W47",
+    "mesAtual": "2026-11",
+    "statusClassificado": "ativo"
   }
 }

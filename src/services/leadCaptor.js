@@ -74,11 +74,12 @@ function parseTriagemMessage(text) {
 
   const nome = getField(/(?:Nome \/ Identificação|Nome|Identificação):?\*?\s*([^\n\r*]+)/i) || "Candidato";
   let perfil = getField(/Perfil:\*?\s*([^\n\r*]+)/i) || "Casal Liberal";
+  const quemEntra = getField(/(?:Quem vai entrar nos grupos|Participação nos grupos):?\*?\s*([^\n\r*]+)/i) || "📱 Ambos no mesmo número de WhatsApp";
   const idade = getField(/Idade\(?s?\)?:\*?\s*([^\n\r*]+)/i) || "Não informada";
   const cidade = getField(/Cidade\/Estado:\*?\s*([^\n\r*]+)/i) || "Salvador";
   const experiencia = getField(/Experiência:\*?\s*([^\n\r*]+)/i) || "Iniciante";
-  const referencia = getField(/Perfil de Referência[^:]*:\*?\s*([^\n\r*]+)/i) || "Não informado";
-  const objetivo = getField(/Objetivo Principal:\*?\s*([^\n\r*]+)/i) || "Encontros e conexões liberais";
+  const referencia = getField(/(?:Perfil de Referência|Link do Perfil de Criador|Link Criador)[^:]*:\*?\s*([^\n\r*]+)/i) || "Não informado";
+  const objetivo = getField(/Objetivo Principal|Objetivo:\*?\s*([^\n\r*]+)/i) || "Encontros e conexões liberais";
   const vendeConteudo = getField(/Produz\/Vende Conteúdo:\*?\s*([^\n\r*]+)/i) || "Não";
   const collab = getField(/Interesse em Collab:\*?\s*([^\n\r*]+)/i) || "Não";
   const festas = getField(/Interesse em Festas:\*?\s*([^\n\r*]+)/i) || "Não";
@@ -86,9 +87,17 @@ function parseTriagemMessage(text) {
   const regraPv = getField(/Regra do (?:seu )?PV:\*?\s*([^\n\r*]+)/i) || "🔒 PV com Permissão";
   const grupoInteresse = getField(/Subgrupo de Maior Interesse:\*?\s*([^\n\r*]+)/i) || "Geral";
 
+  const isCriador = 
+    upper.includes("CRIADOR +18") ||
+    upper.includes("CRIADOR DE CONTEÚDO") ||
+    upper.includes("ISENÇÃO ESPECIAL DE CRIADOR") ||
+    upper.includes("PARCERIA CRIADOR");
+
   // Normalização do Perfil
   const pLower = perfil.toLowerCase();
-  if (pLower.includes("casal")) {
+  if (isCriador || pLower.includes("criador")) {
+    perfil = "Homem Solteiro (Criador +18)";
+  } else if (pLower.includes("casal")) {
     perfil = "Casal Liberal (Homem e Mulher)";
   } else if (pLower.includes("mulher") || pLower.includes("solteira")) {
     perfil = "Mulher Solteira";
@@ -120,7 +129,19 @@ export function capturarLead(remoteJid, text) {
     const agora = new Date();
     const dataFormatada = `${agora.toLocaleDateString("pt-BR")} ${agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
 
-    const isSolteiro = parsed.perfil.includes("Homem") || parsed.perfil.includes("Solteiro");
+    const isCriador = parsed.perfil.includes("Criador");
+    const isSolteiroComum = (parsed.perfil.includes("Homem") || parsed.perfil.includes("Solteiro")) && !isCriador;
+
+    let valorLead = "Isento (Grátis)";
+    let statusLead = "Aguardando Foto 👍 ou Áudio";
+
+    if (isCriador) {
+      valorLead = "Isento (Parceria Criador +18)";
+      statusLead = "Aguardando Comprovação de Criador (Print / Link)";
+    } else if (isSolteiroComum) {
+      valorLead = "R$ 97,00 (Passe Semestral)";
+      statusLead = "Aguardando Pagamento";
+    }
 
     const novoRegistro = {
       id: "t-" + Date.now(),
@@ -128,6 +149,7 @@ export function capturarLead(remoteJid, text) {
       nome: parsed.nome,
       fone: phoneOnly,
       perfil: parsed.perfil,
+      quemEntra: parsed.quemEntra,
       cidade: parsed.cidade,
       idade: parsed.idade,
       experiencia: parsed.experiencia,
@@ -139,9 +161,9 @@ export function capturarLead(remoteJid, text) {
       festas: parsed.festas,
       compraConteudo: parsed.compraConteudo,
       regraPv: parsed.regraPv,
-      valor: isSolteiro ? "R$ 97,00 (Passe Semestral)" : "Isento (Grátis)",
-      status: isSolteiro ? "Aguardando Pagamento" : "Aguardando Foto 👍 ou Áudio",
-      origem: "Site / Triagem Oficial"
+      valor: valorLead,
+      status: statusLead,
+      origem: isCriador ? "Site / Solicitação Criador" : "Site / Triagem Oficial"
     };
 
     // Remove registro anterior com mesmo telefone se houver, para manter atualizado

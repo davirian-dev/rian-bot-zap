@@ -1,5 +1,17 @@
 [
   {
+    "id": "grp-98269371834581-1794922034785",
+    "fone": "98269371834581",
+    "jid": "98269371834581@lid",
+    "nome": "Membro Portaria (4581)",
+    "grupoId": "120363414834940835@g.us",
+    "grupoNome": "​Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "17/11/2026 10:27",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
     "id": "grp-camila-01",
     "fone": "5571990000000",
     "jid": "camila@s.whatsapp.net",
@@ -21,7 +33,10 @@
     "isAdmin": true,
     "dataRegistro": "17/11/2026 09:55",
     "status": "No Grupo",
-    "perfil": "Membro do Grupo"
+    "perfil": "Membro do Grupo",
+    "statusModo": "ativo",
+    "mensagensSemana": 5,
+    "mensagensMes": 5
   },
   {
     "id": "grp-160602467102822-1794920115499",
@@ -34,9 +49,9 @@
     "dataRegistro": "17/11/2026 09:55",
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
-    "statusModo": "observador",
-    "mensagensSemana": 1,
-    "mensagensMes": 1
+    "statusModo": "ativo",
+    "mensagensSemana": 2,
+    "mensagensMes": 2
   },
   {
     "id": "grp-69128186527844-1794920115499",
@@ -309,7 +324,7 @@
     "nome": "Membro (2822)",
     "grupoId": "120363411572682861@g.us",
     "grupoNome": "🥳 Festas & Eventos | Club Casalzaum",
-    "isAdmin": false,
+    "isAdmin": true,
     "dataRegistro": "17/11/2026 09:55",
     "status": "No Grupo",
     "perfil": "Membro do Grupo"
@@ -522,7 +537,7 @@
     "id": "grp-98269371834581-1794920115501",
     "fone": "98269371834581",
     "jid": "98269371834581@lid",
-    "nome": "Membro (4581)",
+    "nome": "Membro Portaria (4581)",
     "grupoId": "120363430157797204@g.us",
     "grupoNome": "🔑 Portaria | Club Casalzaum",
     "isAdmin": false,
