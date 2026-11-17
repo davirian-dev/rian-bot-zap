@@ -78,17 +78,34 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           webMessage?.message?.videoMessage?.caption || "";
         const trimmed = rawText.trim();
 
-        // 1. SE A MENSAGEM FOI ENVIADA POR VOCÊ (fromMe = true):
-        // Pausa o chatbot para este contato específico por 30 minutos para você conversar sem interferência
-        if (webMessage?.key?.fromMe) {
-          // Comando manual para reativar o bot no chat se desejar antes dos 30 minutos:
+        // 1. COMANDOS DO TAKESHI BOT COM PREFIXO (! ou /)
+        // FUNCIONAM SEMPRE E INDEPENDENTEMENTE (mesmo se o contato estiver em pausa humana!)
+        if (trimmed && (trimmed.startsWith("!") || trimmed.startsWith("/"))) {
           if (trimmed === "!bot on" || trimmed === "/bot on" || trimmed === "!ativar") {
             humanPauseMap.delete(remoteJid);
-            infoLog(`[Atendimento Humano] Chatbot reativado manualmente por você para ${remoteJid}.`);
+            infoLog(`[Atendimento Humano] Chatbot reativado manualmente para ${remoteJid}.`);
+            await socket.sendMessage(remoteJid, { text: "✅ Chatbot reativado com sucesso para este contato!" });
+            continue;
+          }
+          if (trimmed === "!bot off" || trimmed === "/bot off" || trimmed === "!pausar") {
+            humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
+            infoLog(`[Atendimento Humano] Chatbot pausado manualmente para ${remoteJid} por 30 minutos.`);
+            await socket.sendMessage(remoteJid, { text: "⏸️ Chatbot pausado por 30 minutos para este contato." });
             continue;
           }
 
-          // Cancela qualquer resposta automática que o bot estivesse prestes a enviar para este contato
+          infoLog(`[TakeshiBot PV] Executando comando com prefixo de ${remoteJid}: "${trimmed}"`);
+          const commonFunctions = loadCommonFunctions({ socket, webMessage });
+          if (commonFunctions) {
+            await dynamicCommand(commonFunctions, startProcess);
+            continue;
+          }
+        }
+
+        // 2. SE A MENSAGEM FOI ENVIADA POR VOCÊ (fromMe = true):
+        // Pausa o chatbot para este contato específico por 30 minutos para você conversar sem interferência
+        if (webMessage?.key?.fromMe) {
+          // Cancela qualquer resposta de IA pendente para este contato
           if (userDebounceMap.has(remoteJid)) {
             const state = userDebounceMap.get(remoteJid);
             if (state.timer) clearTimeout(state.timer);
@@ -102,31 +119,22 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           continue;
         }
 
-        // 2. SE ESTE CONTATO ESPECÍFICO ESTIVER EM ATENDIMENTO HUMANO (PAUSADO):
+        // 3. SE ESTE CONTATO ESPECÍFICO ESTIVER EM ATENDIMENTO HUMANO (PAUSADO):
         const pauseUntil = humanPauseMap.get(remoteJid);
         if (pauseUntil) {
           if (Date.now() < pauseUntil) {
             const minutosRestantes = Math.ceil((pauseUntil - Date.now()) / (60 * 1000));
-            infoLog(`[Atendimento Humano] ${remoteJid} enviou mensagem, mas o chatbot está em silêncio (em atendimento humano por mais ${minutosRestantes} min).`);
-            continue; // O bot NÃO interfere!
+            infoLog(`[Atendimento Humano] ${remoteJid} enviou mensagem normal, mas o chatbot de IA está em silêncio (em atendimento humano por mais ${minutosRestantes} min).`);
+            continue; // O bot NÃO interfere na conversa normal!
           } else {
             humanPauseMap.delete(remoteJid);
             infoLog(`[Atendimento Humano] Período de 30 minutos encerrado para ${remoteJid}. Chatbot reativado.`);
           }
         }
 
+        // 4. MENSAGEM DE CONVERSA COMUM (PROCESSADA PELA IA DAVI & MARI)
         if (trimmed) {
-          // SE FOR COMANDO TRADICIONAL DO TAKESHI BOT (ex: !menu, /menu, !pix69, !regras, etc.)
-          if (trimmed.startsWith("!") || trimmed.startsWith("/")) {
-            infoLog(`[WhatsApp PV] Executando comando de ${remoteJid}: "${trimmed}"`);
-            const commonFunctions = loadCommonFunctions({ socket, webMessage });
-            if (commonFunctions) {
-              await dynamicCommand(commonFunctions, startProcess);
-              continue;
-            }
-          }
-
-          infoLog(`[WhatsApp PV] Mensagem recebida de ${remoteJid}: "${trimmed}"`);
+          infoLog(`[Chatbot IA PV] Mensagem recebida de ${remoteJid}: "${trimmed}"`);
 
           // Mostra presença digitando (composing)
           try {
