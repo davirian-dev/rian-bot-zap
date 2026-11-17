@@ -67,6 +67,42 @@ function clearScreenWithBanner() {
   bannerLog();
 }
 
+let activeSocket = null;
+let watchdogInterval = null;
+let isReconnecting = false;
+
+async function triggerSafeReconnect() {
+  if (isReconnecting) return;
+  isReconnecting = true;
+  warningLog("[Watchdog 24/7] Reiniciando conexão com WhatsApp de forma limpa...");
+
+  if (watchdogInterval) {
+    clearInterval(watchdogInterval);
+    watchdogInterval = null;
+  }
+
+  try {
+    if (activeSocket) {
+      try {
+        activeSocket.end(new Error("Watchdog reconnect"));
+      } catch (_) {}
+    }
+  } catch (_) {}
+
+  await delay(2000);
+
+  try {
+    const newSocket = await connect();
+    load(newSocket);
+    infoLog("[Watchdog 24/7] Conexão restabelecida com sucesso!");
+  } catch (err) {
+    errorLog(`[Watchdog 24/7] Erro ao restabelecer conexão: ${err.message}. Tentando novamente em 4s...`);
+    setTimeout(triggerSafeReconnect, 4000);
+  } finally {
+    isReconnecting = false;
+  }
+}
+
 export async function connect() {
   const baileysFolder = path.resolve(
     __dirname,
@@ -88,8 +124,8 @@ export async function connect() {
     auth: state,
     shouldIgnoreJid: (jid) =>
       isJidBroadcast(jid) || isJidStatusBroadcast(jid) || isJidNewsletter(jid),
-    connectTimeoutMs: 20_000,
-    keepAliveIntervalMs: 30_000,
+    connectTimeoutMs: 30_000,
+    keepAliveIntervalMs: 25_000,
     maxMsgRetryCount: 5,
     markOnlineOnConnect: true,
     syncFullHistory: false,
@@ -97,6 +133,24 @@ export async function connect() {
     msgRetryCounterCache,
     shouldSyncHistoryMessage: () => false,
   });
+
+  activeSocket = socket;
+
+  // Inicia o Watchdog 24/7 para verificar a saúde do WebSocket a cada 30 segundos
+  if (watchdogInterval) clearInterval(watchdogInterval);
+  watchdogInterval = setInterval(() => {
+    try {
+      if (socket && socket.ws) {
+        // readyState: 0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED
+        if (socket.ws.readyState !== 1 && socket.ws.readyState !== 0) {
+          warningLog(`[Watchdog 24/7] WebSocket fora do ar (readyState: ${socket.ws.readyState}). Disparando reconexão...`);
+          triggerSafeReconnect();
+        }
+      }
+    } catch (e) {
+      warningLog(`[Watchdog 24/7] Falha na checagem de socket: ${e.message}`);
+    }
+  }, 30_000);
 
   if (!socket.authState.creds.registered) {
     clearScreenWithBanner();
@@ -141,15 +195,14 @@ export async function connect() {
             badMacHandler.clearProblematicSessionFiles();
             badMacHandler.resetErrorCount();
 
-            const newSocket = await connect();
-            load(newSocket);
+            await triggerSafeReconnect();
             return;
           }
         }
       }
 
       if (statusCode === DisconnectReason.loggedOut) {
-        errorLog("Bot desconectado!");
+        errorLog("Bot desconectado! Por favor, faça login novamente.");
       } else {
         switch (statusCode) {
           case DisconnectReason.badSession:
@@ -182,15 +235,14 @@ export async function connect() {
             warningLog("Conexão proibida!");
             break;
           case DisconnectReason.restartRequired:
-            infoLog('Me reinicie por favor! Digite "npm start".');
+            infoLog('Reiniciando conexão necessária...');
             break;
           case DisconnectReason.unavailableService:
             warningLog("Serviço indisponível!");
             break;
         }
 
-        const newSocket = await connect();
-        load(newSocket);
+        await triggerSafeReconnect();
       }
     } else if (connection === "open") {
       clearScreenWithBanner();
