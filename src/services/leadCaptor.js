@@ -18,7 +18,7 @@ const PAINEL_DB_PATH = path.resolve(__dirname, "../../../club-casalzaum/painel/d
 /**
  * Lê a lista atual de triagens
  */
-function lerTriagens() {
+export function lerTriagens() {
   try {
     if (fs.existsSync(BOT_DB_PATH)) {
       const data = fs.readFileSync(BOT_DB_PATH, "utf-8");
@@ -31,7 +31,7 @@ function lerTriagens() {
 /**
  * Salva a lista de triagens no banco do bot e sincroniza com o Painel Web
  */
-function salvarTriagens(triagens) {
+export function salvarTriagens(triagens) {
   try {
     const jsonStr = JSON.stringify(triagens, null, 2);
     fs.writeFileSync(BOT_DB_PATH, jsonStr, "utf-8");
@@ -47,45 +47,71 @@ function salvarTriagens(triagens) {
 }
 
 /**
+ * Obtém lead cadastrado pelo número de telefone
+ */
+export function obterLeadPorTelefone(remoteJid) {
+  if (!remoteJid) return null;
+  const phoneOnly = remoteJid.replace(/[^0-9]/g, "");
+  const triagens = lerTriagens();
+  return triagens.find(t => t.fone === phoneOnly) || null;
+}
+
+/**
  * Extrai campos de uma mensagem de triagem oficial
  */
 function parseTriagemMessage(text) {
-  if (!text.includes("TRIAGEM OFICIAL") && !text.includes("Nome / Identificação")) {
+  if (!text) return null;
+
+  const upper = text.toUpperCase();
+  if (!upper.includes("TRIAGEM OFICIAL") && !upper.includes("NOME / IDENTIFICAÇÃO")) {
     return null;
   }
 
   const getField = (pattern) => {
     const match = text.match(pattern);
-    return match ? match[1].trim() : "";
+    return match ? match[1].trim().replace(/^[*_~`]+|[*_~`]+$/g, "") : "";
   };
 
-  const nome = getField(/Nome \/ Identificação:\*?\s*([^\n\r*]+)/i) || "Candidato";
+  const nome = getField(/(?:Nome \/ Identificação|Nome|Identificação):?\*?\s*([^\n\r*]+)/i) || "Candidato";
   let perfil = getField(/Perfil:\*?\s*([^\n\r*]+)/i) || "Casal Liberal";
   const idade = getField(/Idade\(?s?\)?:\*?\s*([^\n\r*]+)/i) || "Não informada";
   const cidade = getField(/Cidade\/Estado:\*?\s*([^\n\r*]+)/i) || "Salvador";
   const experiencia = getField(/Experiência:\*?\s*([^\n\r*]+)/i) || "Iniciante";
   const referencia = getField(/Perfil de Referência[^:]*:\*?\s*([^\n\r*]+)/i) || "Não informado";
+  const objetivo = getField(/Objetivo Principal:\*?\s*([^\n\r*]+)/i) || "Encontros e conexões liberais";
+  const vendeConteudo = getField(/Produz\/Vende Conteúdo:\*?\s*([^\n\r*]+)/i) || "Não";
+  const collab = getField(/Interesse em Collab:\*?\s*([^\n\r*]+)/i) || "Não";
+  const festas = getField(/Interesse em Festas:\*?\s*([^\n\r*]+)/i) || "Não";
+  const compraConteudo = getField(/Comprador de Conteúdo:\*?\s*([^\n\r*]+)/i) || "Não";
+  const regraPv = getField(/Regra do (?:seu )?PV:\*?\s*([^\n\r*]+)/i) || "🔒 PV com Permissão";
+  const grupoInteresse = getField(/Subgrupo de Maior Interesse:\*?\s*([^\n\r*]+)/i) || "Geral";
 
   // Normalização do Perfil
   const pLower = perfil.toLowerCase();
   if (pLower.includes("casal")) {
-    perfil = "Casal Liberal";
+    perfil = "Casal Liberal (Homem e Mulher)";
   } else if (pLower.includes("mulher") || pLower.includes("solteira")) {
     perfil = "Mulher Solteira";
   } else if (pLower.includes("homem") || pLower.includes("solteiro")) {
     perfil = "Homem Solteiro";
   }
 
-  return { nome, perfil, idade, cidade, experiencia, referencia };
+  return { nome, perfil, idade, cidade, experiencia, referencia, objetivo, grupoInteresse, vendeConteudo, collab, festas, compraConteudo, regraPv };
 }
 
 /**
  * Analisa e registra mensagem recebida no painel
  */
 export function capturarLead(remoteJid, text) {
-  if (!remoteJid || !text) return;
+  if (!remoteJid || !text) return null;
 
   const phoneOnly = remoteJid.replace(/[^0-9]/g, "");
+
+  // Ignora IDs internos LID que não são números de telefone reais
+  if (!phoneOnly.startsWith("55") || phoneOnly.length < 11 || phoneOnly.length > 13) {
+    return null;
+  }
+
   const triagens = lerTriagens();
 
   // 1. Mensagem de Triagem Oficial Estruturada
@@ -93,6 +119,8 @@ export function capturarLead(remoteJid, text) {
   if (parsed) {
     const agora = new Date();
     const dataFormatada = `${agora.toLocaleDateString("pt-BR")} ${agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
+
+    const isSolteiro = parsed.perfil.includes("Homem") || parsed.perfil.includes("Solteiro");
 
     const novoRegistro = {
       id: "t-" + Date.now(),
@@ -104,8 +132,15 @@ export function capturarLead(remoteJid, text) {
       idade: parsed.idade,
       experiencia: parsed.experiencia,
       referencia: parsed.referencia,
-      valor: parsed.perfil.includes("Casal") || parsed.perfil.includes("Mulher") ? "Isento (Grátis)" : "Passe a definir",
-      status: "Aguardando Foto 👍 ou Áudio",
+      objetivo: parsed.objetivo,
+      grupoInteresse: parsed.grupoInteresse,
+      vendeConteudo: parsed.vendeConteudo,
+      collab: parsed.collab,
+      festas: parsed.festas,
+      compraConteudo: parsed.compraConteudo,
+      regraPv: parsed.regraPv,
+      valor: isSolteiro ? "R$ 97,00 (Passe Semestral)" : "Isento (Grátis)",
+      status: isSolteiro ? "Aguardando Pagamento" : "Aguardando Foto 👍 ou Áudio",
       origem: "Site / Triagem Oficial"
     };
 
@@ -115,7 +150,7 @@ export function capturarLead(remoteJid, text) {
     salvarTriagens(filtered);
 
     infoLog(`[LeadCaptor] ✅ Nova triagem salva no Painel: ${parsed.nome} (${parsed.perfil} - ${parsed.cidade})`);
-    return;
+    return novoRegistro;
   }
 
   // 2. Se o cliente falar "Casal" ou "Solteira" durante a conversa
@@ -133,7 +168,8 @@ export function capturarLead(remoteJid, text) {
       const agora = new Date();
       const dataFormatada = `${agora.toLocaleDateString("pt-BR")} ${agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
 
-      triagens.unshift({
+      const isSolt = perfilDetectado === "Homem Solteiro";
+      const novoLead = {
         id: "t-" + Date.now(),
         data: dataFormatada,
         nome: `Cliente (${phoneOnly.slice(-4)})`,
@@ -143,12 +179,17 @@ export function capturarLead(remoteJid, text) {
         idade: "Não informada",
         experiencia: "Conversa no WhatsApp",
         referencia: "WhatsApp",
-        valor: perfilDetectado.includes("Casal") || perfilDetectado.includes("Mulher") ? "Isento (Grátis)" : "Adesão Solteiro",
-        status: "Em Atendimento",
+        valor: isSolt ? "R$ 97,00 (Passe Semestral)" : "Isento (Grátis)",
+        status: isSolt ? "Aguardando Pagamento" : "Em Atendimento",
         origem: "WhatsApp PV"
-      });
+      };
+      triagens.unshift(novoLead);
       salvarTriagens(triagens);
       infoLog(`[LeadCaptor] Lead identificado e salvo no Painel: ${phoneOnly} (${perfilDetectado})`);
+      return novoLead;
     }
+    return existe;
   }
+
+  return null;
 }

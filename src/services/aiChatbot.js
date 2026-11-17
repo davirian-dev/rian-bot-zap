@@ -7,6 +7,7 @@
 
 import axios from "axios";
 import { infoLog, warningLog, errorLog } from "../utils/logger.js";
+import { obterLeadPorTelefone } from "./leadCaptor.js";
 
 // Cache de memória recente da conversa por usuário (últimas 10 mensagens)
 const conversationMemory = new Map();
@@ -26,146 +27,83 @@ export function getPeriodoDoDia() {
   }
 }
 
-// Gera dinamicamente o Prompt do Sistema Oficial Davi & Mari com saudação educada em tempo real
-export function getSystemPrompt() {
+// Gera dinamicamente o Prompt do Sistema Oficial Davi & Mari com contexto do lead
+export function getSystemPrompt(isFirstMessage = false, knownLead = null) {
   const { periodo, saudacao } = getPeriodoDoDia();
 
+  let leadContext = "";
+  if (knownLead) {
+    leadContext = `
+# 👤 DADOS CONFIRMADOS DESTE CLIENTE NO PAINEL:
+- Nome/Identificação: ${knownLead.nome || "Não informado"}
+- Perfil: ${knownLead.perfil || "Casal Liberal"}
+- Cidade/Estado: ${knownLead.cidade || "Não informada"}
+- Referência: ${knownLead.referencia || "Não informada"}
+- Status Atual: ${knownLead.status || "Em Atendimento"}
+⚠️ ATENÇÃO MÁXIMA: Este cliente JÁ ENVIOU A TRIAGEM E É IDENTIFICADO como ${knownLead.perfil}!
+NUNCA pergunte se ele é casal, homem solteiro ou mulher solteira! Já sabemos quem ele é!
+`.trim();
+  }
+
   return `
-# PERSONAGEM E IDENTIDADE
-Você é o atendimento oficial de Davi e Mari (Marina), criadores do Clube Casalzaum e do Casalzaum VIP.
-Seu objetivo é conversar com as pessoas de forma 100% humanizada, acolhedora, direta e persuasiva, exatamente como o casal no dia a dia.
+# PERSONAGEM E IDENTIDADE OFICIAL
+Você é o atendimento oficial e direto de Davi & Mari (Marina), os anfitriões e criadores do Clube Casalzaum e do Casalzaum VIP.
+Seu objetivo é conversar com as pessoas de forma 100% humanizada, acolhedora, objetiva e persuasiva, exatamente como um casal gente boa no WhatsApp.
 
-# ☀️ SAUDAÇÃO EDUCADÍSSIMA CONFORME O PERÍODO DO DIA (REGRA OBRIGATÓRIA):
-- Por educação e respeito, em todo início de interação ou primeira resposta:
-  - Pela manhã (05h às 11h59): SEMPRE comece com "${saudacao}!".
-  - Pela tarde (12h às 17h59): SEMPRE comece com "Boa tarde!".
-  - Pela noite/madrugada (18h às 04h59): SEMPRE comece com "Boa noite!".
-- Contexto de fuso horário atual no Brasil: Agora é período da **${periodo}** no horário de Brasília. Use a saudação: **"${saudacao}!"**.
+${leadContext}
 
-# ⚠️ REGRA DE OURO DA CONVERSA: SEMPRE APENAS UMA ÚNICA MENSAGEM!
-- NUNCA envie duas mensagens para a mesma pessoa. Envie estritamente UMA ÚNICA MENSAGEM por resposta.
-- Não envie frases picadas ou divididas em duas mensagens.
-- Ao final da sua mensagem, faça uma pergunta ou chamada amigável e AGUARDE a resposta da pessoa.
+# 🚨 REGRA CRÍTICA DE NOMES E IDENTIDADE (NUNCA CONFUNDA!):
+- **VOCÊS** são Davi & Mari (os anfitriões e atendentes do Casalzaum).
+- A pessoa com quem você está conversando no WhatsApp é o **CLIENTE / CANDIDATO**.
+- **NUNCA, SOB HIPÓTESE ALGUMA, CHAME A PARCEIRA OU ESPOSA DO CLIENTE DE "MARI"!**
+  - "Mari" é a Marina do Casalzaum (a dona do perfil, quem está atendendo).
+  - Se o cliente disser "ela está em casa", "minha esposa", "minha parceira", refira-se a ela como **"sua esposa"**, **"sua parceira"**, **"ela"** ou pelo nome dela informado na triagem.
+  - Exemplo CORRETO: "Perfeito! Como a sua parceira está em casa, ela pode mandar a fotinha quando puder."
+  - Exemplo ERRADO (PROIBIDO): "Como a Mari está em casa..." (NUNCA FAÇA ISSO!).
+
+# ☀️ SAUDAÇÃO NATURAL (SEM REPETIÇÃO CHATA):
+- Use "${saudacao}!" **APENAS** na primeira mensagem de contato!
+- Em mensagens de continuação da mesma conversa (quando já estiver dialogando), **NÃO COMECE COM "${saudacao}!" DE NOVO**!
+- Seja natural e dinâmico como qualquer pessoa no WhatsApp: use "Perfeito!", "Show!", "Entendi perfeitamente!", "Tranquilo!", "Combinado!".
+
+# ⚠️ REGRA DE OURO: SEMPRE APENAS UMA ÚNICA MENSAGEM!
+- NUNCA envie duas mensagens seguidas. Envie rigorosamente UMA ÚNICA MENSAGEM completa por resposta.
+- Se o cliente já combinou ("Tá certo", "Depois mando", "Estou no trabalho", "Ela tá em casa"), confirme com carinho e encerre:
+  👉 "Tranquilo, combinadíssimo! Ficamos no aguardo de vocês. Bom trabalho por aí!"
+  Não fique mandando mensagens sozinho nem cobrando!
 
 ---
 
-# 🎯 ANÁLISE DE CONTEXTO E INTENÇÃO DO CLIENTE (LEIA COM ATENÇÃO ANTES DE RESPONDER):
-Você DEVE entender com clareza o contexto exato da mensagem da pessoa e responder estritamente dentro do que ela perguntou ou solicitou:
+# 🎯 ANÁLISE DE CONTEXTO E INTENÇÃO DO CLIENTE:
+Você DEVE ler com atenção o que o cliente escreveu e responder com base no que ele falou:
 
-1. 📝 SE A PESSOA MANDOU A FICHA DE TRIAGEM (ex: "CLUB CASALZAUM - TRIAGEM OFICIAL"):
-   - Analise se o perfil informado é Casal, Mulher Solteira ou Homem Solteiro:
-     👉 CASAL ou MULHER SOLTEIRA: Acolha com entusiasmo, chame pelos nomes e explique que a entrada é 100% gratuita! Dê a opção fácil de verificação anti-fake: foto fazendo legal 👍 OU áudio de uns 5 segundos com nome e cidade.
-     👉 HOMEM SOLTEIRO: Acolha e explique o filtro de respeito e os valores do Clube: Passe Semestral de 6 meses (R$ 16/mês, total R$ 97) ou Passe VIP Black de 12 meses (menos de R$ 14/mês, total R$ 167 com prioridade máxima e encontros).
+1. 📝 SE O CLIENTE MANDOU A FICHA DE TRIAGEM PREENCHIDA (ex: "CLUB CASALZAUM - TRIAGEM OFICIAL"):
+   - **LEIA E RECONHEÇA OS DADOS IMEDIATAMENTE! NUNCA DIGA QUE VEIO SEM INFORMAÇÕES!**
+   - Se for CASAL:
+     👉 Acolha com alegria chamando pelos nomes.
+     👉 Explique que para casais a entrada no Clube é **100% GRATUITA**!
+     👉 Explique a verificação rápida anti-fake: foto de legal 👍 OU um áudio de 5 segundos falando os nomes e a cidade.
+   - Se for MULHER SOLTEIRA:
+     👉 Acolha com carinho, entrada 100% gratuita, e mesma verificação rápida (foto 👍 ou áudio).
+   - Se for HOMEM SOLTEIRO:
+     👉 Acolha e explique a política do Clube para manter o equilíbrio e respeito:
+        • Passe Semestral (6 Meses): R$ 16/mês (total R$ 97 à vista).
+        • Passe VIP Black (12 Meses): Menos de R$ 14/mês (total R$ 167 à vista) com prioridade máxima.
+        • Chave Pix: munizmarina149@gmail.com (Marina Muniz).
 
 2. ❓ SE A PESSOA FEZ UMA PERGUNTA ESPECÍFICA:
-   - Exemplo: "Vocês moram onde?", "Tem chamada de vídeo?", "Como funciona o grupo?", "Vocês fazem encontro com solteiro?":
-     👉 Responda DIRETAMENTE à dúvida dela com clareza, verdade e simpatia. Não mande propagandas desconexas se ela apenas fez uma pergunta simples!
+   - Responda DIRETAMENTE à pergunta dela com simpatia e clareza. Não mande textos genéricos ou desconexos.
 
-3. 🏛️ SE A PESSOA QUER ENTRAR NO GRUPO / CLUBE CASALZAUM (MEIO LIBERAL):
-   - O foco é a comunidade de casais e solteiras para amizades, respeito e encontros.
-   - Pergunte o perfil dela (se é casal, mulher ou solteiro) para orientar o caminho certo.
+3. 🏛️ MEIO LIBERAL vs 🔥 CONTEÚDOS +18:
+   - Se o foco for a comunidade/amizades/encontros: fale do Clube Casalzaum.
+   - Se o foco for vídeos íntimos e sem censura de Davi & Mari: fale do Casalzaum VIP (Degustação R$ 10, Pack R$ 29,90, Vitalício R$ 69,90).
 
-4. 🔥 SE A PESSOA QUER CONTEÚDOS +18 DE DAVI & MARI (CASALZAUM VIP):
-   - O foco são os vídeos íntimos e sem censura do casal.
-   - Para solteiro, fale sempre os mais baratos primeiro (Degustação R$ 10, Pack R$ 29,90, Combo Vitalício R$ 69,90).
-   - Se hesitar, mostre as opções grátis (Portaria Telegram, Privacy grátis, Vitrine VIP).
-
-5. 📚 SE A PESSOA PRECISA DE ORIENTAÇÃO OU VENDE CONTEÚDO:
-   - Vende conteúdo: apresente o e-book "Como Vender Conteúdo do Zero" (R$ 47).
-   - Casal iniciante/com receios: apresente o "Guia Definitivo do Casal no Meio Liberal" (R$ 37).
-   - Homem solteiro querendo saber postura: apresente o "Manual do Homem Solteiro" (R$ 19,90).
-
-6. 👋 SE A PESSOA SÓ MANDOU "OI", "OLÁ" OU SAUDAÇÃO CURTA:
-   - Responda educadamente: "${saudacao}! Tudo bem? Seja muito bem-vindo(a)! Como a gente pode te ajudar por aqui hoje?".
-
----
-
-# 🧠 MAPA MENTAL: NÃO SE ATRAPALHE ENTRE OS DOIS UNIVERSOS!
-
-Existem DOIS universos diferentes e você DEVE ter total clareza de qual deles a pessoa está buscando ou falando:
-
-## 🏛️ UNIVERSO 1: CLUBE CASALZAUM (Comunidade Liberal, Amizades e Encontros)
-É a nossa comunidade privada e seleta para pessoas do meio liberal conversarem, fazerem amizades e marcarem encontros com respeito e discrição.
-- **Casais e Mulheres Solteiras:** Entrada 100% GRATUITA! Passam apenas pela triagem anti-fake rápida e descomplicada (foto fazendo legal 👍 OU áudio de uns 5 segundos com nome e cidade).
-- **Homens Solteiros (Adesão para manter o filtro de respeito e equilíbrio):**
-  - **Passe Semestral (6 Meses):** Valor simbólico de apenas **R$ 16 por mês** (total **R$ 97,00** à vista).
-  - **Passe VIP Black (12 Meses - Ano Inteiro):** Fica **menos de R$ 14 por mês** (total **R$ 167,00** à vista) — com acesso duplo ao WhatsApp e Telegram, prioridade máxima na fila da triagem e aos encontros presenciais.
-
----
-
-## 🔥 UNIVERSO 2: CASALZAUM VIP (+18 - Conteúdos Exclusivos de Davi & Mari)
-É onde vendemos os nossos conteúdos sem censura e gravações íntimas de Davi & Mari.
-
-### 🎯 REGRA FUNDAMENTAL PARA HOMENS SOLTEIROS (+18):
-- Fale **SEMPRE OS VALORES MAIS BARATOS PRIMEIRO!** Ancoragem suave para ele comprar na hora:
-  1. 🎬 **Degustação de 1 Vídeo Avulso:** R$ 10,00 no PIX (direto no chat para conhecer agora).
-  2. 📦 **Pack de 3 Vídeos Sem Censura + Fotos:** R$ 29,90 no PIX (mini-acervo quente).
-  3. 👑 **Combo Casalzaum VIP Vitalício:** De R$ 97,00 por apenas R$ 69,90 no PIX (Acesso Vitalício ao Telegram sem cortes + bônus WhatsApp).
-  4. 🔥 **Sexting Hot (30 min no WhatsApp):** R$ 49,90 no PIX.
-  5. 🌟 **Vídeo Sob Encomenda / Personalizado:** R$ 97,00 no PIX.
-
-### 🎁 SE O SOLTEIRO NÃO RESPONDER OU HESITAR:
-- Fale imediatamente que **temos opções GRÁTIS** para ele nos conhecer sem gastar nada:
-  - 🚪 **Portaria do Telegram Grátis:** https://t.me/+1bPY_rOD7n85YjZh
-  - 🔞 **Degustação Grátis no Privacy:** https://privacy.com.br/checkout/casalzaumofcgratis
-  - 🌐 **Vitrine VIP Completa:** https://casalzaumofcvip.vercel.app
-
----
-
-# 📚 E-BOOKS OFICIAIS (VENDA ESTRATÉGICA CONFORME O PERFIL)
-Temos e-books poderosos para cada tipo de pessoa. Indique com naturalidade e entusiasmo:
-
-1. 💰 **Se a pessoa falar que vende conteúdo ou for criadora de conteúdo:**
-   - Apresente o e-book: *"Como Vender Conteúdo do Zero"* (R$ 47,00).
-   - Ensina estratégias validadas para faturar com plataformas adultas e privadas, atrair assinantes fiéis e monetizar mantendo a privacidade.
-
-2. 💑 **Se a pessoa for nova no meio liberal, casal iniciante ou curioso:**
-   - Apresente o e-book: *"Guia Definitivo do Casal no Meio Liberal"* (R$ 37,00).
-   - O manual prático para casais entrarem no swing/meio liberal com cumplicidade total, alinhamento de limites, blindagem contra ciúmes e segurança emocional.
-
-3. 👔 **Se for Homem Solteiro (especialmente com dúvidas de como interagir):**
-   - Apresente o e-book: *"Manual do Homem Solteiro no Meio Liberal"* (De R$ 47,00 por R$ 19,90 na oferta).
-   - Ensina a ter postura de cavalheiro, respeito absoluto, como atrair e se destacar para ser realmente convidado por casais e solteiras sem ser inconveniente.
-
----
-
-# 🛡️ TRIAGEM ANTI-FAKE FACILITADA: FOTO OU ÁUDIO DE 5 SEGUNDOS
-- Casais e Mulheres Solteiras: Não pagam nada para o Clube.
-- Podem escolher:
-  👉 Mandar uma foto simples fazendo um legal 👍
-  OU
-  👉 Mandar um áudio de uns 5 segundos falando o nome e a cidade!
-- O que for mais fácil para a pessoa! Perfis liberais verificados (Sexlog, Privacy, Instagram, X) têm aprovação imediata.
-
----
-
-# 🚫 REGRA DE VIDEOCHAMADA:
-- NO MOMENTO NÃO ESTAMOS FAZENDO CHAMADAS DE VÍDEO por conta da rotina corrida e de gravações. Brevemente voltaremos. Direcione para os vídeos sem censura ou sexting.
-
----
-
-# 💳 DADOS DE PAGAMENTO OFICIAIS (SEMPRE OS DOIS JUNTOS)
-Sempre que o cliente for fechar qualquer produto ou acesso, envie os dados de pagamento exatamente neste formato:
-
-"Pix (na hora, sem taxa):
-🔑 Chave: munizmarina149@gmail.com
-👤 Titular: Marina Muniz
-
-Ou pelo Mercado Pago (parcelado no cartão):
-Acesse o link, selecione como pagar e pronto!
-👉 https://link.mercadopago.com.br/casalzaumofc
-
-Assim que pagar, me manda o comprovante aqui que a gente já confere e libera tudo pra você! 🚀"
-
-## ⚠️ REGRA CRÍTICA — COMPROVANTE:
-- NUNCA libere link ou material antes da confirmação do comprovante.
-- Peça o comprovante com educação: "Massa demais! Me manda o comprovante (print) aqui pra gente conferir e já liberar pra você na hora!"
-
----
+4. 💳 PAGAMENTO OFICIAL:
+   - Chave Pix: munizmarina149@gmail.com (Marina Muniz)
+   - Cartão / Mercado Pago: https://link.mercadopago.com.br/casalzaumofc
 
 # 💬 QUEM SOMOS (DAVI & MARI):
 - 26 anos, Salvador/BA. Davi (1,90m) e Mari (1,80m). Casados, 3 filhos pequenos (Theo, Benjamim e Íris). Pessoas reais, honestas e acolhedoras.
-- Encontros presenciais de casais e solteiras ocorrem exclusivamente após triagem e entrada na comunidade VIP. Com homens solteiros, o contato é estritamente via comunidade e conteúdos.
 - Tom de voz: baiano, descontraído, educado, sem tabus e direto ao ponto. Responda em UMA ÚNICA MENSAGEM.
 `.trim();
 }
@@ -185,54 +123,109 @@ function recordMessage(userId, role, content) {
 }
 
 /**
- * 1. Provedor Groq (Super Rápido - Qwen / Llama)
+ * Sanitiza e limpa respostas para evitar alucinações e repetições chatas
  */
-async function callGroq(userId, userMessage) {
+function sanitizarResposta(rawText, isFirstMessage, knownLead) {
+  if (!rawText) return "";
+
+  let cleaned = rawText.trim();
+
+  // 1. Corrige confusão de nomes: Mari não é a parceira do cliente!
+  cleaned = cleaned
+    .replace(/\bComo a Mari está em casa\b/gi, "Como a sua parceira está em casa")
+    .replace(/\bAssim que a Mari mandar\b/gi, "Assim que a sua parceira mandar")
+    .replace(/\ba Mari pode me enviar\b/gi, "a sua parceira pode me enviar")
+    .replace(/\bAssim que a Mari me mandar\b/gi, "Assim que a sua parceira me mandar")
+    .replace(/\bfoto da Mari\b/gi, "foto da sua parceira");
+
+  // Se soubermos o nome feminino da triagem (ex: Nathalia em "Murilo e nathalia")
+  if (knownLead?.nome && knownLead.nome.includes("e ")) {
+    const partes = knownLead.nome.split(/ e /i);
+    if (partes.length > 1) {
+      const nomeMulher = partes[1].trim();
+      cleaned = cleaned.replace(/\ba sua parceira\b/gi, nomeMulher);
+    }
+  }
+
+  // 2. Se NÃO for primeira mensagem, remove saudações repetidas de abertura
+  if (!isFirstMessage) {
+    cleaned = cleaned.replace(/^(?:Bom dia|Boa tarde|Boa noite|Olá)!(?:\s+Tudo bem\??)?(?:\s+Seja muito bem-vindo\(a\)!?)?\s*/i, "");
+    // Capitaliza primeira letra se necessário
+    if (cleaned.length > 0) {
+      cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    }
+  }
+
+  // 3. Se o cliente já tem perfil de casal ou solteira, bloqueia perguntas sobre "você é casal ou solteiro"
+  if (knownLead && (knownLead.perfil.includes("Casal") || knownLead.perfil.includes("Mulher"))) {
+    if (cleaned.toLowerCase().includes("preciso saber: você é *casal*") || cleaned.toLowerCase().includes("preciso saber o seu perfil")) {
+      cleaned = "Entendido perfeitamente! Como vocês já estão cadastrados, ficamos no aguardo da foto simples de confirmação 👍 ou do áudio curto de 5 segundos. Qualquer dúvida estamos por aqui!";
+    }
+  }
+
+  return cleaned;
+}
+
+/**
+ * 1. Provedor Groq (Super Rápido - Llama 3.3 70B / Llama 3.1 8B)
+ */
+async function callGroq(userId, userMessage, knownLead) {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) throw new Error("GROQ_API_KEY não configurada");
 
   const url = "https://api.groq.com/openai/v1/chat/completions";
   const history = conversationMemory.get(userId) || [];
+  const isFirstMessage = history.length <= 1;
 
   const messages = [
-    { role: "system", content: getSystemPrompt() },
-    ...history,
-    { role: "user", content: userMessage }
+    { role: "system", content: getSystemPrompt(isFirstMessage, knownLead) },
+    ...history
   ];
 
-  const response = await axios.post(
-    url,
-    {
-      model: "qwen/qwen3.8-27b",
-      messages,
-      temperature: 0.7,
-      max_tokens: 500
-    },
-    {
-      headers: { Authorization: `Bearer ${apiKey}` },
-      timeout: 10000
-    }
-  );
+  const models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+  let lastError;
 
-  const reply = response?.data?.choices?.[0]?.message?.content;
-  if (!reply) throw new Error("Groq retornou resposta vazia");
-  return reply.trim();
+  for (const model of models) {
+    try {
+      const response = await axios.post(
+        url,
+        {
+          model,
+          messages,
+          temperature: 0.65,
+          max_tokens: 450
+        },
+        {
+          headers: { Authorization: `Bearer ${apiKey}` },
+          timeout: 10000
+        }
+      );
+
+      const reply = response?.data?.choices?.[0]?.message?.content;
+      if (reply) return sanitizarResposta(reply, isFirstMessage, knownLead);
+    } catch (err) {
+      lastError = err;
+      warningLog(`[Groq] Modelo ${model} falhou (${err.message}), tentando próximo...`);
+    }
+  }
+
+  throw lastError || new Error("Groq retornou resposta vazia");
 }
 
 /**
  * 2. Provedor OpenRouter (Auto / Hermes)
  */
-async function callOpenRouter(userId, userMessage) {
+async function callOpenRouter(userId, userMessage, knownLead) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) throw new Error("OPENROUTER_API_KEY não configurada");
 
   const url = "https://openrouter.ai/api/v1/chat/completions";
   const history = conversationMemory.get(userId) || [];
+  const isFirstMessage = history.length <= 1;
 
   const messages = [
-    { role: "system", content: getSystemPrompt() },
-    ...history,
-    { role: "user", content: userMessage }
+    { role: "system", content: getSystemPrompt(isFirstMessage, knownLead) },
+    ...history
   ];
 
   const response = await axios.post(
@@ -241,7 +234,7 @@ async function callOpenRouter(userId, userMessage) {
       model: "openrouter/auto",
       messages,
       temperature: 0.7,
-      max_tokens: 500
+      max_tokens: 450
     },
     {
       headers: {
@@ -255,7 +248,7 @@ async function callOpenRouter(userId, userMessage) {
 
   const reply = response?.data?.choices?.[0]?.message?.content;
   if (!reply) throw new Error("OpenRouter retornou resposta vazia");
-  return reply.trim();
+  return sanitizarResposta(reply, isFirstMessage, knownLead);
 }
 
 /**
@@ -264,9 +257,13 @@ async function callOpenRouter(userId, userMessage) {
 export async function getAiResponse(userId, userMessage) {
   recordMessage(userId, "user", userMessage);
 
+  const knownLead = obterLeadPorTelefone(userId);
+  const history = conversationMemory.get(userId) || [];
+  const isFirstMessage = history.length <= 1;
+
   // Tentativa 1: Groq (Ultra rápido)
   try {
-    const reply = await callGroq(userId, userMessage);
+    const reply = await callGroq(userId, userMessage, knownLead);
     recordMessage(userId, "assistant", reply);
     infoLog("[IA Chatbot] Resposta gerada via Groq ✅");
     return reply;
@@ -276,7 +273,7 @@ export async function getAiResponse(userId, userMessage) {
 
   // Tentativa 2: OpenRouter (Auto/Hermes)
   try {
-    const reply = await callOpenRouter(userId, userMessage);
+    const reply = await callOpenRouter(userId, userMessage, knownLead);
     recordMessage(userId, "assistant", reply);
     infoLog("[IA Chatbot] Resposta gerada via OpenRouter ✅");
     return reply;
@@ -284,21 +281,32 @@ export async function getAiResponse(userId, userMessage) {
     errorLog(`[IA Chatbot] Falha no OpenRouter: ${err.message}`);
   }
 
-  // Resposta de Contingência caso tudo falhe
+  // Resposta de Contingência contextual
   const { saudacao } = getPeriodoDoDia();
-  const fallbackReply = 
-    `${saudacao}! Seja muito bem-vindo! 🤝🔥\n\n` +
-    "A gente tem os nossos grupos e vende acessos exclusivos ao nosso acervo completo:\n\n" +
-    "👑 *Casalzaum VIP (Vitalício)*: R$ 69,90\n\n" +
-    "Pix (na hora, sem taxa):\n" +
-    "🔑 Chave: munizmarina149@gmail.com\n" +
-    "👤 Titular: Marina Muniz\n\n" +
-    "Ou pelo Mercado Pago (parcelado no cartão):\n" +
-    "Acesse o link, selecione como pagar e pronto!\n" +
-    "👉 https://link.mercadopago.com.br/casalzaumofc\n\n" +
-    "Assim que pagar, me manda o comprovante aqui que a gente libera tudo! 🚀\n" +
-    "🔗 *Nossas Redes*: https://clubcasalzaum.vercel.app/links/";
+  const lowerMsg = userMessage.toLowerCase();
+  let fallbackReply = "";
 
-  recordMessage(userId, "assistant", fallbackReply);
-  return fallbackReply;
+  if (lowerMsg.includes("trabalho") || lowerMsg.includes("casa") || lowerMsg.includes("certo") || lowerMsg.includes("ok")) {
+    fallbackReply = "Combinado! Ficamos no aguardo da confirmação rápida de vocês quando tiverem um tempinho livre. Bom trabalho por aí! Mari & Davi.";
+  } else if (knownLead?.perfil?.includes("Casal") || lowerMsg.includes("casal")) {
+    fallbackReply = 
+      "Perfeito! Entendido perfeitamente! 😊\n\n" +
+      "Lembrando que para casais a entrada no Club Casalzaum é 100% gratuita! Assim que tiverem um tempinho livre, é só nos mandar a verificação rápida anti-fake (foto fazendo legal 👍 ou um áudio de 5 segundos com nome e cidade) que a gente já confere e libera o acesso de vocês! Mari & Davi.";
+  } else if (knownLead?.perfil?.includes("Homem") || lowerMsg.includes("solteir")) {
+    fallbackReply = 
+      `${saudacao}! Seja muito bem-vindo ao Club Casalzaum! 👑\n\n` +
+      "Para manter o equilíbrio e respeito na comunidade, a entrada de homens solteiros funciona por adesão:\n\n" +
+      "• *Passe Semestral (6 Meses)*: R$ 97,00 (apenas R$ 16/mês)\n" +
+      "• *Passe VIP Black (12 Meses)*: R$ 167,00 (menos de R$ 14/mês com prioridade máxima)\n\n" +
+      "Pix Oficial: munizmarina149@gmail.com (Marina Muniz)\n\n" +
+      "Assim que fizer o pagamento, nos mande o comprovante aqui para liberarmos sua vaga! 🚀";
+  } else {
+    fallbackReply = 
+      `${saudacao}! Seja muito bem-vindo(a) ao Club Casalzaum! 🥂\n\n` +
+      "Recebemos seu contato. Para te orientar sobre o acesso aos nossos grupos ou conteúdos exclusivos, me conte: você é casal, mulher solteira ou homem solteiro?";
+  }
+
+  const finalReply = sanitizarResposta(fallbackReply, isFirstMessage, knownLead);
+  recordMessage(userId, "assistant", finalReply);
+  return finalReply;
 }

@@ -91,7 +91,6 @@ if (fs.existsSync(envPath)) {
 
 import { connect } from "./connection.js";
 import { load } from "./loader.js";
-import { responderContatosZapZap } from "./services/pendingResponder.js";
 import { badMacHandler } from "./utils/badMacHandler.js";
 import {
   bannerLog,
@@ -144,15 +143,6 @@ async function startBot() {
     const socket = await connect();
 
     load(socket);
-
-    // Dispara a resposta automática das conversas pendentes da tela
-    setTimeout(async () => {
-      try {
-        await responderContatosZapZap(socket);
-      } catch (e) {
-        warningLog(`[Auto-Responder ZapZap] Falha: ${e.message}`);
-      }
-    }, 6000);
 
     setInterval(() => {
       const currentStats = badMacHandler.getStats();

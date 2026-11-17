@@ -26,6 +26,11 @@ import { handleAfkReferences } from "./afkHandler.js";
 import { onGroupParticipantsUpdate } from "./onGroupParticipantsUpdate.js";
 import { getAiResponse } from "../services/aiChatbot.js";
 import { capturarLead } from "../services/leadCaptor.js";
+import { registrarAtividadeMensagem, verificarRegraVisualizacaoUnica } from "../services/groupActivityTracker.js";
+import { isMensagemTriagem, responderTriagemOficial } from "../services/triagemHandler.js";
+
+// Timestamp de inicialização do processo (mensagens enviadas antes disso nunca serão respondidas)
+const BOT_START_TIME = Date.now();
 
 // Cache de deduplicação de mensagens (evita processar a mesma mensagem duas vezes)
 const processedMessageIds = new Set();
@@ -155,7 +160,16 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
 
         // 4. MENSAGEM DE CONVERSA COMUM (PROCESSADA PELA IA DAVI & MARI)
         const msgTime = webMessage.messageTimestamp ? Number(webMessage.messageTimestamp) * 1000 : Date.now();
-        const isTooOld = (Date.now() - msgTime) > (24 * 60 * 60 * 1000);
+        // Ignora rigorosamente mensagens enviadas antes de o bot iniciar (evita ressuscitar conversas ou responder histórico)
+        if (msgTime < (BOT_START_TIME - 15000)) {
+          // Se for mensagem de triagem no histórico, apenas atualiza o banco de dados sem reenviar mensagem
+          if (trimmed && isMensagemTriagem(trimmed)) {
+            try { capturarLead(remoteJid, trimmed); } catch (_) {}
+          }
+          continue;
+        }
+
+        const isTooOld = (Date.now() - msgTime) > (2 * 60 * 60 * 1000); // Mais de 2 horas ignora
         if (isTooOld) {
           continue;
         }
@@ -213,11 +227,20 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
               const combinedText = userState.messages.join("\n");
               userState.messages = [];
 
-              infoLog(`[WhatsApp PV] Processando resposta única para ${remoteJid}...`);
-              const aiReply = await getAiResponse(remoteJid, combinedText);
+              let respostaFinal = "";
+
+              // SE O CLIENTE MANDOU A FICHA DE TRIAGEM OFICIAL PREENCHIDA:
+              // Responde imediatamente com dados 100% corretos, nomes e instruções anti-fake, sem erro de LLM!
+              if (isMensagemTriagem(combinedText)) {
+                infoLog(`[WhatsApp PV] Triagem oficial detectada de ${remoteJid}. Respondendo com Handler Especializado...`);
+                respostaFinal = responderTriagemOficial(remoteJid, combinedText);
+              } else {
+                infoLog(`[WhatsApp PV] Processando resposta inteligente com IA para ${remoteJid}...`);
+                respostaFinal = await getAiResponse(remoteJid, combinedText);
+              }
 
               // Envia RIGOROSAMENTE APENAS UMA MENSAGEM e registra o ID como enviado pelo bot
-              const sentMsg = await socket.sendMessage(remoteJid, { text: aiReply });
+              const sentMsg = await socket.sendMessage(remoteJid, { text: respostaFinal });
               if (sentMsg?.key?.id) {
                 botSentMessageIds.add(sentMsg.key.id);
                 if (botSentMessageIds.size > 2000) {
@@ -246,6 +269,12 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
       // Registra o envelope (id -> autor/estado) de TODA mensagem de grupo,
       // para corroborar marcações de pagamento e impedir forja (banir inocente).
       recordMessageEnvelope(webMessage, hasPaymentMessage(webMessage));
+
+      // 1. Rastreia atividade de envio para classificar Ativo vs Observador
+      registrarAtividadeMensagem(webMessage);
+
+      // 2. Fiscaliza regra de nudes/mídias em grupos: obrigatoriedade de visualização única no Zap e incentivo ao Telegram
+      await verificarRegraVisualizacaoUnica(socket, webMessage);
 
       if (webMessage?.message) {
         messageHandler(socket, webMessage);
