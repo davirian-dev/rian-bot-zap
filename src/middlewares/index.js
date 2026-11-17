@@ -131,13 +131,34 @@ export function isBotOwner({ userLid }) {
   return userLid === OWNER_LID;
 }
 
-export async function checkPermission({ type, socket, userLid, remoteJid }) {
+export async function checkPermission({ type, socket, userLid, remoteJid, webMessage }) {
   if (type === "member") {
     return true;
   }
 
-  // Se NÃO for grupo (for conversa no privado), permite se for o Dono ou comandos de aprovação/portaria
+  // Lista de administradores oficiais Davi & Mari / Casalzaum
+  const adminIdentifiers = [
+    OWNER_LID,
+    "160602467102822",
+    "69128186527844",
+    "5571936181632",
+    "557181349593",
+    "557199295905"
+  ];
+
+  const isSenderAdmin = Boolean(
+    webMessage?.key?.fromMe ||
+    (userLid && adminIdentifiers.some((id) => userLid.includes(id))) ||
+    (remoteJid && adminIdentifiers.some((id) => remoteJid.includes(id)))
+  );
+
+  // Se NÃO for grupo (for conversa no privado), exige que seja administrador / Davi & Mari
   if (!remoteJid || !remoteJid.endsWith("@g.us")) {
+    return isSenderAdmin;
+  }
+
+  // Se o usuário for um dos donos/admins globais, tem acesso total em qualquer grupo
+  if (isSenderAdmin) {
     return true;
   }
 

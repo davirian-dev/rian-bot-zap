@@ -25,6 +25,7 @@ import { hasPaymentMessage } from "../utils/paymentMessage.js";
 import { handleAfkReferences } from "./afkHandler.js";
 import { onGroupParticipantsUpdate } from "./onGroupParticipantsUpdate.js";
 import { getAiResponse } from "../services/aiChatbot.js";
+import { capturarLead } from "../services/leadCaptor.js";
 
 // Cache de deduplicação de mensagens (evita processar a mesma mensagem duas vezes)
 const processedMessageIds = new Set();
@@ -119,18 +120,23 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
             continue;
           }
 
-          // Se você mandou no celular para o contato, aí sim é atendimento humano:
-          // Cancela qualquer resposta de IA pendente para este contato
-          if (userDebounceMap.has(remoteJid)) {
-            const state = userDebounceMap.get(remoteJid);
-            if (state.timer) clearTimeout(state.timer);
-            state.messages = [];
-            state.inFlight = false;
-          }
+          const msgTime = webMessage.messageTimestamp ? Number(webMessage.messageTimestamp) * 1000 : Date.now();
+          const isRecentFromMe = (Date.now() - msgTime) < PAUSE_DURATION_MS;
 
-          // Define ou renova a pausa de 5 minutos APENAS para este contato específico
-          humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
-          infoLog(`[Atendimento Humano] Você respondeu ${remoteJid} no celular. Chatbot pausado para este contato por 5 minutos.`);
+          // Se você respondeu recentemente no celular (últimos 5 minutos), ativa o atendimento humano:
+          if (isRecentFromMe) {
+            // Cancela qualquer resposta de IA pendente para este contato
+            if (userDebounceMap.has(remoteJid)) {
+              const state = userDebounceMap.get(remoteJid);
+              if (state.timer) clearTimeout(state.timer);
+              state.messages = [];
+              state.inFlight = false;
+            }
+
+            // Define a pausa de 5 minutos APENAS para este contato específico
+            humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
+            infoLog(`[Atendimento Humano] Você respondeu ${remoteJid} no celular há pouco. Chatbot pausado para este contato por 5 minutos.`);
+          }
           continue;
         }
 
@@ -148,8 +154,38 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
         }
 
         // 4. MENSAGEM DE CONVERSA COMUM (PROCESSADA PELA IA DAVI & MARI)
+        const msgTime = webMessage.messageTimestamp ? Number(webMessage.messageTimestamp) * 1000 : Date.now();
+        const isTooOld = (Date.now() - msgTime) > (24 * 60 * 60 * 1000);
+        if (isTooOld) {
+          continue;
+        }
+
+        // 5. SE A PESSOA MANDOU FOTO, ÁUDIO, COMPROVANTE OU PDF:
+        // Regra do Usuário: Se a pessoa mandou foto, comprovante, PDF ou áudio sem texto/dúvida clara,
+        // o bot NÃO interfere e deixa para atendimento humano direto de Davi & Mari!
+        const msgContent = webMessage?.message;
+        const isMediaOnly = Boolean(
+          (msgContent?.imageMessage && !msgContent?.imageMessage?.caption) ||
+          msgContent?.audioMessage ||
+          msgContent?.documentMessage ||
+          msgContent?.documentWithCaptionMessage ||
+          msgContent?.stickerMessage
+        );
+
+        if (isMediaOnly) {
+          infoLog(`[Atendimento Humano] Mídia detectada (foto/áudio/PDF/comprovante) de ${remoteJid}. IA em silêncio para Davi & Mari atenderem.`);
+          continue;
+        }
+
         if (trimmed) {
           infoLog(`[Chatbot IA PV] Mensagem recebida de ${remoteJid}: "${trimmed}"`);
+
+          // Capta automaticamente leads e dados de triagem para o painel em tempo real
+          try {
+            capturarLead(remoteJid, trimmed);
+          } catch (leadErr) {
+            errorLog(`[LeadCaptor] Erro ao captar lead: ${leadErr.message}`);
+          }
 
           // Mostra presença digitando (composing)
           try {

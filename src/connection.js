@@ -68,6 +68,9 @@ function clearScreenWithBanner() {
 }
 
 let activeSocket = null;
+export function getActiveSocket() {
+  return activeSocket;
+}
 let watchdogInterval = null;
 let isReconnecting = false;
 
@@ -128,10 +131,10 @@ export async function connect() {
     keepAliveIntervalMs: 25_000,
     maxMsgRetryCount: 5,
     markOnlineOnConnect: true,
-    syncFullHistory: false,
+    syncFullHistory: true,
     emitOwnEvents: false,
     msgRetryCounterCache,
-    shouldSyncHistoryMessage: () => false,
+    shouldSyncHistoryMessage: () => true,
   });
 
   activeSocket = socket;
@@ -141,9 +144,8 @@ export async function connect() {
   watchdogInterval = setInterval(() => {
     try {
       if (socket && socket.ws) {
-        // readyState: 0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED
-        if (socket.ws.readyState !== 1 && socket.ws.readyState !== 0) {
-          warningLog(`[Watchdog 24/7] WebSocket fora do ar (readyState: ${socket.ws.readyState}). Disparando reconexão...`);
+        if (!socket.ws.isOpen) {
+          warningLog("[Watchdog 24/7] WebSocket desconectado (ws.isOpen == false). Disparando reconexão...");
           triggerSafeReconnect();
         }
       }

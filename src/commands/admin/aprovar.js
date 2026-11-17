@@ -1,4 +1,15 @@
-import { PREFIX } from "../../config.js";
+import { OWNER_LID, PREFIX } from "../../config.js";
+import { isAdmin } from "../../middlewares/index.js";
+
+// Lista de identificadores oficiais de Davi & Mari e Casalzaum
+const ADMIN_IDS = [
+  OWNER_LID,
+  "160602467102822",
+  "69128186527844",
+  "5571936181632",
+  "557181349593",
+  "557199295905"
+];
 
 export default {
   name: "aprovar",
@@ -8,7 +19,29 @@ export default {
   /**
    * @param {CommandHandleProps} props
    */
-  handle: async ({ args, isReply, replyLid, userLid, sendReply, sendReact }) => {
+  handle: async ({ args, isReply, replyLid, userLid, remoteJid, socket, webMessage, sendReply, sendReact }) => {
+    // 1. Verificação de Segurança Rigorosa: Apenas Davi & Mari ou Casalzaum podem aprovar
+    const isFromMe = Boolean(webMessage?.key?.fromMe);
+    const isMasterAdmin = Boolean(
+      (userLid && ADMIN_IDS.some((id) => userLid.includes(id))) ||
+      (remoteJid && ADMIN_IDS.some((id) => remoteJid.includes(id)))
+    );
+
+    let isAuthorized = isFromMe || isMasterAdmin;
+
+    // Se estiver em grupo, permite também se for admin do grupo
+    if (!isAuthorized && remoteJid?.endsWith("@g.us")) {
+      try {
+        isAuthorized = await isAdmin({ remoteJid, userLid, socket });
+      } catch (_) {}
+    }
+
+    if (!isAuthorized) {
+      await sendReact("⛔");
+      await sendReply("⛔ *Acesso Restrito:* Apenas os administradores (Davi & Mari / Casalzaum) podem aprovar membros e liberar o link das Portarias.");
+      return;
+    }
+
     await sendReact("👑");
 
     const target = isReply ? replyLid : (args[0] && args[0].includes("@") ? args[0] : "");
@@ -16,6 +49,7 @@ export default {
     const mentions = target ? [target.includes("@") ? target : `${target}@lid`] : [];
 
     const linkPortariaTelegram = "https://t.me/+1bPY_rOD7n85YjZh";
+    const linkPortariaWhatsApp = "https://chat.whatsapp.com/CuqFrtYkz2B9KWlPhTcAcI";
 
     const mensagem = 
 `👑 *PAGAMENTO CONFIRMADO & ACESSO LIBERADO!* 🎉
@@ -23,6 +57,9 @@ export default {
 Parabéns, ${targetMention}! Seu pagamento foi autenticado com sucesso e agora você faz parte do círculo exclusivo do *Club Casalzaum*. 🔞✨
 
 📲 *SEUS ACESSOS OFICIAIS:*
+🚪 *Portaria Oficial no WhatsApp:*
+👉 ${linkPortariaWhatsApp}
+
 🚪 *Portaria Oficial no Telegram:*
 👉 ${linkPortariaTelegram}
 

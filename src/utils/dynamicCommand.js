@@ -202,6 +202,16 @@ Sua mensagem foi apagada.
     return;
   }
 
+  // Se for comando de administrador no privado, restringe apenas a Davi & Mari / Casalzaum
+  if (!isGroup && type !== "member") {
+    if (!(await checkPermission({ type, ...paramsHandler }))) {
+      await sendErrorReply(
+        "⛔ Apenas os administradores (Davi & Mari / Casalzaum) podem executar este comando!"
+      );
+      return;
+    }
+  }
+
   try {
     await command.handle({
       ...paramsHandler,

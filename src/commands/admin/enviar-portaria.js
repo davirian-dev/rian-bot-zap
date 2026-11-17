@@ -1,4 +1,15 @@
-import { PREFIX } from "../../config.js";
+import { OWNER_LID, PREFIX } from "../../config.js";
+import { isAdmin } from "../../middlewares/index.js";
+
+// Lista de identificadores oficiais de Davi & Mari e Casalzaum
+const ADMIN_IDS = [
+  OWNER_LID,
+  "160602467102822",
+  "69128186527844",
+  "5571936181632",
+  "557181349593",
+  "557199295905"
+];
 
 export default {
   name: "enviar-portaria",
@@ -6,7 +17,29 @@ export default {
   commands: ["portaria", "enviar-portaria", "espera", "comprovante-ok"],
   usage: `${PREFIX}portaria (ou respondendo à mensagem do cliente)`,
 
-  handle: async ({ args, isReply, replyLid, sendReply, sendReact }) => {
+  handle: async ({ args, isReply, replyLid, userLid, remoteJid, socket, webMessage, sendReply, sendReact }) => {
+    // 1. Verificação de Segurança Rigorosa: Apenas Davi & Mari ou Casalzaum podem enviar o link da portaria
+    const isFromMe = Boolean(webMessage?.key?.fromMe);
+    const isMasterAdmin = Boolean(
+      (userLid && ADMIN_IDS.some((id) => userLid.includes(id))) ||
+      (remoteJid && ADMIN_IDS.some((id) => remoteJid.includes(id)))
+    );
+
+    let isAuthorized = isFromMe || isMasterAdmin;
+
+    // Se estiver em grupo, permite se for admin do grupo
+    if (!isAuthorized && remoteJid?.endsWith("@g.us")) {
+      try {
+        isAuthorized = await isAdmin({ remoteJid, userLid, socket });
+      } catch (_) {}
+    }
+
+    if (!isAuthorized) {
+      await sendReact("⛔");
+      await sendReply("⛔ *Acesso Restrito:* Apenas os administradores (Davi & Mari / Casalzaum) podem enviar o link oficial da Portaria.");
+      return;
+    }
+
     await sendReact("🔑");
 
     const linkPortaria = "https://chat.whatsapp.com/CuqFrtYkz2B9KWlPhTcAcI";

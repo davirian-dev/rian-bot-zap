@@ -9,7 +9,8 @@
 import { onCall } from "./middlewares/onCall.js";
 import { onMessagesUpsert } from "./middlewares/onMesssagesUpsert.js";
 import { badMacHandler } from "./utils/badMacHandler.js";
-import { errorLog } from "./utils/logger.js";
+import { errorLog, infoLog } from "./utils/logger.js";
+import { processPendingConversations } from "./services/pendingResponder.js";
 
 export function load(socket) {
   const safeEventHandler = async (callback, data, eventName) => {
@@ -25,6 +26,16 @@ export function load(socket) {
       }
     }
   };
+
+  // Escuta histórico inicial sincronizado (HistorySync) para responder pendências antigas/recentes sem resposta
+  socket.ev.on("messaging-history.set", async (data) => {
+    infoLog(`[History Sync] Histórico recebido: ${data?.chats?.length || 0} chats, ${data?.messages?.length || 0} mensagens.`);
+    safeEventHandler(
+      () => processPendingConversations(socket, data.messages, data.chats),
+      data,
+      "messaging-history.set"
+    );
+  });
 
   socket.ev.on("messages.upsert", async (data) => {
     const startProcess = Date.now();
