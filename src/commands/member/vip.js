@@ -1,63 +1,39 @@
-/**
- * Comando: !vip ou !conteudo ou !privacy ou !cardapio
- * Cardápio Oficial de Vendas de Casalzaum OFC (Davi & Mari)
- */
 import { PREFIX } from "../../config.js";
 
 export default {
   name: "vip",
-  description: "Cardápio de conteúdos íntimos e VIP do Casalzaum OFC (Davi & Mari)",
-  commands: ["vip", "conteudo", "conteúdo", "privacy", "cardapio", "cardápio", "pack"],
+  description: "Informações sobre o Grupo VIP Sem Censura do Casalzaum e Conteúdos",
+  commands: ["vip", "acessovip", "privacy", "telegramvip", "telegram", "conteudos"],
   usage: `${PREFIX}vip`,
 
-  /**
-   * @param {CommandHandleProps} props
-   */
   handle: async ({ sendReply, sendReact }) => {
-    await sendReact("🔥");
+    await sendReact("👑");
 
-    const chavePix = "71936181632"; // Chave PIX oficial (Telefone)
+    const msg = 
+`👑 *CASALZAUM VIP — CATÁLOGO OFICIAL DE CONTEÚDOS* 🔞
 
-    const mensagem = 
-`😈🔥 *CARDÁPIO OFICIAL CASALZAUM OFC (DAVI & MARI)* 🔞
+Quer ver todos os conteúdos íntimos, vídeos completos em alta definição e cenas sem cortes de Davi & Mari?
 
-Quer ver a gente de verdade, sem cortes e com total sigilo? Escolha sua forma favorita de curtir hoje:
+💎 *OPÇÕES DISPONÍVEIS:*
+1️⃣ *Vídeo Avulso (Degustação):* R$ 10,00 no Pix ➔ Digite \`/pix10\`
+2️⃣ *Pack 3 Vídeos Sem Censura + Fotos:* R$ 29,90 no Pix ➔ Digite \`/pack3\`
+3️⃣ *Combo VIP Vitalício (Telegram + Comunidade WhatsApp):* De R$ 97 por R$ 69,90 no Pix ➔ Digite \`/pix69\`
+4️⃣ *Sexting Hot no WhatsApp (30 min):* R$ 49,90 no Pix
+5️⃣ *Vídeo Sob Encomenda (com seu nome e fetiche):* R$ 97,00 no Pix
 
-👑 *1. COMBO VIP TELEGRAM + COMUNIDADE* (O Mais Vendido!)
-• Cenas longas e pesadas completas sem censura (anal profundo, gozada na cara e fetiches sem cortes).
-• 🎁 *BÔNUS:* Entrada inclusa no Club Casalzaum (12 subgrupos no WhatsApp com casais e solteiras!).
-• *Valor:* De ~R$ 97,00~ por *R$ 69,90 no PIX* (Pagamento único, sem mensalidade).
+🚪 *Portaria Telegram Grátis:*
+👉 https://t.me/+1bPY_rOD7n85YjZh
 
-📸 *2. NOSSO PRIVACY VIP* (Assinatura Mensal)
-• Dezenas de fotos e vídeos em alta resolução no feed oficial + chat direto com a gente.
-• *Valor:* R$ 29,90/mês
-👉 *Assine no Cartão ou Pix:* https://privacy.com.br/checkout/Casalzaumofc
+🔞 *Privacy Oficial:*
+• Pago: https://privacy.com.br/checkout/Casalzaumofc
+• Degustação Grátis: https://privacy.com.br/checkout/casalzaumofcgratis
 
-📦 *3. PACK 3 VÍDEOS SEM CENSURA + FOTOS*
-• Mini-acervo exclusivo enviado diretamente aqui no chat.
-• *Valor:* *R$ 29,90 no PIX*
+🌐 *Vitrine VIP Completa:*
+👉 https://casalzaumofcvip.vercel.app
 
-🎬 *4. DEGUSTAÇÃO RÁPIDA: 1 VÍDEO AVULSO*
-• Quer só conhecer e comprovar a qualidade agora?
-• *Valor:* *Apenas R$ 10,00 no PIX*
+💳 *Pagamentos:* Pix na chave \`munizmarina149@gmail.com\` ou cartão no Mercado Pago:
+👉 https://link.mercadopago.com.br/casalzaumofc`;
 
-😈 *5. EXPERIÊNCIAS NO PRIVADO (Sob Encomenda)*
-• *Sexting Hot (30 min):* R$ 49,90 (troca de mensagens quentes, fotos e áudios em tempo real)
-• *Vídeo com o seu Nome:* R$ 97,00 (realizando seu fetiche com exclusividade)
-
-🎁 *DEGUSTAÇÃO GRÁTIS:*
-• Prévias no Telegram: https://t.me/+QY2sd5zWIZFmZDEx
-• Privacy Grátis: https://privacy.com.br/checkout/casalzaumofcgratis
-• Página VIP Completa: https://casalzaumofcvip.vercel.app/
-
----
-🔒 *DADOS PARA PAGAMENTO VIA PIX:*
-• *Tipo de Chave:* Telefone
-• *Chave PIX:* \`${chavePix}\`
-• *Identificação na Fatura:* 100% Discreta
-
-👉 *Após fazer o PIX:* Envie o comprovante aqui no chat informando qual opção você escolheu para receber seu acesso na mesma hora! 😉`;
-
-    await sendReply(mensagem);
-  },
+    await sendReply(msg);
+  }
 };

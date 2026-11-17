@@ -2,31 +2,40 @@ import { PREFIX } from "../../config.js";
 
 export default {
   name: "aprovar",
-  description: "Aprova o membro após triagem e envia os links oficiais de acesso",
-  commands: ["aprovar", "liberar"],
-  usage: `${PREFIX}aprovar`,
+  description: "Aprova o membro pagante e envia mensagem oficial de liberação com os links oficiais",
+  commands: ["aprovar", "liberar", "aprovado", "liberado"],
+  usage: `${PREFIX}aprovar @membro ou respondendo à mensagem do comprovante`,
   /**
    * @param {CommandHandleProps} props
    */
-  handle: async ({ sendReply, sendReact }) => {
-    await sendReact("🎉");
+  handle: async ({ args, isReply, replyLid, userLid, sendReply, sendReact }) => {
+    await sendReact("👑");
 
-    const linkComunidade = "https://chat.whatsapp.com/SEU_LINK_DA_PORTARIA";
-    const linkTelegram = "https://t.me/casalzaumofc";
+    const target = isReply ? replyLid : (args[0] && args[0].includes("@") ? args[0] : "");
+    const targetMention = target ? (target.includes("@") ? `@${target.split("@")[0].replace("@", "")}` : `@${target}`) : "Membro VIP";
+    const mentions = target ? [target.includes("@") ? target : `${target}@lid`] : [];
+
+    const linkPortariaTelegram = "https://t.me/+1bPY_rOD7n85YjZh";
 
     const mensagem = 
-`🎉 *PARABÉNS! SEU ACESSO FOI APROVADO!* 👑
+`👑 *PAGAMENTO CONFIRMADO & ACESSO LIBERADO!* 🎉
 
-Você concluiu a triagem de segurança do *Club Casalzaum* com sucesso. Seja muito bem-vindo(a)!
+Parabéns, ${targetMention}! Seu pagamento foi autenticado com sucesso e agora você faz parte do círculo exclusivo do *Club Casalzaum*. 🔞✨
 
-🔗 *Link da Comunidade no WhatsApp:*
-${linkComunidade}
+📲 *SEUS ACESSOS OFICIAIS:*
+🚪 *Portaria Oficial no Telegram:*
+👉 ${linkPortariaTelegram}
 
-🔥 *Link do Telegram (+18 & Prévias das Criadoras):*
-${linkTelegram}
+💎 *Painel & Plataforma Web:*
+👉 https://clubcasalzaum.vercel.app/vip/
 
-⚠️ *Lembrete Importante:* É estritamente proibido invadir o privado (PV) de qualquer participante sem permissão prévia no grupo. Divirta-se com responsabilidade!`;
+⚠️ *REGRAS DE CONVIVÊNCIA:*
+• Sigilo absoluto e respeito mútuo.
+• Proibido salvar, vazar fotos ou gravar tela (o material possui rastreador).
+• Proibido chamar membros no privado sem autorização prévia.
 
-    await sendReply(mensagem);
+Qualquer dúvida, responda aqui diretamente aos administradores. Aproveite os conteúdos sem moderação! 😉🔥`;
+
+    await sendReply(mensagem, mentions);
   },
 };

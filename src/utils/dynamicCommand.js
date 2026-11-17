@@ -1,3 +1,4 @@
+import { addWarn, getWarnLimit } from "./warnSystem.js";
 /**
  * Direcionador
  * de comandos.
@@ -51,7 +52,8 @@ export async function dynamicCommand(paramsHandler, startProcess) {
     webMessage,
   } = paramsHandler;
 
-  const activeGroup = isActiveGroup(remoteJid);
+  const isGroup = remoteJid?.endsWith("@g.us");
+  const activeGroup = isGroup && isActiveGroup(remoteJid);
 
   if (activeGroup && isActiveAntiLinkGroup(remoteJid) && isLink(fullMessage)) {
     if (!userLid) {
@@ -59,20 +61,40 @@ export async function dynamicCommand(paramsHandler, startProcess) {
     }
 
     if (!(await isAdmin({ remoteJid, userLid, socket }))) {
-      await socket.groupParticipantsUpdate(remoteJid, [userLid], "remove");
+      // 1. Apaga a mensagem com o link imediatamente
+      try {
+        await socket.sendMessage(remoteJid, {
+          delete: {
+            remoteJid,
+            fromMe: false,
+            id: webMessage.key.id,
+            participant: webMessage.key.participant,
+          },
+        });
+      } catch (delErr) {
+        // Ignora erro se já foi deletado
+      }
 
-      await sendReply(
-        "Anti-link ativado! Você foi removido por enviar um link!"
-      );
+      // 2. Aplica advertência progressiva (Warn)
+      const warns = addWarn(remoteJid, userLid, "Envio de link não autorizado");
+      const limit = getWarnLimit(remoteJid);
+      const userNum = userLid.split("@")[0];
 
-      await socket.sendMessage(remoteJid, {
-        delete: {
-          remoteJid,
-          fromMe: false,
-          id: webMessage.key.id,
-          participant: webMessage.key.participant,
-        },
-      });
+      if (warns >= limit) {
+        await socket.groupParticipantsUpdate(remoteJid, [userLid], "remove");
+        await sendReply(
+          `🚫 *@${userNum}* foi removido por atingir o limite de advertências (${warns}/${limit}) ao insistir no envio de links.`,
+          [userLid]
+        );
+      } else {
+        await sendReply(
+          `⚠️ *@${userNum}*, links não são permitidos neste grupo!
+Sua mensagem foi apagada.
+
+📌 *Advertência:* ${warns}/${limit} (Ao atingir o limite você será removido).`,
+          [userLid]
+        );
+      }
 
       return;
     }
@@ -134,7 +156,7 @@ export async function dynamicCommand(paramsHandler, startProcess) {
     }
   }
 
-  if (!isBotOwner({ userLid }) && !activeGroup) {
+  if (isGroup && !isBotOwner({ userLid }) && !activeGroup) {
     if (
       verifyPrefix(prefix, remoteJid) &&
       hasTypeAndCommand({ type, command })

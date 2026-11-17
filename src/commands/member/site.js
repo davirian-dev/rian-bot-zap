@@ -27,8 +27,8 @@ _(@clubcasalzaum - Novidades da comunidade)_
 https://www.instagram.com/casalzaumofc
 _(@casalzaumofc - Lifestyle e bastidores)_
 
-🔞 *Canal de Prévias no Telegram (+18):*
-https://t.me/casalzaumofc
+🔞 *Portaria Club Casal no Telegram (+18):*
+https://t.me/+1bPY_rOD7n85YjZh
 
 🎵 *TikTok Oficial:*
 https://www.tiktok.com/@casalzauum
@@ -37,7 +37,7 @@ https://www.tiktok.com/@casalzauum
 https://linktr.ee/casalzaumofc
 
 ---
-🛡️ *Aviso de Segurança:* Nunca confie em contas secundárias ou pessoas cobrando valores em chave PIX diferente de *(71) 93618-1632*. Nosso ambiente é blindado e monitorado!`;
+🛡️ *Aviso de Segurança:* Nunca confie em contas secundárias ou pessoas cobrando valores em chave PIX diferente de *munizmarina149@gmail.com (Marina Muniz)*. Nosso ambiente é blindado e monitorado!`;
 
     await sendReply(mensagem);
   },

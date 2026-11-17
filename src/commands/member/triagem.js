@@ -2,8 +2,8 @@ import { PREFIX } from "../../config.js";
 
 export default {
   name: "triagem",
-  description: "Menu de triagem e acesso ao Club Casalzaum",
-  commands: ["triagem", "entrar", "acesso", "cadastro"],
+  description: "Menu de triagem e acesso à Portaria do Club Casalzaum",
+  commands: ["triagem", "entrar", "acesso", "cadastro", "portaria"],
   usage: `${PREFIX}triagem`,
   /**
    * @param {CommandHandleProps} props
@@ -11,8 +11,10 @@ export default {
   handle: async ({ sendReply, sendSuccessReact }) => {
     await sendSuccessReact();
 
+    const linkPortaria = "https://chat.whatsapp.com/CuqFrtYkz2B9KWlPhTcAcI";
+
     const mensagem = 
-`👑 *CLUB CASALZAUM - TRIAGEM OFICIAL* 🔞
+`👑 *CLUB CASALZAUM - PORTARIA & TRIAGEM OFICIAL* 🔞
 _Comunidade Privada • Meio Liberal & Criadores_
 
 Bem-vindo(a) ao processo de seleção do Club Casalzaum! Para mantermos um ambiente seguro, respeitoso e blindado contra fakes, escolha o seu perfil:
@@ -27,14 +29,17 @@ Entrada 100% gratuita com triagem anti-fake.
 Acesso gratuito para divulgação autorizada e parcerias.
 
 4️⃣ *HOMEM SOLTEIRO (Vagas Limitadas)*
-Acesso mediante taxa de adesão/mensalidade + triagem com foto.
-👉 Digite *${PREFIX}planos* para ver os valores e a chave PIX.
+Acesso mediante taxa de adesão/mensalidade (Pix 71936181632) + triagem.
+👉 Digite *${PREFIX}pix10* ou *${PREFIX}pix69*.
+
+🚪 *LINK OFICIAL DA PORTARIA (GRUPO DE ESPERA):*
+👉 ${linkPortaria}
 
 📜 *REGRAS DO CLUBE*
-👉 Digite *${PREFIX}regras* para ler a Regra de Ouro (Proibido invasão de PV).
+👉 Digite *${PREFIX}regras* para ler as diretrizes de segurança.
 
 ---
-_Envie sua resposta ou sua foto de verificação com a data de hoje aqui no chat para a moderação aprovar!_`;
+_Entre na portaria acima e envie sua mensagem ou foto de verificação para a moderação aprovar!_`;
 
     await sendReply(mensagem);
   },

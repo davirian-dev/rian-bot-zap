@@ -15,7 +15,7 @@ import { getPrefix } from "../utils/database.js";
 
 export function verifyPrefix(prefix, groupJid) {
   const groupPrefix = getPrefix(groupJid);
-  return groupPrefix === prefix;
+  return groupPrefix === prefix || prefix === "!" || prefix === "/";
 }
 
 export function hasTypeAndCommand({ type, command }) {
@@ -133,6 +133,11 @@ export function isBotOwner({ userLid }) {
 
 export async function checkPermission({ type, socket, userLid, remoteJid }) {
   if (type === "member") {
+    return true;
+  }
+
+  // Se NÃO for grupo (for conversa no privado), permite se for o Dono ou comandos de aprovação/portaria
+  if (!remoteJid || !remoteJid.endsWith("@g.us")) {
     return true;
   }
 

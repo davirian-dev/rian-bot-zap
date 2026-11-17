@@ -1,2 +1,5 @@
 {"level":50,"time":"2026-11-15T16:47:09.039Z","pid":138274,"hostname":"daviemari-B450M-DS3H-V2","fullErrorNode":{"tag":"stream:error","attrs":{"code":"515"}},"msg":"stream errored out"}
 {"level":50,"time":"2026-11-16T01:51:55.864Z","pid":138274,"hostname":"daviemari-B450M-DS3H-V2","reasonNode":{"tag":"conflict","attrs":{"type":"device_removed"}},"fullErrorNode":{"tag":"stream:error","attrs":{"code":"401"},"content":[{"tag":"conflict","attrs":{"type":"device_removed"}}]},"msg":"stream errored out"}
+{"level":50,"time":"2026-11-16T22:38:22.599Z","pid":74495,"hostname":"daviemari-B450M-DS3H-V2","fullErrorNode":{"tag":"stream:error","attrs":{"code":"503"}},"msg":"stream errored out"}
+{"level":50,"time":"2026-11-16T22:44:23.493Z","pid":74495,"hostname":"daviemari-B450M-DS3H-V2","fullErrorNode":{"tag":"stream:error","attrs":{"code":"503"}},"msg":"stream errored out"}
+{"level":50,"time":"2026-11-16T22:58:24.662Z","pid":74495,"hostname":"daviemari-B450M-DS3H-V2","fullErrorNode":{"tag":"stream:error","attrs":{"code":"503"}},"msg":"stream errored out"}

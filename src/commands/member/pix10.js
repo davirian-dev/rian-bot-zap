@@ -9,16 +9,18 @@ export default {
   handle: async ({ sendReply, sendReact }) => {
     await sendReact("🎬");
 
-    const chavePix = "71936181632";
+    const chavePix = "munizmarina149@gmail.com";
+    const titular = "Marina Muniz";
 
     const msg = 
 `🎬 *DEGUSTAÇÃO RÁPIDA: 1 VÍDEO AVULSO DO CASALZAUM* 🔞
 
 Para receber 1 vídeo exclusivo sem censura de Davi & Mari diretamente aqui no seu chat:
 
-💰 *Valor:* R$ 10,00
-🔑 *Chave PIX (Telefone):* \`${chavePix}\`
-🔒 *Identificação:* 100% Discreta
+💰 *Valor:* R$ 10,00 no PIX
+🔑 *Chave PIX (E-mail):* \`${chavePix}\`
+👤 *Titular:* ${titular}
+🔒 *Sigilo:* 100% Discreto na fatura (LOJACZ)
 
 👉 *Faça o Pix de R$ 10 e envie o comprovante aqui!* Assim que enviar, eu já libero o seu vídeo na hora! 😉`;
 

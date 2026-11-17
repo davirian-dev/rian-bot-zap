@@ -96,15 +96,16 @@ export function extractDataFromMessage(webMessage) {
 
   const replyText = replyTextType1 || replyTextType2 || replyTextType3 || "";
 
-  const userLid = webMessage?.key?.participant?.replace(
-    /:[0-9][0-9]|:[0-9]/g,
-    "",
-  );
+  const userLid = (
+    webMessage?.key?.participant ||
+    webMessage?.key?.remoteJid ||
+    ""
+  ).replace(/:[0-9][0-9]|:[0-9]/g, "");
 
   const [command, ...args] = fullMessage.split(" ");
   const prefix = command.charAt(0);
 
-  const commandWithoutPrefix = command.replace(new RegExp(`^[${PREFIX}]+`), "");
+  const commandWithoutPrefix = command.replace(/^[!/]+/, "");
 
   return {
     args: splitByCharacters(args.join(" "), ["\\", "|", "/"]),

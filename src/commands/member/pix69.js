@@ -23,7 +23,8 @@ Você escolheu nosso pacote completo mais vendido com o cofre mais pesado de Dav
 
 💰 *Valor:* De ~R$ 97,00~ por *R$ 69,90 à vista no PIX*
 🔑 *Chave PIX (Telefone):* \`${chavePix}\`
-🔒 *Identificação:* 100% Discreta (Total sigilo)
+🔒 *Identificação:* 100% Discreta
+💳 *Nome na Fatura:* LOJACZ (Total sigilo)
 
 👉 *Após o PIX:* Envie o comprovante aqui para liberarmos seu link de entrada imediata! 🚀`;
 
