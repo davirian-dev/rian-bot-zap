@@ -1,5 +1,45 @@
 [
   {
+    "id": "grp-46274564894843-1794942014470",
+    "fone": "46274564894843",
+    "jid": "46274564894843@lid",
+    "nome": "Membro Portaria (4843)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "17/11/2026 16:00",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 4,
+    "mensagensSemana": 4,
+    "mensagensMes": 4
+  },
+  {
+    "id": "grp-268362777124924-1794936078358",
+    "fone": "268362777124924",
+    "jid": "268362777124924@lid",
+    "nome": "Membro Portaria (4924)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "17/11/2026 14:21",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
+    "id": "grp-273267881443452-1794931916321",
+    "fone": "273267881443452",
+    "jid": "273267881443452@lid",
+    "nome": "Membro Portaria (3452)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "17/11/2026 13:11",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
     "id": "grp-98269371834581-1794922034785",
     "fone": "98269371834581",
     "jid": "98269371834581@lid",
@@ -35,8 +75,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 5,
-    "mensagensMes": 5
+    "mensagensSemana": 9,
+    "mensagensMes": 9,
+    "mensagensDia": 4
   },
   {
     "id": "grp-160602467102822-1794920115499",
@@ -50,8 +91,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 2,
-    "mensagensMes": 2
+    "mensagensSemana": 5,
+    "mensagensMes": 5,
+    "mensagensDia": 3
   },
   {
     "id": "grp-69128186527844-1794920115499",
@@ -159,7 +201,11 @@
     "isAdmin": false,
     "dataRegistro": "17/11/2026 09:55",
     "status": "No Grupo",
-    "perfil": "Membro do Grupo"
+    "perfil": "Membro do Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 3,
+    "mensagensSemana": 3,
+    "mensagensMes": 3
   },
   {
     "id": "grp-69128186527844-1794920115500",
@@ -387,7 +433,11 @@
     "isAdmin": false,
     "dataRegistro": "17/11/2026 09:55",
     "status": "No Grupo",
-    "perfil": "Membro do Grupo"
+    "perfil": "Membro do Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 1,
+    "mensagensSemana": 1,
+    "mensagensMes": 1
   },
   {
     "id": "grp-69128186527844-1794920115501",

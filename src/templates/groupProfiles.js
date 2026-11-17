@@ -16,7 +16,7 @@ Bem-vindo(a) à sala de espera e recepção oficial de Davi & Mari!
 
 🌐 Site: casalzaumofc.vercel.app | Fatura discreta: LOJACZ`,
     welcome: `👋 Bem-vindo(a) à *Portaria do Club Casalzaum*, @member!
-Envie seu comprovante e sua foto anti-fake (👍 ou plaquinha com a data de hoje) para liberarmos seu acesso ao grupo principal! 🔞✨`,
+Envie seu comprovante e sua foto anti-fake (👍 ou plaquinha com a data de hoje), e cole aqui a sua *Apresentação* para liberarmos seu acesso aos grupos principais! 🔞✨`,
     pinned: `📌 *REGRAS DA PORTARIA:*
 1. Este é um grupo de espera temporário para triagem de novos membros.
 2. Não envie fotos explícitas aqui.
@@ -30,7 +30,8 @@ O ponto de encontro oficial dos membros verificados do Casalzaum!
 Resenha leve, apresentações, papo descontraído e novidades de Davi & Mari.
 Regra de ouro: Respeito mútuo absoluto e proibido invasão de PV.`,
     welcome: `🔥 *BEM-VINDO(A) AO GRUPO GERAL DO CASALZAUM!* @member
-A casa é sua! Participe das resenhas, jogue com nossos comandos (/verdadeoudesafio, /shippar) e divirta-se com responsabilidade! 😈✨`,
+A casa é sua! 🥂✨
+📣 *APRESENTAÇÃO OBRIGATÓRIA:* Cole aqui no grupo a sua apresentação para todo mundo te conhecer com muito respeito e resenha boa!`,
     pinned: `📌 *BEM-VINDOS AO GERAL:*
 Aproveite o espaço para se apresentar e conhecer pessoas de mente aberta. Proibido spam, desrespeito e links externos!`
   },
