@@ -29,13 +29,16 @@ import { getAiResponse } from "../services/aiChatbot.js";
 // Cache de deduplicação de mensagens (evita processar a mesma mensagem duas vezes)
 const processedMessageIds = new Set();
 
+// Cache de IDs de mensagens enviadas pelo próprio BOT (para nunca confundir mensagem do bot com mensagem digitada por Davi/Mari)
+const botSentMessageIds = new Set();
+
 // Fila de agrupamento (debounce) por usuário para SEMPRE enviar APENAS UMA MENSAGEM
 const userDebounceMap = new Map();
 
 // Mapa de Atendimento Humano (remoteJid -> timestamp limite de pausa)
-// Sempre que Davi ou Mari respondem no PV, o bot pausa para aquele contato por 30 minutos
+// Quando Davi ou Mari respondem no PV pelo celular, o bot pausa para aquele contato por 5 minutos
 const humanPauseMap = new Map();
-const PAUSE_DURATION_MS = 30 * 60 * 1000; // 30 minutos
+const PAUSE_DURATION_MS = 5 * 60 * 1000; // 5 minutos (configurado a pedido de Davi & Mari)
 
 export async function onMessagesUpsert({ socket, messages, startProcess }) {
   if (!messages.length) {
@@ -71,6 +74,11 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
       if (!webMessage?.key?.remoteJid?.endsWith("@g.us") && webMessage?.key?.remoteJid !== "status@broadcast") {
         const remoteJid = webMessage.key.remoteJid;
 
+        // Se o remoteJid for o próprio número do bot (chat consigo mesmo ou sincronização), ignora
+        if (remoteJid.includes("160602467102822")) {
+          continue;
+        }
+
         const rawText =
           webMessage?.message?.conversation ||
           webMessage?.message?.extendedTextMessage?.text ||
@@ -84,13 +92,15 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           if (trimmed === "!bot on" || trimmed === "/bot on" || trimmed === "!ativar") {
             humanPauseMap.delete(remoteJid);
             infoLog(`[Atendimento Humano] Chatbot reativado manualmente para ${remoteJid}.`);
-            await socket.sendMessage(remoteJid, { text: "✅ Chatbot reativado com sucesso para este contato!" });
+            const sent = await socket.sendMessage(remoteJid, { text: "✅ Chatbot reativado com sucesso para este contato!" });
+            if (sent?.key?.id) botSentMessageIds.add(sent.key.id);
             continue;
           }
           if (trimmed === "!bot off" || trimmed === "/bot off" || trimmed === "!pausar") {
             humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
-            infoLog(`[Atendimento Humano] Chatbot pausado manualmente para ${remoteJid} por 30 minutos.`);
-            await socket.sendMessage(remoteJid, { text: "⏸️ Chatbot pausado por 30 minutos para este contato." });
+            infoLog(`[Atendimento Humano] Chatbot pausado manualmente para ${remoteJid} por 5 minutos.`);
+            const sent = await socket.sendMessage(remoteJid, { text: "⏸️ Chatbot pausado por 5 minutos para este contato." });
+            if (sent?.key?.id) botSentMessageIds.add(sent.key.id);
             continue;
           }
 
@@ -103,8 +113,13 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
         }
 
         // 2. SE A MENSAGEM FOI ENVIADA POR VOCÊ (fromMe = true):
-        // Pausa o chatbot para este contato específico por 30 minutos para você conversar sem interferência
         if (webMessage?.key?.fromMe) {
+          // Se essa mensagem foi enviada pelo próprio BOT, NÃO é atendimento humano! Apenas ignora.
+          if (msgId && botSentMessageIds.has(msgId)) {
+            continue;
+          }
+
+          // Se você mandou no celular para o contato, aí sim é atendimento humano:
           // Cancela qualquer resposta de IA pendente para este contato
           if (userDebounceMap.has(remoteJid)) {
             const state = userDebounceMap.get(remoteJid);
@@ -113,9 +128,9 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
             state.inFlight = false;
           }
 
-          // Define ou renova a pausa de 30 minutos para este contato
+          // Define ou renova a pausa de 5 minutos APENAS para este contato específico
           humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
-          infoLog(`[Atendimento Humano] Você respondeu ${remoteJid}. Chatbot pausado para este contato por 30 minutos.`);
+          infoLog(`[Atendimento Humano] Você respondeu ${remoteJid} no celular. Chatbot pausado para este contato por 5 minutos.`);
           continue;
         }
 
@@ -128,7 +143,7 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
             continue; // O bot NÃO interfere na conversa normal!
           } else {
             humanPauseMap.delete(remoteJid);
-            infoLog(`[Atendimento Humano] Período de 30 minutos encerrado para ${remoteJid}. Chatbot reativado.`);
+            infoLog(`[Atendimento Humano] Período de 5 minutos encerrado para ${remoteJid}. Chatbot reativado.`);
           }
         }
 
@@ -165,8 +180,16 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
               infoLog(`[WhatsApp PV] Processando resposta única para ${remoteJid}...`);
               const aiReply = await getAiResponse(remoteJid, combinedText);
 
-              // Envia RIGOROSAMENTE APENAS UMA MENSAGEM e encerra
-              await socket.sendMessage(remoteJid, { text: aiReply });
+              // Envia RIGOROSAMENTE APENAS UMA MENSAGEM e registra o ID como enviado pelo bot
+              const sentMsg = await socket.sendMessage(remoteJid, { text: aiReply });
+              if (sentMsg?.key?.id) {
+                botSentMessageIds.add(sentMsg.key.id);
+                if (botSentMessageIds.size > 2000) {
+                  const first = botSentMessageIds.values().next().value;
+                  botSentMessageIds.delete(first);
+                }
+              }
+
               infoLog(`[WhatsApp PV] Mensagem única enviada com sucesso para ${remoteJid} ✅`);
 
               try {
