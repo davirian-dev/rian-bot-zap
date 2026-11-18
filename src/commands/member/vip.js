@@ -16,8 +16,8 @@ Quer ver todos os conteúdos íntimos, vídeos completos em alta definição e c
 
 💎 *OPÇÕES DISPONÍVEIS:*
 1️⃣ *Vídeo Avulso (Degustação):* R$ 10,00 no Pix ➔ Digite \`/pix10\`
-2️⃣ *Pack 3 Vídeos Sem Censura + Fotos:* R$ 29,90 no Pix ➔ Digite \`/pack3\`
-3️⃣ *Combo VIP Vitalício (Telegram + Comunidade WhatsApp):* De R$ 97 por R$ 69,90 no Pix ➔ Digite \`/pix69\`
+2️⃣ *Pack 7 Vídeos + 6 Fotos Nudes:* R$ 29,90 no Pix (Oral, masturbação e penetração) ➔ Digite \`/pack\`
+3️⃣ *VIP Telegram Sem Censura (Acesso Vitalício):* De R$ 97 por R$ 69,90 no Pix (Vídeos longos, anal e cenas que você não encontra no Privacy) ➔ Digite \`/pix69\`
 4️⃣ *Sexting Hot no WhatsApp (30 min):* R$ 49,90 no Pix
 5️⃣ *Vídeo Sob Encomenda (com seu nome e fetiche):* R$ 97,00 no Pix
 
