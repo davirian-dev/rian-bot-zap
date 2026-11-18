@@ -1,5 +1,33 @@
 [
   {
+    "id": "t-1794948709116",
+    "data": "17/11/2026 17:51",
+    "nome": "Membro Portaria (5407)",
+    "fone": "20014681825407",
+    "perfil": "Em Identificação",
+    "cidade": "Identificando...",
+    "idade": "Não informada",
+    "experiencia": "Entrou no grupo: 🔑 Portaria | Club Casalzaum",
+    "referencia": "Entrou no Grupo WhatsApp",
+    "valor": "Isento (Grátis)",
+    "status": "Entrou no Grupo: 🔥 Casais & Solteiras | Club Casalzaum",
+    "origem": "Grupo: 🔑 Portaria | Club Casalzaum"
+  },
+  {
+    "id": "t-1794945457507",
+    "data": "17/11/2026 16:57",
+    "nome": "Membro Portaria (1875)",
+    "fone": "182897642311875",
+    "perfil": "Em Identificação",
+    "cidade": "Identificando...",
+    "idade": "Não informada",
+    "experiencia": "Entrou no grupo: 🔑 Portaria | Club Casalzaum",
+    "referencia": "Entrou no Grupo WhatsApp",
+    "valor": "Isento (Grátis)",
+    "status": "Entrou no Grupo: ​Club Casalzaum",
+    "origem": "Grupo: 🔑 Portaria | Club Casalzaum"
+  },
+  {
     "id": "t-1794942014470",
     "data": "17/11/2026 16:00",
     "nome": "Membro Portaria (4843)",
@@ -10,7 +38,7 @@
     "experiencia": "Entrou no grupo: 🔑 Portaria | Club Casalzaum",
     "referencia": "Entrou no Grupo WhatsApp",
     "valor": "Isento (Grátis)",
-    "status": "Entrou na Portaria / Grupo",
+    "status": "Entrou no Grupo: 🥂 Geral | Club Casalzaum",
     "origem": "Grupo: 🔑 Portaria | Club Casalzaum"
   },
   {
@@ -200,37 +228,5 @@
     "valor": "Isento (Grátis)",
     "status": "Foto 👍 / Perfil Verificado",
     "origem": "Site / Triagem Oficial"
-  },
-  {
-    "id": "t-1731790000",
-    "data": "16/11/2026 21:00",
-    "nome": "Lucas Fontes",
-    "fone": "5571988410012",
-    "perfil": "Homem Solteiro",
-    "cidade": "Salvador - BA",
-    "idade": "27",
-    "experiencia": "Já conhece o meio",
-    "referencia": "@lucasfontes",
-    "objetivo": "Encontros e festas do meio liberal",
-    "regraPv": "🔒 PV com Permissão",
-    "valor": "R$ 97,00 (Passe Semestral)",
-    "status": "Aprovado (Membro Ativo)",
-    "origem": "Adesão Solteiro"
-  },
-  {
-    "id": "t-1731780000",
-    "data": "16/11/2026 18:30",
-    "nome": "Rafael Mendonça",
-    "fone": "5571991823344",
-    "perfil": "Homem Solteiro",
-    "cidade": "Salvador - BA",
-    "idade": "31",
-    "experiencia": "Experiente",
-    "referencia": "@rafaelmendonca",
-    "objetivo": "Festas exclusivas e conexões",
-    "regraPv": "🔒 PV com Permissão",
-    "valor": "R$ 167,00 (VIP Black 1 Ano)",
-    "status": "Aprovado (Membro Ativo)",
-    "origem": "Adesão Solteiro"
   }
 ]

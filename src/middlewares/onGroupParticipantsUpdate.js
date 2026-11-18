@@ -5,6 +5,8 @@
  * @author Dev Gui
  */
 import { exitMessage, welcomeMessage } from "../messages.js";
+import { obterMensagemBoasVindasGrupo } from "../services/groupWelcomeSelector.js";
+import { obterMensagemSaidaGrupo } from "../services/groupExitSelector.js";
 import {
   isActiveExitGroup,
   isActiveGroup,
@@ -31,14 +33,24 @@ export async function onGroupParticipantsUpdate({
     const userLid = extractUserLid(data);
 
     if (isActiveWelcomeGroup(remoteJid) && action === "add") {
-      const hasMemberMention = welcomeMessage.includes("@member");
+      let grupoNome = "";
+      try {
+        const meta = await socket.groupMetadata(remoteJid);
+        if (meta && meta.subject) {
+          grupoNome = meta.subject;
+        }
+      } catch (_) {}
+
+      // Seleciona a mensagem especializada para o grupo específico (Portaria, Geral, Casais, etc.)
+      const templateWelcome = grupoNome ? obterMensagemBoasVindasGrupo(grupoNome) : welcomeMessage;
+      const hasMemberMention = templateWelcome.includes("@member");
 
       const mentions = [];
-      let finalWelcomeMessage = welcomeMessage;
+      let finalWelcomeMessage = templateWelcome;
 
       if (hasMemberMention) {
         const userNumber = onlyNumbers(userLid);
-        finalWelcomeMessage = welcomeMessage.replace(
+        finalWelcomeMessage = templateWelcome.replace(
           "@member",
           `@${userNumber}`,
         );
@@ -50,14 +62,24 @@ export async function onGroupParticipantsUpdate({
         mentions,
       });
     } else if (isActiveExitGroup(remoteJid) && action === "remove") {
-      const hasMemberMention = exitMessage.includes("@member");
+      let grupoNome = "";
+      try {
+        const meta = await socket.groupMetadata(remoteJid);
+        if (meta && meta.subject) {
+          grupoNome = meta.subject;
+        }
+      } catch (_) {}
+
+      // Seleciona a mensagem especializada de saída para o grupo específico (Portaria, Geral, etc.)
+      const templateExit = grupoNome ? obterMensagemSaidaGrupo(grupoNome) : exitMessage;
+      const hasMemberMention = templateExit.includes("@member");
 
       const mentions = [];
-      let finalExitMessage = exitMessage;
+      let finalExitMessage = templateExit;
 
       if (hasMemberMention) {
         const userNumber = onlyNumbers(userLid);
-        finalExitMessage = exitMessage.replace("@member", `@${userNumber}`);
+        finalExitMessage = templateExit.replace("@member", `@${userNumber}`);
         mentions.push(userLid);
       }
 

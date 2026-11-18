@@ -24,7 +24,7 @@ import { recordMessageEnvelope } from "../utils/messageEnvelopeRegistry.js";
 import { hasPaymentMessage } from "../utils/paymentMessage.js";
 import { handleAfkReferences } from "./afkHandler.js";
 import { onGroupParticipantsUpdate } from "./onGroupParticipantsUpdate.js";
-import { getAiResponse } from "../services/aiChatbot.js";
+import { getAiResponse, recordMessage } from "../services/aiChatbot.js";
 import { capturarLead } from "../services/leadCaptor.js";
 import { registrarAtividadeMensagem, verificarRegraVisualizacaoUnica } from "../services/groupActivityTracker.js";
 import { isMensagemTriagem, responderTriagemOficial } from "../services/triagemHandler.js";
@@ -114,6 +114,11 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           const commonFunctions = loadCommonFunctions({ socket, webMessage });
           if (commonFunctions) {
             await dynamicCommand(commonFunctions, startProcess);
+            // Se o comando foi executado por você no PV (ex: !aprovado), pausa o chatbot para este contato por 10 minutos
+            if (webMessage?.key?.fromMe) {
+              humanPauseMap.set(remoteJid, Date.now() + 10 * 60 * 1000);
+              infoLog(`[Atendimento Humano] Comando executado por você no PV. Chatbot pausado para ${remoteJid} por 10 minutos.`);
+            }
             continue;
           }
         }
@@ -136,6 +141,11 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
               if (state.timer) clearTimeout(state.timer);
               state.messages = [];
               state.inFlight = false;
+            }
+
+            // Registra a mensagem de Davi/Mari no histórico da IA para ela sempre saber o contexto!
+            if (trimmed) {
+              recordMessage(remoteJid, "assistant", trimmed);
             }
 
             // Define a pausa de 5 minutos APENAS para este contato específico
@@ -188,6 +198,7 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
 
         if (isMediaOnly) {
           infoLog(`[Atendimento Humano] Mídia detectada (foto/áudio/PDF/comprovante) de ${remoteJid}. IA em silêncio para Davi & Mari atenderem.`);
+          recordMessage(remoteJid, "user", "[Cliente enviou foto/áudio de confirmação anti-fake]");
           continue;
         }
 
@@ -206,60 +217,72 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
             await socket.sendPresenceUpdate("composing", remoteJid);
           } catch (_) {}
 
-          // Controle de Debounce: agrupa mensagens enviadas em sequência pelo cliente
+          // Controle de Debounce com fila sequencial: agrupa mensagens e NUNCA manda duplicadas
           if (!userDebounceMap.has(remoteJid)) {
-            userDebounceMap.set(remoteJid, { messages: [], timer: null, inFlight: false });
+            userDebounceMap.set(remoteJid, { messages: [], timer: null, inFlight: false, lastResponseTime: 0 });
           }
           const userState = userDebounceMap.get(remoteJid);
           userState.messages.push(trimmed);
 
-          if (userState.timer) {
-            clearTimeout(userState.timer);
-          }
-
-          // Aguarda o cliente terminar de mandar as frases (2.5s) para enviar APENAS UMA RESPOSTA
-          userState.timer = setTimeout(async () => {
-            if (userState.inFlight) {
-              return;
+          const scheduleDebounce = () => {
+            if (userState.timer) {
+              clearTimeout(userState.timer);
             }
-            userState.inFlight = true;
-            try {
-              const combinedText = userState.messages.join("\n");
-              userState.messages = [];
 
-              let respostaFinal = "";
-
-              // SE O CLIENTE MANDOU A FICHA DE TRIAGEM OFICIAL PREENCHIDA:
-              // Responde imediatamente com dados 100% corretos, nomes e instruções anti-fake, sem erro de LLM!
-              if (isMensagemTriagem(combinedText)) {
-                infoLog(`[WhatsApp PV] Triagem oficial detectada de ${remoteJid}. Respondendo com Handler Especializado...`);
-                respostaFinal = responderTriagemOficial(remoteJid, combinedText);
-              } else {
-                infoLog(`[WhatsApp PV] Processando resposta inteligente com IA para ${remoteJid}...`);
-                respostaFinal = await getAiResponse(remoteJid, combinedText);
+            userState.timer = setTimeout(async () => {
+              if (userState.inFlight) {
+                // Se já tem uma resposta sendo gerada, espera ela terminar e reagenda
+                scheduleDebounce();
+                return;
               }
 
-              // Envia RIGOROSAMENTE APENAS UMA MENSAGEM e registra o ID como enviado pelo bot
-              const sentMsg = await socket.sendMessage(remoteJid, { text: respostaFinal });
-              if (sentMsg?.key?.id) {
-                botSentMessageIds.add(sentMsg.key.id);
-                if (botSentMessageIds.size > 2000) {
-                  const first = botSentMessageIds.values().next().value;
-                  botSentMessageIds.delete(first);
+              if (!userState.messages.length) return;
+
+              userState.inFlight = true;
+              try {
+                const combinedText = userState.messages.join("\n");
+                userState.messages = [];
+
+                let respostaFinal = "";
+
+                // SE O CLIENTE MANDOU A FICHA DE TRIAGEM OFICIAL PREENCHIDA:
+                if (isMensagemTriagem(combinedText)) {
+                  infoLog(`[WhatsApp PV] Triagem oficial detectada de ${remoteJid}. Respondendo com Handler Especializado...`);
+                  respostaFinal = responderTriagemOficial(remoteJid, combinedText);
+                } else {
+                  infoLog(`[WhatsApp PV] Processando resposta inteligente com IA para ${remoteJid}...`);
+                  respostaFinal = await getAiResponse(remoteJid, combinedText);
+                }
+
+                if (respostaFinal && respostaFinal.trim()) {
+                  const sentMsg = await socket.sendMessage(remoteJid, { text: respostaFinal });
+                  if (sentMsg?.key?.id) {
+                    botSentMessageIds.add(sentMsg.key.id);
+                    if (botSentMessageIds.size > 2000) {
+                      const first = botSentMessageIds.values().next().value;
+                      botSentMessageIds.delete(first);
+                    }
+                  }
+                  userState.lastResponseTime = Date.now();
+                  infoLog(`[WhatsApp PV] Mensagem única enviada com sucesso para ${remoteJid} ✅`);
+                }
+
+                try {
+                  await socket.sendPresenceUpdate("paused", remoteJid);
+                } catch (_) {}
+              } catch (err) {
+                errorLog(`[WhatsApp PV] Erro ao enviar resposta para ${remoteJid}: ${err.message}`);
+              } finally {
+                userState.inFlight = false;
+                // Se chegaram novas mensagens enquanto a IA gerava a resposta anterior, agenda com intervalo seguro
+                if (userState.messages.length > 0) {
+                  userState.timer = setTimeout(scheduleDebounce, 3000);
                 }
               }
+            }, 2500);
+          };
 
-              infoLog(`[WhatsApp PV] Mensagem única enviada com sucesso para ${remoteJid} ✅`);
-
-              try {
-                await socket.sendPresenceUpdate("paused", remoteJid);
-              } catch (_) {}
-            } catch (err) {
-              errorLog(`[WhatsApp PV] Erro ao enviar resposta para ${remoteJid}: ${err.message}`);
-            } finally {
-              userState.inFlight = false;
-            }
-          }, 2500);
+          scheduleDebounce();
         }
         continue;
       }

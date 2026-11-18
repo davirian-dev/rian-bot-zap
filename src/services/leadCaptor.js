@@ -47,13 +47,67 @@ export function salvarTriagens(triagens) {
 }
 
 /**
- * Obtém lead cadastrado pelo número de telefone
+ * Obtém lead cadastrado pelo número de telefone ou JID
  */
 export function obterLeadPorTelefone(remoteJid) {
   if (!remoteJid) return null;
   const phoneOnly = remoteJid.replace(/[^0-9]/g, "");
   const triagens = lerTriagens();
-  return triagens.find(t => t.fone === phoneOnly) || null;
+  return triagens.find(t => 
+    t.jid === remoteJid || 
+    t.fone === phoneOnly || 
+    (phoneOnly.length >= 8 && t.fone && t.fone.endsWith(phoneOnly.slice(-8))) ||
+    (t.fone && phoneOnly.length >= 8 && phoneOnly.endsWith(t.fone.slice(-8)))
+  ) || null;
+}
+
+/**
+ * Atualiza status e dados de um lead aprovado
+ */
+export function atualizarStatusLead(remoteJid, novoStatus, dadosExtras = {}) {
+  if (!remoteJid) return null;
+  const triagens = lerTriagens();
+  const phoneOnly = remoteJid.replace(/[^0-9]/g, "");
+  
+  let index = triagens.findIndex(t => 
+    t.jid === remoteJid || 
+    t.fone === phoneOnly || 
+    (phoneOnly.length >= 8 && t.fone && t.fone.endsWith(phoneOnly.slice(-8)))
+  );
+
+  if (index !== -1) {
+    triagens[index].status = novoStatus;
+    triagens[index].jid = remoteJid;
+    if (dadosExtras.nome) triagens[index].nome = dadosExtras.nome;
+    if (dadosExtras.perfil) triagens[index].perfil = dadosExtras.perfil;
+    if (dadosExtras.valor) triagens[index].valor = dadosExtras.valor;
+    triagens[index].ultimaAtualizacao = new Date().toISOString();
+    salvarTriagens(triagens);
+    infoLog(`[LeadCaptor] Status do lead ${triagens[index].nome} atualizado para: ${novoStatus}`);
+    return triagens[index];
+  } else {
+    const agora = new Date();
+    const dataFormatada = `${agora.toLocaleDateString("pt-BR")} ${agora.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`;
+    const novoLead = {
+      id: "t-" + Date.now(),
+      data: dataFormatada,
+      nome: dadosExtras.nome || `Membro (${phoneOnly ? phoneOnly.slice(-4) : "VIP"})`,
+      fone: phoneOnly || remoteJid,
+      jid: remoteJid,
+      perfil: dadosExtras.perfil || "Casal Liberal",
+      cidade: dadosExtras.cidade || "Salvador/BA",
+      idade: "Não informada",
+      experiencia: "Verificado pela Moderação",
+      referencia: "WhatsApp PV",
+      valor: dadosExtras.valor || "Isento (Grátis)",
+      status: novoStatus,
+      origem: "Aprovação Manual"
+    };
+    triagens.unshift(novoLead);
+    salvarTriagens(triagens);
+    infoLog(`[LeadCaptor] Novo lead aprovado manualmente salvo: ${novoLead.nome} (${novoStatus})`);
+    return novoLead;
+  }
 }
 
 /**
@@ -116,8 +170,8 @@ export function capturarLead(remoteJid, text) {
 
   const phoneOnly = remoteJid.replace(/[^0-9]/g, "");
 
-  // Ignora IDs internos LID que não são números de telefone reais
-  if (!phoneOnly.startsWith("55") || phoneOnly.length < 11 || phoneOnly.length > 13) {
+  // Aceita tanto formato com 55 quanto LIDs numéricos do WhatsApp
+  if (!phoneOnly || phoneOnly.length < 8) {
     return null;
   }
 
@@ -148,6 +202,7 @@ export function capturarLead(remoteJid, text) {
       data: dataFormatada,
       nome: parsed.nome,
       fone: phoneOnly,
+      jid: remoteJid,
       perfil: parsed.perfil,
       quemEntra: parsed.quemEntra,
       cidade: parsed.cidade,
