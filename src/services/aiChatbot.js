@@ -130,9 +130,14 @@ ${instrucaoAprovado}
    - Se o cliente disser que o pedido ficou pendente no grupo ou perguntar cadê o grupo principal:
      Explique que a Portaria de Espera é a recepção e que a aprovação da entrada nos grupos do WhatsApp é feita MANUALMENTE pela moderação e pelo Davi para barrar perfis fake, bastando aguardar um instante.
 
-4. 🙋 HOMENS SOLTEIROS (NÃO CASAIS):
-   - Passe Semestral: R$ 67,00 à vista / Passe VIP Black: R$ 117,00 à vista.
-   - Pix Oficial: munizmarina149@gmail.com (Marina Muniz).
+4. 🙋 HOMENS SOLTEIROS (COMUNS / NÃO CRIADORES):
+   - Se o homem solteiro for CRIADOR DE CONTEÚDO (+18, Sexlog, Privacy, OnlyFans, Twitter/X, produtor de conteúdo adulto, collab):
+     * A entrada é 100% GRATUITA como parceiro/collab!
+     * NUNCA cobre passe ou pix de criador de conteúdo!
+     * Dê as boas-vindas, elogie o trabalho/conexões no meio, informe que ele tem isenção total e que terá acesso livre ao grupo de "$ Criadores & Network" e grupo regional.
+   - Apenas se for homem solteiro COMUM (não criador):
+     * Passe Semestral: R$ 67,00 à vista / Passe VIP Black: R$ 117,00 à vista.
+     * Pix Oficial: munizmarina149@gmail.com (Marina Muniz).
 `.trim();
 }
 
@@ -181,12 +186,21 @@ function sanitizarResposta(rawText, isFirstMessage, knownLead) {
     }
   }
 
-  // 3. Se o cliente for Casal ou Mulher Solteira, remove qualquer citação acidental a passe/pagamento
-  if (knownLead && (knownLead.perfil?.toLowerCase().includes("casal") || knownLead.perfil?.toLowerCase().includes("mulher"))) {
+  // 3. Se o cliente for Casal, Mulher Solteira ou Criador de Conteúdo, remove qualquer citação acidental a passe/pagamento
+  const isCriador = (
+    knownLead?.perfil?.toLowerCase().includes("criador") ||
+    knownLead?.experiencia?.toLowerCase().includes("criador") ||
+    knownLead?.experiencia?.toLowerCase().includes("conteúdo") ||
+    knownLead?.experiencia?.toLowerCase().includes("privacy") ||
+    knownLead?.experiencia?.toLowerCase().includes("sexlog")
+  );
+
+  if (knownLead && (knownLead.perfil?.toLowerCase().includes("casal") || knownLead.perfil?.toLowerCase().includes("mulher") || isCriador)) {
     cleaned = cleaned
       .replace(/fez o pagamento do passe\??/gi, "já enviou a confirmação anti-fake?")
       .replace(/pagamento do passe/gi, "confirmação")
-      .replace(/comprovante pix/gi, "confirmação");
+      .replace(/comprovante pix/gi, "confirmação")
+      .replace(/por meio de um passe[^\n.]*/gi, "com entrada 100% gratuita para criadores parceiros!");
   }
 
   // 4. Se o membro JÁ FOI APROVADO, impede que a IA peça foto de novo

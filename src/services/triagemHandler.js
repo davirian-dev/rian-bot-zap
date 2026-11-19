@@ -67,12 +67,12 @@ export function responderTriagemOficial(remoteJid, text) {
   if (perfil.toLowerCase().includes("criador") || text.toUpperCase().includes("CRIADOR")) {
     return (
       `Olá, ${nome}! Seja muito bem-vindo ao Club Casalzaum! 🎬👑\n\n` +
-      `Identificamos que você é Criador de Conteúdo (+18 / Meio Liberal) e solicitou a *Isenção Especial de Parceiro*!\n\n` +
-      `Aqui no Clube, criadores ativos têm entrada *100% GRATUITA* para fortalecer nossa rede de networking, amizades e collabs de qualidade.\n\n` +
-      `Para liberarmos sua vaga isenta e comprovar sua titularidade, só precisamos de 2 passos rápidos:\n` +
-      `1️⃣ Envie o link do seu perfil ativo de criador (Privacy, OnlyFans, X/+18 ou Instagram Adulto);\n` +
-      `2️⃣ Mande um print simples do seu painel de criador (mostrando que a conta pertence a você) OU nos mande uma mensagem direta pela sua conta oficial confirmando seu WhatsApp.\n\n` +
-      `Assim que você enviar por aqui, a moderação já confere no painel e libera o seu acesso VIP oficial! Tamo junto! Abraços, Davi & Mari.`
+      `Recebemos sua ficha! Como você indicou que é *Homem Solteiro Criador de Conteúdo (+18)*, criadores ativos têm isenção na comunidade para fortalecer nossa rede e collabs. 🤝\n\n` +
+      `Para a moderação validar seu perfil e liberar sua entrada, precisamos comprovar que você é de fato criador ativo e confirmar sua titularidade anti-fake:\n\n` +
+      `1️⃣ *Perfil de Criador:* Envie o link do seu perfil ativo de criador (Privacy, OnlyFans, X/+18, SexLog ou Instagram de trabalho);\n` +
+      `2️⃣ *Comprovação de Titularidade:* Envie um print simples do painel de criador logado (mostrando que a conta é sua) OU mande uma DM pela própria rede oficial confirmando seu WhatsApp;\n` +
+      `3️⃣ *Verificação Anti-fake:* Uma foto simples segurando um papel escrito à mão "Club Casalzaum" e a data de hoje (ou fazendo sinal de 👍).\n\n` +
+      `Assim que você enviar esses itens por aqui, a moderação já confere e libera seu acesso VIP oficial aos grupos! Tamo junto! Abraços, Davi & Mari.`
     );
   }
 

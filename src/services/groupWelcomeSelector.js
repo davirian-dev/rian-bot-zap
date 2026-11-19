@@ -63,6 +63,11 @@ Caso não tenha copiado, envie respondendo este modelo rápido:
 2. Invasão de PV sem autorização dá banimento imediato.
 3. Proibido links externos e desrespeito.
 
+🎮 *DIVERSÃO & JOGOS DO ROBÔ:*
+Aqui no grupo você também pode interagir com os nossos jogos liberados:
+👉 Digite *!jogos* para ver a lista (Jogo da Forca, Jogo da Velha, Cassino, Raspadinha, Cantadas, Eu Nunca e muito mais)!
+👉 Digite *!menu* para ver todas as ferramentas.
+
 Sinta-se em casa e boa resenha com a família Casalzaum! 😈🔥`
     );
   }
@@ -76,7 +81,9 @@ Olá @member! Chegando no espaço mais quente e respeitoso da comunidade!
 Aqui casais liberais e mulheres solteiras interagem com cumplicidade, liberdade e afinidade.
 
 📌 *Dica de Ouro:*
-Afinidades acontecem na resenha com consentimento mútuo. Jamais invada o PV de ninguém sem autorização prévia conquistada aqui no grupo! Divirta-se! 🥂✨`
+Afinidades acontecem na resenha com consentimento mútuo. Jamais invada o PV de ninguém sem autorização prévia conquistada aqui no grupo! Divirta-se! 🥂✨
+
+🎮 *Para quebrar o gelo e brincar:* Digite *!jogos* (Forca, Velha, Cassino, Cantadas e mais)!`
     );
   }
 

@@ -92,6 +92,26 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           webMessage?.message?.videoMessage?.caption || "";
         const trimmed = rawText.trim();
 
+        // 0. TRIAGEM OFICIAL TEM PRIORIDADE MÁXIMA E RESPOSTA IMEDIATA:
+        // Se o cliente mandou a ficha de triagem oficial, responde na hora sem esperar nem pausar!
+        if (trimmed && isMensagemTriagem(trimmed)) {
+          infoLog(`[WhatsApp PV] Ficha de triagem oficial recebida de ${remoteJid}! Processando imediatamente...`);
+          humanPauseMap.delete(remoteJid);
+          try { capturarLead(remoteJid, trimmed); } catch (_) {}
+          try { await socket.sendPresenceUpdate("composing", remoteJid); } catch (_) {}
+          
+          const respostaTriagem = responderTriagemOficial(remoteJid, trimmed);
+          if (respostaTriagem && respostaTriagem.trim()) {
+            const sentMsg = await socket.sendMessage(remoteJid, { text: respostaTriagem });
+            if (sentMsg?.key?.id) {
+              botSentMessageIds.add(sentMsg.key.id);
+            }
+            infoLog(`[WhatsApp PV] Resposta oficial de triagem entregue com sucesso para ${remoteJid} ✅`);
+          }
+          try { await socket.sendPresenceUpdate("paused", remoteJid); } catch (_) {}
+          continue;
+        }
+
         // 1. COMANDOS DO TAKESHI BOT COM PREFIXO (! ou /)
         // FUNCIONAM SEMPRE E INDEPENDENTEMENTE (mesmo se o contato estiver em pausa humana!)
         if (trimmed && (trimmed.startsWith("!") || trimmed.startsWith("/"))) {

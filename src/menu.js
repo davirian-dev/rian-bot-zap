@@ -23,6 +23,14 @@ export function menuMessage(groupJid) {
 ▢
 ╰━━─「🪐」─━━
 
+╭━━⪩ 🧭 NAVEGAÇÃO RÁPIDA ⪨━━
+▢
+▢ • ${prefix}menu ➔ Menu completo de membros
+▢ • ${prefix}jogos ➔ Aba exclusiva de Jogos, Cassino e Brincadeiras
+▢ • ${prefix}menuadmin ➔ Aba exclusiva da Moderação e Segurança
+▢
+╰━━─「🧭」─━━
+
 ╭━━⪩ 👑 CLUB CASALZAUM ⪨━━
 ▢
 ▢ • ${prefix}triagem (Menu de entrada e cadastro)
@@ -45,134 +53,88 @@ export function menuMessage(groupJid) {
 ▢
 ╰━━─「🔞」─━━
 
-╭━━⪩ DONO ⪨━━
+╭━━⪩ 🎮 JOGOS & BRINCADEIRAS (NOVO!) ⪨━━
 ▢
-▢ • ${prefix}exec
-▢ • ${prefix}get-group-id
-▢ • ${prefix}off
-▢ • ${prefix}on
-▢ • ${prefix}set-menu-image
-▢ • ${prefix}set-prefix
-▢ • ${prefix}set-spider-api-token
+▢ 👉 *Dica:* Digite *${prefix}jogos* para ver o guia completo!
 ▢
-╰━━─「🌌」─━━
-
-╭━━⪩ ADMINS ⪨━━
-▢
-▢ • ${prefix}abrir
-▢ • ${prefix}add-auto-responder
-▢ • ${prefix}agendar-mensagem
-▢ • ${prefix}anti-audio (1/0)
-▢ • ${prefix}anti-call (1/0)
-▢ • ${prefix}anti-document (1/0)
-▢ • ${prefix}anti-event (1/0)
-▢ • ${prefix}anti-image (1/0)
-▢ • ${prefix}anti-link (1/0)
-▢ • ${prefix}anti-lottie-sticker (1/0)
-▢ • ${prefix}anti-payment (1/0)
-▢ • ${prefix}anti-product (1/0)
-▢ • ${prefix}anti-sticker (1/0)
-▢ • ${prefix}anti-status-grupo (1/0)
-▢ • ${prefix}anti-video (1/0)
-▢ • ${prefix}auto-responder (1/0)
-▢ • ${prefix}auto-sticker (1/0)
-▢ • ${prefix}ban
-▢ • ${prefix}delete
-▢ • ${prefix}delete-auto-responder
-▢ • ${prefix}exit (1/0)
-▢ • ${prefix}fechar
-▢ • ${prefix}hidetag
-▢ • ${prefix}limpar-chat
-▢ • ${prefix}link-grupo
-▢ • ${prefix}list-auto-responder
-▢ • ${prefix}mute
-▢ • ${prefix}only-admin (1/0)
-▢ • ${prefix}promover
-▢ • ${prefix}rebaixar
-▢ • ${prefix}revelar
-▢ • ${prefix}saldo
-▢ • ${prefix}set-proxy
-▢ • ${prefix}unmute
-▢ • ${prefix}welcome (1/0)
-▢
-╰━━─「⭐」─━━
-
-╭━━⪩ PRINCIPAL ⪨━━
-▢
-▢ • ${prefix}attp
-▢ • ${prefix}brat
-▢ • ${prefix}bratvid
-▢ • ${prefix}cep
-▢ • ${prefix}exemplos-de-mensagens
-▢ • ${prefix}fake-chat
-▢ • ${prefix}gerar-link
-▢ • ${prefix}info
-▢ • ${prefix}meu-lid
-▢ • ${prefix}perfil
-▢ • ${prefix}ping
-▢ • ${prefix}raw-message
-▢ • ${prefix}rename
-▢ • ${prefix}removebg
-▢ • ${prefix}sticker
-▢ • ${prefix}suporte
-▢ • ${prefix}to-gif
-▢ • ${prefix}to-image
-▢ • ${prefix}to-mp3
-▢ • ${prefix}ttp
-▢ • ${prefix}yt-search
-▢
-╰━━─「🚀」─━━
-
-╭━━⪩ DOWNLOADS ⪨━━
-▢
-▢ • ${prefix}facebook
-▢ • ${prefix}instagram
-▢ • ${prefix}play-audio
-▢ • ${prefix}play-video
-▢ • ${prefix}pinterest
-▢ • ${prefix}tik-tok
-▢ • ${prefix}tik-tok-audio
-▢ • ${prefix}xtwitter
-▢ • ${prefix}yt-mp3
-▢ • ${prefix}yt-mp4
-▢
-╰━━─「🎶」─━━
-
-╭━━⪩ BRINCADEIRAS ⪨━━
-▢
-▢ • ${prefix}abracar
-▢ • ${prefix}beijar
-▢ • ${prefix}dado
-▢ • ${prefix}jantar
-▢ • ${prefix}lutar
-▢ • ${prefix}matar
-▢ • ${prefix}socar
+▢ • ${prefix}forca (Jogo da Forca interativo em tempo real)
+▢ • ${prefix}velha (Jogo da Velha contra bot ou @membro)
+▢ • ${prefix}adivinhe (Adivinhe o número de 1 a 100)
+▢ • ${prefix}quiz (Desafio de conhecimentos gerais A, B, C, D)
+▢ • ${prefix}ppt (Pedra, Papel ou Tesoura / Jokenpô)
+▢ • ${prefix}eununca (Clássico Eu Nunca para votação)
+▢ • ${prefix}cassino (Caça-níqueis apostando fichas virtuais)
+▢ • ${prefix}roleta-cassino (Roleta Vermelho, Preto ou Verde 14x!)
+▢ • ${prefix}raspadinha (Raspe a cartela digital da sorte)
+▢ • ${prefix}cantada (Manda uma cantada ou xaveca alguém)
+▢ • ${prefix}signo (Horóscopo do dia e conselho astral)
+▢ • ${prefix}topfiel (Termômetro da fidelidade / golpista)
+▢ • ${prefix}piada (Conta uma piada engraçada)
+▢ • ${prefix}verdadeoudesafio (Verdade ou Desafio liberal)
+▢ • ${prefix}desafiohot (Desafio liberal ousado)
+▢ • ${prefix}shippar (Calcula química de casal)
+▢ • ${prefix}roleta (Gira roleta liberal)
+▢ • ${prefix}dado / ${prefix}beijar / ${prefix}abracar / ${prefix}tapa
 ▢
 ╰━━─「🎡」─━━
 
-╭━━⪩ IA ⪨━━
+╭━━⪩ 🤖 INTELIGÊNCIA ARTIFICIAL ⪨━━
 ▢
-▢ • ${prefix}deepseek
-▢ • ${prefix}flux
-▢ • ${prefix}gemini
-▢ • ${prefix}gpt-5-mini
-▢ • ${prefix}ia-sticker
-▢ • ${prefix}transcrever
-▢ • ${prefix}tts
+▢ • ${prefix}deepseek (Conversa profunda com DeepSeek)
+▢ • ${prefix}gemini (IA Google Gemini)
+▢ • ${prefix}gpt-5-mini (IA rápida e conversacional)
+▢ • ${prefix}flux (Criação de imagens profissionais por IA)
+▢ • ${prefix}ia-sticker (Cria figurinhas exclusivas por IA)
+▢ • ${prefix}transcrever (Transcreve áudio para texto)
+▢ • ${prefix}tts (Transforma texto em áudio de voz)
 ▢
 ╰━━─「🚀」─━━
 
-╭━━⪩ CANVAS ⪨━━
+╭━━⪩ 📥 DOWNLOADS ⪨━━
 ▢
-▢ • ${prefix}blur
-▢ • ${prefix}bolsonaro
-▢ • ${prefix}cadeia
-▢ • ${prefix}contraste
-▢ • ${prefix}espelhar
-▢ • ${prefix}gray
-▢ • ${prefix}inverter
-▢ • ${prefix}pixel
-▢ • ${prefix}rip
+▢ • ${prefix}play-audio (Baixa áudio e música)
+▢ • ${prefix}play-video (Baixa vídeo do YouTube)
+▢ • ${prefix}instagram (Baixa mídias do Instagram)
+▢ • ${prefix}tik-tok (Baixa vídeos do TikTok sem marca)
+▢ • ${prefix}facebook (Baixa vídeos do Facebook)
+▢ • ${prefix}pinterest (Baixa fotos/vídeos do Pinterest)
+▢ • ${prefix}xtwitter (Baixa vídeos do X / Twitter)
+▢ • ${prefix}yt-mp3 (Converte YouTube para MP3)
+▢ • ${prefix}yt-mp4 (Baixa YouTube em MP4)
 ▢
-╰━━─「❇」─━━`;
+╰━━─「🎶」─━━
+
+╭━━⪩ 🛠️ FERRAMENTAS & UTILITÁRIOS ⪨━━
+▢
+▢ • ${prefix}clima [cidade] (Previsão do tempo e temperatura)
+▢ • ${prefix}dolar (Cotação em tempo real de Dólar, Euro e Bitcoin)
+▢ • ${prefix}letra [música] (Busca letra completa de qualquer música)
+▢ • ${prefix}sticker (Cria figurinha de foto/vídeo)
+▢ • ${prefix}to-image (Converte figurinha de volta para foto)
+▢ • ${prefix}to-gif (Converte figurinha animada em GIF)
+▢ • ${prefix}to-mp3 (Extrai áudio de qualquer vídeo)
+▢ • ${prefix}removebg (Remove fundo de imagem)
+▢ • ${prefix}attp / ${prefix}ttp (Figurinhas animadas de texto)
+▢ • ${prefix}brat / ${prefix}bratvid (Efeito Brat)
+▢ • ${prefix}cep (Consulta endereço por CEP)
+▢ • ${prefix}perfil (Exibe suas estatísticas no grupo)
+▢ • ${prefix}ping (Verifica latência e tempo de resposta)
+▢
+╰━━─「🚀」─━━
+
+╭━━⪩ 🎨 CANVAS & EFEITOS ⪨━━
+▢
+▢ • ${prefix}procurado (Cartaz de Procurado / Wanted com a foto)
+▢ • ${prefix}lula (Efeito e montagem petista)
+▢ • ${prefix}bolsonaro (Efeito e montagem Bolsonaro)
+▢ • ${prefix}blur / ${prefix}contraste / ${prefix}inverter / ${prefix}gray
+▢ • ${prefix}pixel / ${prefix}cadeia / ${prefix}rip / ${prefix}espelhar
+▢
+╰━━─「❇」─━━
+
+╭━━⪩ 🛡️ MODERAÇÃO & ADMIN ⪨━━
+▢
+▢ 👉 *Área restrita:* Digite *${prefix}menuadmin* para abrir todas as ferramentas!
+▢
+╰━━─「⭐」─━━`;
 }
