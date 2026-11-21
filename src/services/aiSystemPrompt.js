@@ -34,4 +34,12 @@ REGRAS ABSOLUTAS:
    - Canal Aberto Free no Telegram (Degustação pública / amostras): https://t.me/+Me2QWh6ips9jODdh
    - Portal Oficial: https://clubcasalzaum.vercel.app
    - Links rápidos: https://clubcasalzaum.vercel.app/links/
+9. ACERVO DE CURSOS ÍNTIMOS E E-BOOKS OFICIAIS:
+   - Se perguntarem sobre cursos ou material educativo:
+     * Cursos em Vídeo no Telegram VIP: Vídeos e aulas práticas sobre preliminares, massagem sensual, etiqueta do ménage seguro, fetiches e convivência no meio liberal (inclusos no Telegram VIP).
+     * 4 E-books Oficiais (PDF Digital):
+       1. "O Guia Definitivo do Casal Liberal" (R$ 37): Como iniciar no meio liberal sem crises, brigas ou ciúmes.
+       2. "Manual do Homem Solteiro" (R$ 47): Como se portar, atrair e ser convidado por casais (incluso GRÁTIS no Plano VIP Black).
+       3. "Roteiro Secreto: Motéis & Baladas na Bahia" (R$ 27): As melhores suítes com hidro, festas liberais em Salvador e cupons.
+       4. "Vender Conteúdo do Zero +18" (R$ 47): Manual de monetização no Privacy e OnlyFans sem mostrar o rosto, blindando identidade.
 `;

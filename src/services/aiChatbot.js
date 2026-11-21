@@ -147,6 +147,15 @@ ${instrucaoAprovado}
      * Cobrança 100% discreta na fatura/extrato como "LOJACZ".
      * Canal Aberto Free no Telegram (Degustação): https://t.me/+Me2QWh6ips9jODdh
      * Portal Oficial: https://clubcasalzaum.vercel.app
+
+5. 📚 CURSOS ÍNTIMOS E E-BOOKS OFICIAIS:
+   - Se o cliente perguntar sobre cursos, materiais ou guias educativos:
+     * Cursos em Vídeo (Telegram VIP): Aulas práticas e acervo sobre preliminares, massagem sensual, dinâmica de ménage seguro e fetiches.
+     * 4 E-books Oficiais disponíveis:
+       1. "O Guia Definitivo do Casal Liberal" (R$ 37)
+       2. "Manual do Homem Solteiro no Meio Liberal" (R$ 47 - Incluso grátis no VIP Black)
+       3. "Roteiro Secreto: Motéis & Baladas na Bahia" (R$ 27)
+       4. "Como Vender Conteúdo do Zero +18" (R$ 47 - Privacy, OnlyFans e Close Friends sem expor o rosto)
 `.trim();
 }
 
