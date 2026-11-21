@@ -149,13 +149,19 @@ ${instrucaoAprovado}
      * Portal Oficial: https://clubcasalzaum.vercel.app
 
 5. 📚 CURSOS ÍNTIMOS E E-BOOKS OFICIAIS:
-   - Se o cliente perguntar sobre cursos, materiais ou guias educativos:
-     * Cursos em Vídeo (Telegram VIP): Aulas práticas e acervo sobre preliminares, massagem sensual, dinâmica de ménage seguro e fetiches.
+   - Se o cliente perguntar sobre cursos, materiais ou guias educativos do Club:
+     * Cursos em Vídeo (Telegram VIP): Inclusos para membros ("Entrou, levou") com aulas práticas sobre preliminares, orgasmo feminino, massagem sensual, dinâmica de ménage seguro e fetiches.
      * 4 E-books Oficiais disponíveis:
        1. "O Guia Definitivo do Casal Liberal" (R$ 37)
        2. "Manual do Homem Solteiro no Meio Liberal" (R$ 47 - Incluso grátis no VIP Black)
        3. "Roteiro Secreto: Motéis & Baladas na Bahia" (R$ 27)
        4. "Como Vender Conteúdo do Zero +18" (R$ 47 - Privacy, OnlyFans e Close Friends sem expor o rosto)
+
+6. 💾 MEGA ACERVO DIGITAL GERAL VIP (+68 CATEGORIAS):
+   - Se o cliente perguntar sobre acervo geral, jogos de PC, filmes, cursos de IA, programação, automação ou ferramentas digitais:
+     * Explique que é um supergrupo VIP separado no Telegram com +68 categorias organizadas por tópicos (Softwares, Jogos de PC completos, IAs, Edição, Dev, Filmes & Cursos).
+     * Valor simbólico único e vitalício: R$ 19,90 no PIX (Chave Celular: 71936181632 - Davi/Marina).
+     * Comando do bot para mais detalhes: !acervo
 `.trim();
 }
 
