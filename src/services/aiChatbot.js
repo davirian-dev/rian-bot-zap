@@ -160,7 +160,7 @@ ${instrucaoAprovado}
 6. 💾 MEGA ACERVO DIGITAL GERAL VIP (+68 CATEGORIAS):
    - Se o cliente perguntar sobre acervo geral, jogos de PC, filmes, cursos de IA, programação, automação ou ferramentas digitais:
      * Explique que é um supergrupo VIP separado no Telegram com +68 categorias organizadas por tópicos (Softwares, Jogos de PC completos, IAs, Edição, Dev, Filmes & Cursos).
-     * Valor simbólico único e vitalício: R$ 19,90 no PIX (Chave Celular: 71936181632 - Davi/Marina).
+     * Valor simbólico único e vitalício: R$ 9,90 no PIX (Chave Celular: 71936181632 - Davi/Marina).
      * Comando do bot para mais detalhes: !acervo
 `.trim();
 }

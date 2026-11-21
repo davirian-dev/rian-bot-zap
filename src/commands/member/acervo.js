@@ -29,7 +29,7 @@ Aqui você encontra tudo o que precisa sem precisar pagar cursos caros de R$ 97 
 
 ---
 💰 *VALOR SIMBÓLICO DE ACESSO:*
-• De ~R$ 97,00~ por apenas *R$ 19,90 à vista no PIX* (Taxa única vitalícia!)
+• De ~R$ 97,00~ por apenas *R$ 9,90 à vista no PIX* (Taxa única vitalícia!)
 
 🔒 *DADOS PARA PAGAMENTO VIA PIX:*
 • *Tipo de Chave:* Telefone
@@ -38,7 +38,7 @@ Aqui você encontra tudo o que precisa sem precisar pagar cursos caros de R$ 97 
 
 ---
 ⚡ *COMO LIBERAR SEU ACESSO:*
-1. Faça o PIX de *R$ 19,90* na chave acima.
+1. Faça o PIX de *R$ 9,90* na chave acima.
 2. Envie o *comprovante* aqui neste chat.
 3. Assim que confirmado, você recebe na hora o *link de convite VIP* para o Supergrupo no Telegram com todas as 68 pastas liberadas!`;
 
