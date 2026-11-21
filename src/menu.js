@@ -38,6 +38,7 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}regras (Regra de Ouro do PV e Sigilo)
 ▢ • ${prefix}site (Links oficiais, site e redes)
 ▢ • ${prefix}ebooks (Biblioteca de e-books e manuais)
+▢ • ${prefix}acervo (Mega Acervo Digital VIP: +68 categorias por R$ 19,90)
 ▢ • ${prefix}grupos (Ecossistema dos 12 subgrupos)
 ▢ • ${prefix}roteiro (Dicas de motéis e privacidade)
 ▢ • ${prefix}legenda (Gerador de legendas e posts VIP)
