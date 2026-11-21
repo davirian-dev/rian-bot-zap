@@ -79,11 +79,13 @@ export function responderTriagemOficial(remoteJid, text) {
   // 4. HOMEM SOLTEIRO COMUM (ADESÃO PAGA)
   return (
     `Olá, ${nome}! Seja muito bem-vindo ao Club Casalzaum! 👑\n\n` +
-    `Recebemos seus dados de triagem com sucesso! Para mantermos o respeito mútuo, segurança e o equilíbrio na comunidade, a entrada de homens solteiros é realizada mediante aprovação e contratação de um dos nossos Passes Oficiais:\n\n` +
-    `⭐ *Passe Semestral (6 Meses):* R$ 97,00 (apenas R$ 16/mês)\n` +
-    `👑 *Passe VIP Black (12 Meses):* R$ 167,00 (menos de R$ 14/mês com máxima prioridade)\n\n` +
-    `💳 *Chave Pix Oficial:* munizmarina149@gmail.com\n` +
-    `👤 *Titular:* Marina Muniz\n\n` +
-    `Assim que realizar o Pix, envie o comprovante por aqui. A moderação irá validar no painel administrativo e liberar o seu acesso imediato! 🚀`
+    `Recebemos seus dados de triagem com sucesso! Para mantermos o respeito mútuo, segurança e o equilíbrio na comunidade, a entrada de homens solteiros é realizada mediante aprovação e contratação de um dos nossos Passes Oficiais com *Desconto Ativo de Black Friday*:\n\n` +
+    `⭐ *Passe Semestral Black (6 Meses):* De ~R$ 97,00~ por *R$ 67,00 à vista*\n` +
+    `👉 Link Cartão/Pix Mercado Pago: https://mpago.la/1oCKtkw\n\n` +
+    `👑 *Passe VIP Black (12 Meses):* De ~R$ 167,00~ por *R$ 117,00 à vista*\n` +
+    `👉 Link Cartão/Pix Mercado Pago: https://mpago.la/14fvgxf\n\n` +
+    `💳 *Chave Pix Direta (Telefone):* 71936181632\n` +
+    `🔒 *Fatura:* 100% Discreta\n\n` +
+    `Assim que realizar o pagamento, envie o comprovante por aqui. A moderação irá validar no painel administrativo e liberar o seu acesso imediato! 🚀`
   );
 }

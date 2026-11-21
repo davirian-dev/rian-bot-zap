@@ -424,3 +424,38 @@ export async function removeBg(
 
   return Buffer.from(data);
 }
+
+export async function specialTts(text, voice) {
+  if (!text) {
+    throw new Error("Você precisa informar o texto para converter em áudio!");
+  }
+
+  const normalizedText = String(text).trim();
+  if (normalizedText.length > 512) {
+    throw new Error("O texto deve ter no máximo 512 caracteres.");
+  }
+
+  const spiderApiToken = requireSpiderApiToken();
+
+  const { data } = await axios.post(
+    `${SPIDER_API_BASE_URL}/ai/special-tts/${encodeURIComponent(voice)}`,
+    { text: normalizedText },
+    {
+      headers: { "X-API-KEY": spiderApiToken },
+      timeout: 45000,
+    },
+  );
+
+  if (
+    data?.success !== true ||
+    typeof data?.url !== "string" ||
+    !/^https?:\/\/\S+$/.test(data.url)
+  ) {
+    throw new Error(
+      data?.message || "A Spider X API não retornou uma URL de áudio válida.",
+    );
+  }
+
+  return data.url;
+}
+

@@ -189,7 +189,19 @@ export function getContent(webMessage, context) {
       ?.viewOnceMessage?.message?.[`${context}Message`] ||
     webMessage?.message?.viewOnceMessageV2?.message?.[`${context}Message`] ||
     webMessage?.message?.extendedTextMessage?.contextInfo?.quotedMessage
-      ?.viewOnceMessageV2?.message?.[`${context}Message`]
+      ?.viewOnceMessageV2?.message?.[`${context}Message`] ||
+    webMessage?.message?.viewOnceMessageV2Extension?.message?.[`${context}Message`] ||
+    webMessage?.message?.extendedTextMessage?.contextInfo?.quotedMessage
+      ?.viewOnceMessageV2Extension?.message?.[`${context}Message`] ||
+    webMessage?.message?.ephemeralMessage?.message?.[`${context}Message`] ||
+    webMessage?.message?.extendedTextMessage?.contextInfo?.quotedMessage
+      ?.ephemeralMessage?.message?.[`${context}Message`] ||
+    webMessage?.message?.ephemeralMessage?.message?.viewOnceMessage?.message?.[`${context}Message`] ||
+    webMessage?.message?.extendedTextMessage?.contextInfo?.quotedMessage
+      ?.ephemeralMessage?.message?.viewOnceMessage?.message?.[`${context}Message`] ||
+    webMessage?.message?.ephemeralMessage?.message?.viewOnceMessageV2?.message?.[`${context}Message`] ||
+    webMessage?.message?.extendedTextMessage?.contextInfo?.quotedMessage
+      ?.ephemeralMessage?.message?.viewOnceMessageV2?.message?.[`${context}Message`]
   );
 }
 
@@ -309,7 +321,7 @@ export async function readCommandImports() {
       const files = await Promise.all(
         readDirectoryRecursive(subdirectoryPath).map(async (filePath) => {
           try {
-            const module = await import(pathToFileURL(filePath).href);
+            const module = await import(pathToFileURL(filePath).href + "?v=" + fs.statSync(filePath).mtimeMs);
             return module.default ?? module;
           } catch (err) {
             console.error(`Erro ao importar ${filePath}:`, err);

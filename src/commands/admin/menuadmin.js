@@ -16,6 +16,8 @@ export function menuAdminMessage(groupJid) {
 
 ╭━━⪩ 🚪 GESTÃO & APROVAÇÃO ⪨━━
 ▢
+▢ • ${p}revelar ➔ Revela fotos e vídeos de visualização única (1x)
+▢ • ${p}configs ➔ Painel visual com status de todas as travas do grupo
 ▢ • ${p}aprovar ➔ Aprova e dá boas-vindas oficiais ao membro triado
 ▢ • ${p}enviar-portaria ➔ Envia as instruções de triagem no grupo
 ▢ • ${p}membros ➔ Relatório de membros e controle de vencimentos

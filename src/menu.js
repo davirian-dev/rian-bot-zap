@@ -50,6 +50,7 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}vip (Cardápio completo de conteúdos sem censura)
 ▢ • ${prefix}pix10 (PIX rápido de R$ 10 para 1 vídeo avulso)
 ▢ • ${prefix}pix69 (PIX de R$ 69,90 para o VIP Telegram Vitalício)
+▢ • ${prefix}webhooks (Central de Webhooks e fluxos de redes sociais)
 ▢
 ╰━━─「🔞」─━━
 
@@ -87,6 +88,9 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}ia-sticker (Cria figurinhas exclusivas por IA)
 ▢ • ${prefix}transcrever (Transcreve áudio para texto)
 ▢ • ${prefix}tts (Transforma texto em áudio de voz)
+▢ • ${prefix}vozlula (Áudio com voz de IA do Lula)
+▢ • ${prefix}vozbolsonaro (Áudio com voz de IA do Bolsonaro)
+▢ • ${prefix}vozes (Lista de vozes de famosos disponíveis)
 ▢
 ╰━━─「🚀」─━━
 

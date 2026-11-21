@@ -1,1 +1,14 @@
-{}
+{
+  "120363431011611307@g.us": {
+    "warnLimit": 3,
+    "warns": {
+      "36356948492368@lid": [
+        {
+          "reason": "Envio de link não autorizado",
+          "timestamp": 1795091432424,
+          "valid": true
+        }
+      ]
+    }
+  }
+}
