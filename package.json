@@ -1,7 +1,7 @@
 {
-  "name": "takeshi-bot",
+  "name": "rian-bot-zap",
   "version": "8.11.0",
-  "description": "Um bot de WhatsApp multifunções.",
+  "description": "Rian Bot Zap — Engine WhatsApp autoral multifunções de Davi Rian com IA, Pix e Automações.",
   "main": "index.js",
   "type": "module",
   "scripts": {

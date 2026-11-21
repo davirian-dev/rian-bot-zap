@@ -1,11 +1,11 @@
-# 🤖 Takeshi Bot — Davi Rian Edition (Módulo de Automação Davi Bot SaaS)
+# ⚡ Rian Bot Zap — Engine WhatsApp Oficial (Davi Rian)
 
-> ⚡ **Edição Personalizada e Estendida por [Davi Rian](https://github.com/davirian-dev)**  
-> Este repositório é uma evolução e adaptação do motor open-source Takeshi Bot (Node.js/Baileys), transformado no **Motor Oficial de Mensageria e Vendas no WhatsApp** integrado aos projetos **[Davi Bot SaaS](https://github.com/davirian-dev/davi-bot)** e ecossistema **Casalzaum**.
+> 🚀 **Criado e customizado por [Davi Rian](https://github.com/davirian-dev)**  
+> O **Rian Bot Zap** é o motor autoral e oficial de mensageria, inteligência artificial multimodal, cobranças Pix e automações para WhatsApp, integrado aos projetos **[Davi Bot SaaS](https://github.com/davirian-dev/davi-bot)** e ecossistema **Casalzaum**.
 
 ---
 
-### 🚀 Melhorias Exclusivas Implementadas por Davi Rian:
+### 🚀 Recursos Principais do Rian Bot Zap:
 1. 💸 **Cobranças Pix Automatizadas:**
    - `src/commands/member/pix10.js`: Gera cobrança instantânea via Pix de R$ 10,00 para suporte e consultorias rápidas.
    - `src/commands/member/pix69.js`: Gera cobrança instantânea via Pix de R$ 69,00 para acesso anual ou planos VIP.
