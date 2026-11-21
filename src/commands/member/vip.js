@@ -20,6 +20,9 @@ Quer ver todos os conteúdos íntimos, vídeos completos em alta definição e c
 3️⃣ *VIP Telegram Sem Censura (Acesso Vitalício):* De R$ 97 por R$ 69,90 no Pix (Vídeos longos, anal e cenas que você não encontra no Privacy) ➔ Digite \`/pix69\`
 4️⃣ *Sexting Hot no WhatsApp (30 min):* R$ 49,90 no Pix
 5️⃣ *Vídeo Sob Encomenda (com seu nome e fetiche):* R$ 97,00 no Pix
+6️⃣ *Mega Acervo Digital Geral VIP (+68 Tópicos no Telegram):* R$ 9,90 no Pix ➔ Digite \`/acervo\`
+🎁 *Pix Anônimo / Mimos (LivePix - 100% Sigilo sem expor seus dados):*
+👉 https://livepix.gg/casalzaumofc (ou digite \`/mimo\`)
 
 🚪 *Portaria Telegram Grátis:*
 👉 https://t.me/+1bPY_rOD7n85YjZh
@@ -31,7 +34,10 @@ Quer ver todos os conteúdos íntimos, vídeos completos em alta definição e c
 🌐 *Vitrine VIP Completa:*
 👉 https://casalzaumofcvip.vercel.app
 
-💳 *Pagamentos:* Pix na chave \`munizmarina149@gmail.com\` ou cartão no Mercado Pago:
+🔗 *Central de Links Oficiais:*
+👉 https://clubcasalzaum.vercel.app/links/
+
+💳 *Pagamentos:* Pix na chave \`munizmarina149@gmail.com\` ou celular \`71936181632\`, ou cartão no Mercado Pago:
 👉 https://link.mercadopago.com.br/casalzaumofc`;
 
     await sendReply(msg);

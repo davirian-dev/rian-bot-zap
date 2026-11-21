@@ -162,6 +162,13 @@ ${instrucaoAprovado}
      * Explique que é um supergrupo VIP separado no Telegram com +68 categorias organizadas por tópicos (Softwares, Jogos de PC completos, IAs, Edição, Dev, Filmes & Cursos).
      * Valor simbólico único e vitalício: R$ 9,90 no PIX (Chave Celular: 71936181632 - Davi/Marina).
      * Comando do bot para mais detalhes: !acervo
+
+7. 🎁 MIMOS E PIX ANÔNIMO (LIVEPIX - 100% SIGILO):
+   - Se o cliente quiser mandar um mimo, drink, apoiar financeiramente ou pagar doação sem que seus dados (nome, CPF, banco) apareçam para ninguém:
+     * Indique o link oficial LivePix: https://livepix.gg/casalzaumofc
+     * Explique que o LivePix garante 100% de sigilo e anonimato total para quem doa.
+     * Central oficial de links: https://clubcasalzaum.vercel.app/links/
+     * Comando do bot para mais detalhes: !mimo
 `.trim();
 }
 

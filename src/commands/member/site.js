@@ -33,11 +33,14 @@ https://t.me/+1bPY_rOD7n85YjZh
 🎵 *TikTok Oficial:*
 https://www.tiktok.com/@casalzauum
 
-🔗 *Central Linktree:*
-https://linktr.ee/casalzaumofc
+🔗 *Central Oficial de Links & Redes:*
+https://clubcasalzaum.vercel.app/links/
+
+🎁 *Pix Anônimo & Mimos (LivePix - 100% Sigilo):*
+https://livepix.gg/casalzaumofc
 
 ---
-🛡️ *Aviso de Segurança:* Nunca confie em contas secundárias ou pessoas cobrando valores em chave PIX diferente de *munizmarina149@gmail.com (Marina Muniz)*. Nosso ambiente é blindado e monitorado!`;
+🛡️ *Aviso de Segurança:* Nunca confie em contas secundárias ou pessoas cobrando valores em chave PIX diferente de *munizmarina149@gmail.com (Marina Muniz)* ou celular *71936181632*. Nosso ambiente é blindado e monitorado!`;
 
     await sendReply(mensagem);
   },

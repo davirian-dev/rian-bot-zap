@@ -38,7 +38,7 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}regras (Regra de Ouro do PV e Sigilo)
 ▢ • ${prefix}site (Links oficiais, site e redes)
 ▢ • ${prefix}ebooks (Biblioteca de e-books e manuais)
-▢ • ${prefix}acervo (Mega Acervo Digital VIP: +68 categorias por R$ 19,90)
+▢ • ${prefix}acervo (Mega Acervo Digital VIP: +68 categorias por R$ 9,90)
 ▢ • ${prefix}grupos (Ecossistema dos 12 subgrupos)
 ▢ • ${prefix}roteiro (Dicas de motéis e privacidade)
 ▢ • ${prefix}legenda (Gerador de legendas e posts VIP)
@@ -51,6 +51,7 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}vip (Cardápio completo de conteúdos sem censura)
 ▢ • ${prefix}pix10 (PIX rápido de R$ 10 para 1 vídeo avulso)
 ▢ • ${prefix}pix69 (PIX de R$ 69,90 para o VIP Telegram Vitalício)
+▢ • ${prefix}mimo (Pix Anônimo e Mimos via LivePix - 100% Sigilo)
 ▢ • ${prefix}webhooks (Central de Webhooks e fluxos de redes sociais)
 ▢
 ╰━━─「🔞」─━━
