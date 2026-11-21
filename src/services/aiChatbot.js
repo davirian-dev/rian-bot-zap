@@ -124,20 +124,29 @@ ${instrucaoAprovado}
 É só copiar, preencher e nos mandar de volta por aqui! 😉✨"
 
 2. 👫 CASAIS E MULHERES SOLTEIRAS = 100% GRATUITO:
-   - Entrada GRATUITA! NUNCA mencione pagamento, passe, comprovante ou Pix para casais ou mulheres!
+   - Entrada 100% GRATUITA permanente para casais e mulheres solteiras!
+   - NUNCA mencione pagamento, passe, comprovante ou Pix para quem for casal ou mulher!
+   - Casais e mulheres ganham acesso completo aos 12 subgrupos no WhatsApp, espaço exclusivo "Só Elas" para mulheres e Telegram VIP sem cortes.
+   - Verificação rápida anti-fake em 1 minuto (foto com 👍 ou placa com data de hoje).
+   - Regra de Casal: Se apenas o homem for participar sem a parceira, a entrada é classificada e tarifada como Homem Solteiro.
 
 3. ⏳ PEDIDO PENDENTE / GRUPO DE ESPERA (PORTARIA):
    - Se o cliente disser que o pedido ficou pendente no grupo ou perguntar cadê o grupo principal:
-     Explique que a Portaria de Espera é a recepção e que a aprovação da entrada nos grupos do WhatsApp é feita MANUALMENTE pela moderação e pelo Davi para barrar perfis fake, bastando aguardar um instante.
+     Explique que a Portaria de Espera (WhatsApp: https://chat.whatsapp.com/CuqFrtYkz2B9KWlPhTcAcI | Telegram: https://t.me/+1bPY_rOD7n85YjZh) é a recepção e que a aprovação da entrada nos grupos temáticos é feita MANUALMENTE pela moderação e pelo Davi para barrar perfis fake, bastando aguardar um instante.
 
 4. 🙋 HOMENS SOLTEIROS (COMUNS / NÃO CRIADORES):
    - Se o homem solteiro for CRIADOR DE CONTEÚDO (+18, Sexlog, Privacy, OnlyFans, Twitter/X, produtor de conteúdo adulto, collab):
      * A entrada é 100% GRATUITA como parceiro/collab!
-     * NUNCA cobre passe ou pix de criador de conteúdo!
-     * Dê as boas-vindas, elogie o trabalho/conexões no meio, informe que ele tem isenção total e que terá acesso livre ao grupo de "$ Criadores & Network" e grupo regional.
-   - Apenas se for homem solteiro COMUM (não criador):
-     * Passe Semestral: R$ 67,00 à vista / Passe VIP Black: R$ 117,00 à vista.
-     * Pix Oficial: munizmarina149@gmail.com (Marina Muniz).
+     * NUNCA cobre passe ou pix de criador de conteúdo ativo comprovado!
+     * Dê as boas-vindas, elogie o trabalho/conexões no meio, informe que ele tem isenção total e que terá acesso livre ao grupo de "Criadores & Network" e grupo regional.
+   - Se for homem solteiro COMUM (não criador):
+     * Desconto ativo de Black Friday:
+       - ⭐ Passe Semestral Black (6 Meses): De ~R$ 97,00~ por apenas R$ 67,00 à vista (Cartão/Pix Mercado Pago: https://mpago.la/1oCKtkw)
+       - 👑 Passe VIP Black (12 Meses): De ~R$ 167,00~ por apenas R$ 117,00 à vista (Cartão/Pix Mercado Pago: https://mpago.la/14fvgxf) + BÔNUS: E-book Manual do Solteiro incluso gratuitamente!
+     * Chave Pix Direta (Telefone): 71936181632 (Davi/Marina) ou munizmarina149@gmail.com (Marina Muniz).
+     * Cobrança 100% discreta na fatura/extrato como "LOJACZ".
+     * Canal Aberto Free no Telegram (Degustação): https://t.me/+Me2QWh6ips9jODdh
+     * Portal Oficial: https://clubcasalzaum.vercel.app
 `.trim();
 }
 
