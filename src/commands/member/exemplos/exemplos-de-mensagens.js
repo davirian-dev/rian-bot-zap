@@ -6,7 +6,9 @@ export default {
     "Lista todos os exemplos disponíveis de envio de mensagens para desenvolvedores",
   commands: [
     "exemplos-de-mensagens",
+    "exemplosdemensagens",
     "exemplos",
+    "exemplo",
     "help-exemplos",
     "exemplo-de-mensagem",
     "exemplo-de-mensagens",

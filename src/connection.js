@@ -139,20 +139,22 @@ export async function connect() {
 
   activeSocket = socket;
 
-  // Inicia o Watchdog 24/7 para verificar a saúde do WebSocket a cada 30 segundos
+  // Inicia o Watchdog 24/7 para verificar a saúde do WebSocket a cada 60 segundos
   if (watchdogInterval) clearInterval(watchdogInterval);
   watchdogInterval = setInterval(() => {
     try {
       if (socket && socket.ws) {
-        if (!socket.ws.isOpen) {
-          warningLog("[Watchdog 24/7] WebSocket desconectado (ws.isOpen == false). Disparando reconexão...");
+        // readyState: 0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED
+        const state = socket.ws.readyState;
+        if (state !== 1 && state !== 0 && !isReconnecting) {
+          warningLog(`[Watchdog 24/7] WebSocket desconectado (readyState: ${state}). Disparando reconexão limpa...`);
           triggerSafeReconnect();
         }
       }
     } catch (e) {
       warningLog(`[Watchdog 24/7] Falha na checagem de socket: ${e.message}`);
     }
-  }, 30_000);
+  }, 60_000);
 
   if (!socket.authState.creds.registered) {
     clearScreenWithBanner();

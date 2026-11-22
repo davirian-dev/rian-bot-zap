@@ -9,11 +9,23 @@ const REACTIONS_DIR = path.join(ASSETS_DIR, "stickers", "reactions");
 
 export default {
   name: "react-sticker",
-  description: "Reage a uma mensagem marcada com figurinha (Sticker Annotation).",
-  commands: ["react-sticker", "rs", "reagir-fig", "rfig", "reactfig"],
-  usage: `${PREFIX}rs [opção ou quantia] (responda a uma mensagem)
+  description: "Cerca e reage a uma mensagem com moldura de figurinhas (Sticker Annotation).",
+  commands: [
+    "react-sticker",
+    "rs",
+    "reagir-fig",
+    "rfig",
+    "reactfig",
+    "moldura",
+    "cercar",
+    "gato",
+  ],
+  usage: `${PREFIX}moldura (responda a uma mensagem para cercar com 12 figurinhas do gato)
+• ${PREFIX}cercar [opção] (cerca a mensagem com a figurinha escolhida)
+• ${PREFIX}rs [opção ou quantia] (ex: ${PREFIX}rs gato 5 ou ${PREFIX}rs casal)
 Opções de figurinhas:
-• ${PREFIX}rs (Foto do Casal - Padrão)
+• ${PREFIX}moldura (Gatinho em moldura completa - Padrão)
+• ${PREFIX}rs gato (Gatinho da foto)
 • ${PREFIX}rs casal (Foto do Casal)
 • ${PREFIX}rs takeshi (Mascote Takeshi)
 • ${PREFIX}rs dado (Dado da sorte)
@@ -26,6 +38,7 @@ Opções de figurinhas:
     socket,
     webMessage,
     remoteJid,
+    commandName,
     args,
     fullArgs,
     sendReply,
@@ -46,8 +59,8 @@ Opções de figurinhas:
       }
       return await sendReply(
         `🎭 *FIGURINHAS DE REAÇÃO DISPONÍVEIS:*\n\n${
-          listFiles.join("\n") || "• casal\n• takeshi\n• dado"
-        }\n\n💡 *Como usar:* Marque uma mensagem e digite: \n\`${PREFIX}rs\` (Padrão: Casal)\n\`${PREFIX}rs takeshi\`\n\`${PREFIX}rs casal 3\` (Reage 3x)`
+          listFiles.join("\n") || "• gato\n• casal\n• takeshi\n• dado"
+        }\n\n💡 *Como usar:* Marque uma mensagem e digite: \n\`${PREFIX}moldura\` (Cerca com gatinhos igual ao print)\n\`${PREFIX}cercar casal\`\n\`${PREFIX}rs gato 12\``
       );
     }
 
@@ -61,7 +74,7 @@ Opções de figurinhas:
 
     if (!contextInfo?.stanzaId) {
       throw new InvalidParameterError(
-        `Você precisa responder à mensagem que receberá a reação com figurinha!\nExemplo: Responda uma mensagem e digite *${PREFIX}rs*`
+        `Você precisa responder à mensagem que receberá a reação com figurinha!\nExemplo: Responda a uma mensagem e digite *${PREFIX}moldura* ou *${PREFIX}rs*`
       );
     }
 
@@ -76,13 +89,15 @@ Opções de figurinhas:
       ...(isGroup && contextInfo.participant ? { participant: contextInfo.participant } : {}),
     };
 
-    // 3. Extrair quantidade (ex: !rs 3 ou !rs casal 3)
-    let count = 1;
+    // 3. Determinar quantidade padrão conforme o comando
+    const isFramingCommand = commandName === "moldura" || commandName === "cercar";
+    let count = isFramingCommand ? 12 : 1;
+
     const countArg = args.find((a) => /^\d+$/.test(a));
     if (countArg) {
       const parsed = parseInt(countArg, 10);
       if (!isNaN(parsed) && parsed > 0) {
-        count = Math.min(parsed, 10);
+        count = Math.min(parsed, 16);
       }
     }
 
@@ -91,11 +106,25 @@ Opções de figurinhas:
 
     let stickerSource = null;
 
-    if (optionArg && optionArg !== "rs" && optionArg !== "react-sticker") {
+    if (
+      optionArg &&
+      optionArg !== "rs" &&
+      optionArg !== "react-sticker" &&
+      optionArg !== "moldura" &&
+      optionArg !== "cercar"
+    ) {
       const customPath = path.join(REACTIONS_DIR, `${optionArg}.webp`);
       if (fs.existsSync(customPath)) {
         stickerSource = customPath;
         infoLog(`[ReactSticker] Usando figurinha escolhida: ${optionArg}`);
+      }
+    }
+
+    // Se o comando for diretamente !gato
+    if (commandName === "gato") {
+      const gatoPath = path.join(REACTIONS_DIR, "gato.webp");
+      if (fs.existsSync(gatoPath)) {
+        stickerSource = gatoPath;
       }
     }
 
@@ -116,12 +145,24 @@ Opções de figurinhas:
       } catch (_) {}
     }
 
-    // 6. SEGREDO: O PADRÃO ABSOLUTO É SEMPRE O CASAL!
+    // 6. Padrão para moldura/cercar: GATO (da foto 1)
+    if (!stickerSource && isFramingCommand) {
+      const gatoPath = path.join(REACTIONS_DIR, "gato.webp");
+      if (fs.existsSync(gatoPath)) {
+        stickerSource = gatoPath;
+        infoLog(`[ReactSticker] Usando figurinha padrão para moldura: GATO.`);
+      }
+    }
+
+    // 7. Padrão para rs geral: CASAL
     if (!stickerSource) {
       const casalPath = path.join(REACTIONS_DIR, "casal.webp");
       if (fs.existsSync(casalPath)) {
         stickerSource = casalPath;
         infoLog(`[ReactSticker] Usando figurinha padrão: CASAL.`);
+      } else {
+        const gatoPath = path.join(REACTIONS_DIR, "gato.webp");
+        if (fs.existsSync(gatoPath)) stickerSource = gatoPath;
       }
     }
 
@@ -134,7 +175,7 @@ Opções de figurinhas:
     try {
       await sendStickerReaction(socket, remoteJid, targetKey, stickerSource, {
         count,
-        delayMs: 300,
+        delayMs: 200,
       });
       await sendSuccessReact();
     } catch (error) {

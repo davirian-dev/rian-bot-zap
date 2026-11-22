@@ -3,3 +3,6 @@ node_modules/
 assets/auth/baileys
 assets/temp/
 assets/temp/wa-logs.txt
+.env
+*.log
+.idea/

@@ -112,17 +112,17 @@ export async function onMessagesUpsert({ socket, messages, startProcess }) {
           continue;
         }
 
-        // 1. COMANDOS DO TAKESHI BOT COM PREFIXO (! ou /)
+        // 1. COMANDOS DO TAKESHI BOT COM PREFIXO (!, /, =)
         // FUNCIONAM SEMPRE E INDEPENDENTEMENTE (mesmo se o contato estiver em pausa humana!)
-        if (trimmed && (trimmed.startsWith("!") || trimmed.startsWith("/"))) {
-          if (trimmed === "!bot on" || trimmed === "/bot on" || trimmed === "!ativar") {
+        if (trimmed && (trimmed.startsWith("!") || trimmed.startsWith("/") || trimmed.startsWith("="))) {
+          if (trimmed === "!bot on" || trimmed === "/bot on" || trimmed === "=bot on" || trimmed === "!ativar") {
             humanPauseMap.delete(remoteJid);
             infoLog(`[Atendimento Humano] Chatbot reativado manualmente para ${remoteJid}.`);
             const sent = await socket.sendMessage(remoteJid, { text: "✅ Chatbot reativado com sucesso para este contato!" });
             if (sent?.key?.id) botSentMessageIds.add(sent.key.id);
             continue;
           }
-          if (trimmed === "!bot off" || trimmed === "/bot off" || trimmed === "!pausar") {
+          if (trimmed === "!bot off" || trimmed === "/bot off" || trimmed === "=bot off" || trimmed === "!pausar") {
             humanPauseMap.set(remoteJid, Date.now() + PAUSE_DURATION_MS);
             infoLog(`[Atendimento Humano] Chatbot pausado manualmente para ${remoteJid} por 5 minutos.`);
             const sent = await socket.sendMessage(remoteJid, { text: "⏸️ Chatbot pausado por 5 minutos para este contato." });

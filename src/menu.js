@@ -26,10 +26,58 @@ export function menuMessage(groupJid) {
 ╭━━⪩ 🧭 NAVEGAÇÃO RÁPIDA ⪨━━
 ▢
 ▢ • ${prefix}menu ➔ Menu completo de membros
+▢ • ${prefix}exemplos ➔ Menu completo de Exemplos & Rich Messages
 ▢ • ${prefix}jogos ➔ Aba exclusiva de Jogos, Cassino e Brincadeiras
 ▢ • ${prefix}menuadmin ➔ Aba exclusiva da Moderação e Segurança
 ▢
 ╰━━─「🧭」─━━
+
+╭━━⪩ 🔊 FIGURINHAS COM SOM & REAÇÕES (NOVO!) ⪨━━
+▢
+▢ • ${prefix}stickeraudio [música] ➔ Cria figurinha com som (audioStickerMessage)
+▢ • ${prefix}as [música] ➔ Atalho rápido para figurinha com áudio
+▢ • ${prefix}moldura ➔ Cerca uma mensagem com 12 figurinhas (moldura de gato)
+▢ • ${prefix}cercar [opção] ➔ Cerca a mensagem marcada com figurinhas
+▢ • ${prefix}rs [opção/quantia] ➔ Reage à mensagem marcada com figurinha
+▢ • ${prefix}beijar [@membro] ➔ Dá um beijo picante no parceiro com figurinha
+▢ • ${prefix}morder [@membro] ➔ Dá uma mordidinha gostosa com figurinha
+▢ • ${prefix}abraco [@membro] ➔ Dá um abraço apertado com figurinha
+▢
+╰━━─「🔊」─━━
+
+╭━━⪩ 🤖 EXEMPLOS INTERATIVOS (SPIDER API) ⪨━━
+▢
+▢ • ${prefix}exemplos (Lista todos os exemplos de mensagens)
+▢ • ${prefix}enviar-botoes (Mensagem com botões interativos)
+▢ • ${prefix}enviar-carrossel (Carrossel de cards / produtos)
+▢ • ${prefix}enviar-lista (Lista suspensa interativa)
+▢ • ${prefix}enviar-enquete (Enquete com opções de voto)
+▢ • ${prefix}enviar-audio-de-arquivo (Áudio PTT gravado na hora)
+▢ • ${prefix}enviar-video-de-arquivo (Vídeo com legenda)
+▢ • ${prefix}enviar-sticker-de-arquivo (Figurinha estática/animada)
+▢ • ${prefix}enviar-documento-de-arquivo (Envio de documento/PDF)
+▢ • ${prefix}enviar-reels (Formato Reels interativo)
+▢ • ${prefix}enviar-tabela (Tabela rich response)
+▢ • ${prefix}enviar-codigo (Bloco de código syntax)
+▢ • ${prefix}enviar-texto-colorido (Texto com destaque visual)
+▢ • ${prefix}enviar-latex (Fórmulas matemáticas LaTeX)
+▢ • ${prefix}obter-dados-grupo (Estatísticas e metadados)
+▢
+╰━━─「📱」─━━
+
+╭━━⪩ 🔥 ÁREA LIBERAL & FETICHES (CASALZAUM) ⪨━━
+▢
+▢ • ${prefix}dadoerotico (Rola dado erótico com ações ousadas)
+▢ • ${prefix}fetiche (Descobre um fetiche aleatório ou secreto)
+▢ • ${prefix}roleta-fetiches (Roleta de fetiches liberais)
+▢ • ${prefix}forcahot (Jogo da forca com palavras quentes)
+▢ • ${prefix}garrafahot (Gira a garrafa para desafio íntimo)
+▢ • ${prefix}fariaounaofaria (Enquete interativa de limites)
+▢ • ${prefix}drink (Roleta de shots e desafios etílicos)
+▢ • ${prefix}ngl (Caixa de confissões anônimas no grupo)
+▢ • ${prefix}pack3 (Acesso rápido à degustação especial)
+▢
+╰━━─「🔞」─━━
 
 ╭━━⪩ 👑 CLUB CASALZAUM ⪨━━
 ▢
@@ -77,6 +125,11 @@ export function menuMessage(groupJid) {
 ▢ • ${prefix}desafiohot (Desafio liberal ousado)
 ▢ • ${prefix}shippar (Calcula química de casal)
 ▢ • ${prefix}roleta (Gira roleta liberal)
+▢ • ${prefix}bola8 [pergunta] (Bola 8 mágica responde seu futuro)
+▢ • ${prefix}jogodavelha [@membro] (Jogo da velha interativo)
+▢ • ${prefix}qualmusica (Adivinhe a música pelo trecho)
+▢ • ${prefix}sortudo (Sorteia um membro aleatório no grupo)
+▢ • ${prefix}voceprefere (Dilemas polêmicos de Você Prefere)
 ▢ • ${prefix}dado / ${prefix}beijar / ${prefix}abracar / ${prefix}tapa
 ▢
 ╰━━─「🎡」─━━
@@ -112,6 +165,12 @@ export function menuMessage(groupJid) {
 
 ╭━━⪩ 🛠️ FERRAMENTAS & UTILITÁRIOS ⪨━━
 ▢
+▢ • ${prefix}revelar (Revela foto/vídeo de visualização única 1x)
+▢ • ${prefix}gerar-link (Gera link direto para arquivos/fotos)
+▢ • ${prefix}yt-search [busca] (Pesquisa vídeos no YouTube)
+▢ • ${prefix}fake-chat (Simula print falso de conversa WhatsApp)
+▢ • ${prefix}rename [nome] (Renomeia pacote de figurinha)
+▢ • ${prefix}meu-lid (Descobre seu LID interno do WhatsApp)
 ▢ • ${prefix}clima [cidade] (Previsão do tempo e temperatura)
 ▢ • ${prefix}dolar (Cotação em tempo real de Dólar, Euro e Bitcoin)
 ▢ • ${prefix}letra [música] (Busca letra completa de qualquer música)
@@ -140,7 +199,13 @@ export function menuMessage(groupJid) {
 
 ╭━━⪩ 🛡️ MODERAÇÃO & ADMIN ⪨━━
 ▢
-▢ 👉 *Área restrita:* Digite *${prefix}menuadmin* para abrir todas as ferramentas!
+▢ • ${prefix}revelar ➔ Revela mídia de visualização única (1x)
+▢ • ${prefix}portaria ➔ Envia instruções da Portaria Oficial (Grupo de Espera)
+▢ • ${prefix}aprovar ➔ Aprova membro e envia convite VIP
+▢ • ${prefix}anuncio-vip ➔ Dispara comunicado oficial do Privacy
+▢ • ${prefix}configs ➔ Status das travas e proteções do grupo
+▢
+▢ 👉 *Painel Completo:* Digite *${prefix}menuadmin* para abrir todas as ferramentas!
 ▢
 ╰━━─「⭐」─━━`;
 }

@@ -1,5 +1,49 @@
 [
   {
+    "id": "grp-26723789865150-1795310622122",
+    "fone": "26723789865150",
+    "jid": "26723789865150@lid",
+    "nome": "Membro Portaria (5150)",
+    "grupoId": "120363413761989677@g.us",
+    "grupoNome": "💬 Contos Eróticos | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "21/11/2026 22:23",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 5,
+    "mensagensSemana": 8,
+    "mensagensMes": 8
+  },
+  {
+    "id": "grp-26723789865150-1795310609400",
+    "fone": "26723789865150",
+    "jid": "26723789865150@lid",
+    "nome": "Membro Portaria (5150)",
+    "grupoId": "120363430589324185@g.us",
+    "grupoNome": "​📍 Salvador & Região | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "21/11/2026 22:23",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
+    "id": "grp-174114333540385-1795296676030",
+    "fone": "174114333540385",
+    "jid": "174114333540385@lid",
+    "nome": "Novo Membro (0385)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "21/11/2026 18:31",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 3,
+    "mensagensSemana": 3,
+    "mensagensMes": 3
+  },
+  {
     "id": "grp-26276760956943-1795193333980",
     "fone": "26276760956943",
     "jid": "26276760956943@lid",
@@ -119,9 +163,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 7,
-    "mensagensSemana": 7,
-    "mensagensMes": 7
+    "mensagensDia": 1,
+    "mensagensSemana": 10,
+    "mensagensMes": 10
   },
   {
     "id": "grp-182171037859991-1795095190621",
@@ -339,9 +383,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 4,
-    "mensagensSemana": 38,
-    "mensagensMes": 38
+    "mensagensDia": 6,
+    "mensagensSemana": 44,
+    "mensagensMes": 44
   },
   {
     "id": "grp-53141697519857-1795058953639",
@@ -396,8 +440,8 @@
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
     "mensagensDia": 1,
-    "mensagensSemana": 13,
-    "mensagensMes": 13
+    "mensagensSemana": 14,
+    "mensagensMes": 14
   },
   {
     "id": "grp-96731907784815-1795055498767",
@@ -811,8 +855,8 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 35,
-    "mensagensMes": 35,
+    "mensagensSemana": 37,
+    "mensagensMes": 37,
     "mensagensDia": 2
   },
   {
@@ -827,9 +871,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 120,
-    "mensagensMes": 120,
-    "mensagensDia": 7
+    "mensagensSemana": 123,
+    "mensagensMes": 123,
+    "mensagensDia": 3
   },
   {
     "id": "grp-69128186527844-1794920115499",
@@ -1167,7 +1211,7 @@
     "id": "grp-26723789865150-1794920115501",
     "fone": "26723789865150",
     "jid": "26723789865150@lid",
-    "nome": "Membro (5150)",
+    "nome": "Membro Portaria (5150)",
     "grupoId": "120363413573997852@g.us",
     "grupoNome": "Prévia Vip +18 | Geral",
     "isAdmin": false,
@@ -1175,9 +1219,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 3,
-    "mensagensSemana": 3,
-    "mensagensMes": 3
+    "mensagensDia": 2,
+    "mensagensSemana": 5,
+    "mensagensMes": 5
   },
   {
     "id": "grp-69128186527844-1794920115501",
@@ -1219,7 +1263,7 @@
     "id": "grp-26723789865150-1794920115501",
     "fone": "26723789865150",
     "jid": "26723789865150@lid",
-    "nome": "Membro (5150)",
+    "nome": "Membro Portaria (5150)",
     "grupoId": "120363431011611307@g.us",
     "grupoNome": "🥂 Geral | Club Casalzaum",
     "isAdmin": false,
@@ -1411,7 +1455,7 @@
     "id": "grp-26723789865150-1794920115502",
     "fone": "26723789865150",
     "jid": "26723789865150@lid",
-    "nome": "Membro (5150)",
+    "nome": "Membro Portaria (5150)",
     "grupoId": "120363414834940835@g.us",
     "grupoNome": "​Club Casalzaum",
     "isAdmin": false,

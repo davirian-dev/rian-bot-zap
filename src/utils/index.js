@@ -105,7 +105,7 @@ export function extractDataFromMessage(webMessage) {
   const [command, ...args] = fullMessage.split(" ");
   const prefix = command.charAt(0);
 
-  const commandWithoutPrefix = command.replace(/^[!/]+/, "");
+  const commandWithoutPrefix = command.replace(/^[!/=.#]+/, "");
 
   return {
     args: splitByCharacters(args.join(" "), ["\\", "|", "/"]),

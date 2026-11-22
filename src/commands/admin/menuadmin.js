@@ -19,7 +19,8 @@ export function menuAdminMessage(groupJid) {
 ▢ • ${p}revelar ➔ Revela fotos e vídeos de visualização única (1x)
 ▢ • ${p}configs ➔ Painel visual com status de todas as travas do grupo
 ▢ • ${p}aprovar ➔ Aprova e dá boas-vindas oficiais ao membro triado
-▢ • ${p}enviar-portaria ➔ Envia as instruções de triagem no grupo
+▢ • ${p}portaria ➔ Envia o link da Portaria Oficial (Grupo de Espera) anti-fake
+▢ • ${p}anuncio-vip ➔ Dispara o comunicado oficial de vendas do Club Casalzaum
 ▢ • ${p}membros ➔ Relatório de membros e controle de vencimentos
 ▢ • ${p}salvar-contatos ➔ Sincroniza e exporta contatos da comunidade
 ▢ • ${p}link-grupo ➔ Envia o link de convite do grupo atual

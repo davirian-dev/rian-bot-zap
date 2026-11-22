@@ -15,7 +15,7 @@ import { getPrefix } from "../utils/database.js";
 
 export function verifyPrefix(prefix, groupJid) {
   const groupPrefix = getPrefix(groupJid);
-  return groupPrefix === prefix || prefix === "!" || prefix === "/";
+  return prefix === groupPrefix;
 }
 
 export function hasTypeAndCommand({ type, command }) {
