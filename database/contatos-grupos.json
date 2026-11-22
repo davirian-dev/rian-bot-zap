@@ -11,9 +11,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 5,
-    "mensagensSemana": 8,
-    "mensagensMes": 8
+    "mensagensDia": 7,
+    "mensagensSemana": 10,
+    "mensagensMes": 10
   },
   {
     "id": "grp-26723789865150-1795310609400",
@@ -227,9 +227,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 17,
-    "mensagensSemana": 17,
-    "mensagensMes": 17
+    "mensagensDia": 1,
+    "mensagensSemana": 18,
+    "mensagensMes": 18
   },
   {
     "id": "grp-36356948492368-1795090824048",
@@ -243,9 +243,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 3,
-    "mensagensSemana": 26,
-    "mensagensMes": 26
+    "mensagensDia": 1,
+    "mensagensSemana": 27,
+    "mensagensMes": 27
   },
   {
     "id": "grp-141571332772021-1795090274274",
@@ -383,9 +383,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 6,
-    "mensagensSemana": 44,
-    "mensagensMes": 44
+    "mensagensDia": 5,
+    "mensagensSemana": 49,
+    "mensagensMes": 49
   },
   {
     "id": "grp-53141697519857-1795058953639",
