@@ -1,5 +1,73 @@
 [
   {
+    "id": "grp-189640120242393-1795390451139",
+    "fone": "189640120242393",
+    "jid": "189640120242393@lid",
+    "nome": "Cliente (2393)",
+    "grupoId": "120363411572682861@g.us",
+    "grupoNome": "🥳 Festas & Eventos | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "22/11/2026 20:34",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 4,
+    "mensagensSemana": 4,
+    "mensagensMes": 4
+  },
+  {
+    "id": "grp-189640120242393-1795390433769",
+    "fone": "189640120242393",
+    "jid": "189640120242393@lid",
+    "nome": "Cliente (2393)",
+    "grupoId": "120363431011611307@g.us",
+    "grupoNome": "🥂 Geral | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "22/11/2026 20:33",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
+    "id": "grp-189640120242393-1795390427263",
+    "fone": "189640120242393",
+    "jid": "189640120242393@lid",
+    "nome": "Cliente (2393)",
+    "grupoId": "120363430589324185@g.us",
+    "grupoNome": "​📍 Salvador & Região | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "22/11/2026 20:33",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
+    "id": "grp-189640120242393-1795390237441",
+    "fone": "189640120242393",
+    "jid": "189640120242393@lid",
+    "nome": "Cliente (2393)",
+    "grupoId": "120363414834940835@g.us",
+    "grupoNome": "​Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "22/11/2026 20:30",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 2,
+    "mensagensSemana": 2,
+    "mensagensMes": 2
+  },
+  {
+    "id": "grp-189640120242393-1795390063106",
+    "fone": "189640120242393",
+    "jid": "189640120242393@lid",
+    "nome": "Cliente (2393)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "22/11/2026 20:27",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
     "id": "grp-26723789865150-1795310622122",
     "fone": "26723789865150",
     "jid": "26723789865150@lid",
@@ -383,9 +451,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 5,
-    "mensagensSemana": 49,
-    "mensagensMes": 49
+    "mensagensDia": 9,
+    "mensagensSemana": 53,
+    "mensagensMes": 53
   },
   {
     "id": "grp-53141697519857-1795058953639",
@@ -855,8 +923,8 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 37,
-    "mensagensMes": 37,
+    "mensagensSemana": 39,
+    "mensagensMes": 39,
     "mensagensDia": 2
   },
   {
@@ -871,9 +939,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 123,
-    "mensagensMes": 123,
-    "mensagensDia": 3
+    "mensagensSemana": 125,
+    "mensagensMes": 125,
+    "mensagensDia": 2
   },
   {
     "id": "grp-69128186527844-1794920115499",
