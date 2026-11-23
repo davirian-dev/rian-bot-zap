@@ -1,5 +1,49 @@
 [
   {
+    "id": "grp-95709722361894-1795429697064",
+    "fone": "95709722361894",
+    "jid": "95709722361894@lid",
+    "nome": "Membro Portaria (1894)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "23/11/2026 07:28",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo"
+  },
+  {
+    "id": "grp-118300713467961-1795426671248",
+    "fone": "118300713467961",
+    "jid": "118300713467961@lid",
+    "nome": "Membro Portaria (7961)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "23/11/2026 06:37",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 2,
+    "mensagensSemana": 2,
+    "mensagensMes": 2
+  },
+  {
+    "id": "grp-76219160748270-1795426669145",
+    "fone": "76219160748270",
+    "jid": "76219160748270@lid",
+    "nome": "Membro Portaria (8270)",
+    "grupoId": "120363430157797204@g.us",
+    "grupoNome": "🔑 Portaria | Club Casalzaum",
+    "isAdmin": false,
+    "dataRegistro": "23/11/2026 06:37",
+    "status": "Entrou Recentemente",
+    "perfil": "Entrou no Grupo",
+    "statusModo": "ativo",
+    "mensagensDia": 2,
+    "mensagensSemana": 2,
+    "mensagensMes": 2
+  },
+  {
     "id": "grp-189640120242393-1795390451139",
     "fone": "189640120242393",
     "jid": "189640120242393@lid",
@@ -296,8 +340,8 @@
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
     "mensagensDia": 1,
-    "mensagensSemana": 18,
-    "mensagensMes": 18
+    "mensagensSemana": 1,
+    "mensagensMes": 19
   },
   {
     "id": "grp-36356948492368-1795090824048",
@@ -507,9 +551,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 1,
-    "mensagensSemana": 14,
-    "mensagensMes": 14
+    "mensagensDia": 3,
+    "mensagensSemana": 3,
+    "mensagensMes": 17
   },
   {
     "id": "grp-96731907784815-1795055498767",
@@ -771,9 +815,9 @@
     "status": "Entrou Recentemente",
     "perfil": "Entrou no Grupo",
     "statusModo": "ativo",
-    "mensagensDia": 1,
-    "mensagensSemana": 15,
-    "mensagensMes": 15
+    "mensagensDia": 2,
+    "mensagensSemana": 2,
+    "mensagensMes": 17
   },
   {
     "id": "grp-46274564894843-1794947986805",
@@ -939,9 +983,9 @@
     "status": "No Grupo",
     "perfil": "Membro do Grupo",
     "statusModo": "ativo",
-    "mensagensSemana": 125,
-    "mensagensMes": 125,
-    "mensagensDia": 2
+    "mensagensSemana": 9,
+    "mensagensMes": 134,
+    "mensagensDia": 9
   },
   {
     "id": "grp-69128186527844-1794920115499",

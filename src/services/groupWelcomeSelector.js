@@ -19,24 +19,38 @@ export function obterMensagemBoasVindasGrupo(grupoNome) {
   // 1. 🔑 PORTARIA & RECEPÇÃO SEGURA (SALA DE ESPERA)
   if (g.includes("portaria")) {
     return (
-`🔑 *BEM-VINDO(A) À PORTARIA DO CLUB CASALZAUM!* 🔞
+`👋 Oi @member! Bem-vindo(a) à *Portaria do Club Casalzaum* 🔑🔞
 
-Olá @member! Seja muito bem-vindo(a) à nossa recepção segura! 🛡️✨
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ *LEIA ANTES DE SAIR — LEVA SÓ 20 SEGUNDOS!*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⏳ *SALA DE ESPERA TEMPORÁRIA:*
-Este é o nosso grupo de recepção segura e acolhedora. Para mantermos a comunidade 100% blindada contra perfis falsos e invasores de privacidade, você só precisa de **1 passo rápido** para ter seu acesso liberado ao grupo principal:
+🤔 *O QUE É O CLUB CASALZAUM?*
+Somos o *Davi & a Mari*, um casal real, liberal e criador de conteúdo adulto (+18) 🔞
+Criamos uma comunidade privada com casais exibicionistas, mulheres, criadores de conteúdo e admiradores — tudo em um ambiente de respeito mútuo, resenha quente e muita liberdade.
 
-👉 **Envie sua confirmação anti-fake:**
-• Uma foto simples fazendo o sinal de legal (👍) com a data de hoje escrita em um papelzinho **OU**
-• Um áudio curtinho de 5 segundos dizendo o seu nome e a sua cidade.
+🚪 *E ESSE GRUPO AQUI, O QUE É?*
+Este é apenas a nossa *PORTARIA* — a sala de triagem e recepção.
+Aqui não rola conteúdo ainda. O movimento de verdade (prévias, exibições, resenha, encontros e muito mais) acontece no *Grupo Principal*, que liberamos após uma verificação rápida anti-fake!
 
-💬 *ONDE ENVIAR:*
-Você pode enviar sua confirmação **aqui mesmo no grupo** OU, se preferir total discrição, pode enviar **diretamente no privado (PV) da moderação / Davi & Mari**!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ *QUEM ENTRA GRATUITAMENTE:*
 
-⚠️ *LEMBRETE SOBRE A SUA APRESENTAÇÃO:*
-A sua apresentação oficial **NÃO é feita aqui na Portaria**! Assim que a moderação validar seu anti-fake, você receberá a entrada no **Grupo Geral dentro da Comunidade**, onde você colará sua apresentação para todos os membros te conhecerem e te darem as boas-vindas!
+💃 *Mulher* (solteira ou casada) — 100% grátis
+👩‍❤️‍👨 *Casal* (liberal ou exibicionista) — 100% grátis
+🎬 *Criador(a) de Conteúdo +18* — 100% grátis (pode divulgar prévias!)
 
-Aguarde um instante que a moderação já está atendendo você! 🥂`
+👑 *Homem Solteiro* — acesso VIP mediante taxa (para manter o equilíbrio e proteger a privacidade das mulheres do grupo). Digite *!planos* para ver os valores.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📸 *SEU PRÓXIMO PASSO (1 minuto só):*
+Envie aqui no grupo ou no nosso PV uma das opções abaixo para liberar sua entrada:
+• Foto simples com o sinal de 👍 e um papel com a data de hoje *OU*
+• Áudio rápido de 5 segundos dizendo seu nome e cidade
+
+💬 Chame a moderação no privado: *@casalzaumofc*
+
+Aguarda um instante — já estamos te atendendo! 🥂🔥`
     );
   }
 
