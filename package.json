@@ -21,6 +21,7 @@
     "@cacheable/node-cache": "^3.0.0",
     "axios": "^1.14.0",
     "baileys": "7.0.0-rc14",
+    "better-sqlite3": "^13.2.0",
     "correios-brasil": "^3.0.6",
     "node-cache": "^5.1.2",
     "node-webpmux": "^3.2.1",

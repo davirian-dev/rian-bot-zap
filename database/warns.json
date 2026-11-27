@@ -8,6 +8,30 @@
           "timestamp": 1795091432424,
           "valid": true
         }
+      ],
+      "194085579141145@lid": [
+        {
+          "reason": "Envio de link não autorizado",
+          "timestamp": 1795610025703,
+          "valid": false
+        },
+        {
+          "reason": "Envio de link não autorizado",
+          "timestamp": 1795709498869,
+          "valid": false
+        }
+      ]
+    }
+  },
+  "120363411525326617@g.us": {
+    "warnLimit": 3,
+    "warns": {
+      "194085579141145@lid": [
+        {
+          "reason": "Envio de link não autorizado",
+          "timestamp": 1795709499041,
+          "valid": true
+        }
       ]
     }
   }

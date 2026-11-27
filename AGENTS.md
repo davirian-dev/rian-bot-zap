@@ -313,3 +313,12 @@ This keeps support and agent workflows selective instead of forcing every answer
 ## DOESN'T RUNS
 
 Do not run `npm test` or `npm start` in this repository.
+
+## Padrões de Qualidade & Engenharia (Antigravity Suite)
+- **Rigor Técnico & Invariantes (Gravitas)**:
+  - Grounding pré-mutação obrigatório (ler o módulo, os chamadores e configurações antes de editar).
+  - Nunca fechar tarefa sem validação real (executar python -m py_compile, pytest ou teste funcional do bot/serviço).
+- **Ciclo de Features & Bugs (Superpowers)**:
+  - Usar systematic-debugging (reproduzir -> isolar causa raiz -> corrigir pontualmente -> testar regressão).
+  - Mudanças de arquitetura devem ser precedidas por plano estruturado (writing-plans).
+- **Arquitetura (Graphify)**: Grafo de dependências gerado em graphify-out/. Para rastrear rotas, imports e fluxos, consulte o grafo ou execute graphify query.

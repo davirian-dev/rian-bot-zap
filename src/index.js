@@ -91,6 +91,7 @@ if (fs.existsSync(envPath)) {
 
 import { connect } from "./connection.js";
 import { load } from "./loader.js";
+import { startDailyNewsDigest } from "./services/dailyNewsDigest.js";
 import { badMacHandler } from "./utils/badMacHandler.js";
 import {
   bannerLog,
@@ -143,6 +144,7 @@ async function startBot() {
     const socket = await connect();
 
     load(socket);
+    startDailyNewsDigest(socket);
 
     setInterval(() => {
       const currentStats = badMacHandler.getStats();

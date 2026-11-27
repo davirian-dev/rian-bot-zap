@@ -145,8 +145,8 @@ export async function connect() {
     try {
       if (socket && socket.ws) {
         // readyState: 0=CONNECTING, 1=OPEN, 2=CLOSING, 3=CLOSED
-        const state = socket.ws.readyState;
-        if (state !== 1 && state !== 0 && !isReconnecting) {
+        const state = socket.ws?.readyState ?? socket.ws?.socket?.readyState;
+        if (state !== undefined && state !== 1 && state !== 0 && !isReconnecting) {
           warningLog(`[Watchdog 24/7] WebSocket desconectado (readyState: ${state}). Disparando reconexão limpa...`);
           triggerSafeReconnect();
         }
